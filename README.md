@@ -10,7 +10,7 @@ Installation
 
 It works!
 
-#### Usage
+## Usage
 
 ```js
 
@@ -43,29 +43,29 @@ logger.init({
 To initialise the logger with your own settings, you may do so with this snippet. You can include as many or as little of these settings as you wish, the ones that you do not include will be defaulted to.
 However, init is called upon sending the first message, init settings will be the default ones in this case. The first message tat is sent will be delayed and this is a bug that will be fixed shortly!
 
-#### Settings in detail
+## Settings in detail
 
-# location #
+##### location
 
 the location that is given as a parameter of the log. Defaults to os.hostname() if undefined. 
 
-# timeformat #
+##### timeformat 
 
 the formatting of the timestamp parameter. Defaults to:
 
 An example of how it can be set is: 'DD MMM HH:mm:ss' or any other string that the 'moment' module supports
 
-# output #
+##### output
 
 displayOpts: if set to false, will not display locally. (the strings will still be sent to the socket and database)
 
 sourceOpts: Allows sources to be allowed and disallowed (whitelist/blacklist) //not implemented
 
-# quickStart #
+##### quickStart
 
 Bypasses startup messages if set to true.
 
-# catchUncaught and catchExit #
+##### catchUncaught and catchExit
 
 Starts listeners for process.on('exit') and ('uncaughtException')
 It is not recommended to use the uncaughtException unless you want to prevent your app from fatally closing!
@@ -77,14 +77,14 @@ In order to account for all needs and desires I have tried to make any and all u
 
 If you have an recommendations, suggestions or ideas regarding the API, do not hesitate to let me know!  
 
-#### Settings
+## Settings
 
-# Set settings after init #
+##### Set settings after init
 ```
 logger.settings.set(options)
 ```
 
-# Set the settings manually #
+##### Set the settings manually
 ```
 logger.core.settings : {}
 ```
@@ -94,7 +94,7 @@ logger.core.settings.location = os.hostname()
 ```
 However it is much preferred that you use the set settings method as this will initialise functions or other methods that need to be restarted with the new settings...
 
-#  Direct-to-console logging #
+##  Direct-to-console logging
 ```
 logger.output({
 	severity:'warning', 
@@ -106,22 +106,22 @@ logger.output({
 ```
 Just remember, using this method ONLY outputs to console, and no other transport is used and no event is emitted. It's basically a fancy console log, useful for welcome messages etc.
 
-# Event Emitter #
+## Event Emitter
 
-The emitter:
+###### The emitter:
 ```
 logger.emitter.emit('logger', data)
 ```
 This will emit straight into the matrix, make sure to be careful with emitted data, that it is correctly formatted and will not cause any of the other listeners and modules to error out
 
-Likewise, you can listen:
+###### The listener:
 ```
 logger.emitter.on('logger', function(data){
 	console.log(data)
 });
 ```
 
-# Utilities #
+## Utilities
 
 Potentially moving to a new repository...
 ```
