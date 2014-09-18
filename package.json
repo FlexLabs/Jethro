@@ -1,0 +1,44 @@
+{
+	"name": 					"Jethro",
+	"build": 					"Private",
+	"state": 					"Early Alpha",
+	"version": 					"0.0.3",
+	"author": {
+		"name": 				"Samuel Mills",
+		"nickname": 			"Henchman",
+		"email": 				"spam.mills@hotmail.com"
+	},
+
+	"description": 				"Modular logging utility",
+	"contributors": 
+		[
+			{
+				"name": 		"Mathieu Samaey",
+				"nickname": 	"EucalyptusSpace",
+				"email": 		"yemasthui@gmail.com"
+			}
+		],
+
+	"main": 					"./index.js",
+	"dependencies": {
+		"moment":"2.8.3",
+		"colour":"0.7.1",
+		"eventemitter2":"0.4.14"
+	},
+	"optionalDependencies": {
+
+	},
+
+
+	"repository": {
+		"type": 				"git",
+		"url": 					"https://github.com/henchspace/jethro"
+	},
+
+
+	"engines": {
+		"node": 				">= 0.10.0"
+	},
+
+	"homepage": 				"http://hench.in"
+}
