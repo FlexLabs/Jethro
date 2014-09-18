@@ -1,4 +1,4 @@
-Jethro
+Jethro  [![Build Status](https://travis-ci.org/HenchSpace/Jethro.svg?branch=master)](https://travis-ci.org/HenchSpace/Jethro)
 ======
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
@@ -141,6 +141,12 @@ More features Coming!
 * Logger Web/socket server
 * Logger socket client
 * Database transport
+
+Projects using this logger
+--------------------------
+* HenchBot
+* HenchSpace backend infrastructure
+* TFL Bot (plug.dj)
 
 Credits
 -------
