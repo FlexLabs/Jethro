@@ -1,5 +1,8 @@
-Jethro  [![Build Status](https://travis-ci.org/HenchSpace/Jethro.svg?branch=master)](https://travis-ci.org/HenchSpace/Jethro)
-======
+# Jethro  
+
+[![Build Status](https://travis-ci.org/HenchSpace/Jethro.svg?branch=master)](https://travis-ci.org/HenchSpace/Jethro)
+[![npm version](http://img.shields.io/npm/v/gh-badges.svg)](https://npmjs.org/package/jethro)
+[![Gratipay][gratipay-image]][gratipay-url]
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
 
@@ -168,3 +171,7 @@ Licensed under the LGPL v3 License
 Copyright (C) 2014  Samuel Mills (known as Henchman, under the github team: HenchSpace)
 
 You can find full license [here.](https://github.com/HenchSpace/Jethro/blob/master/LICENSE.txt)
+
+
+[gratipay-image]: https://img.shields.io/gratipay/dougwilson.svg
+[gratipay-url]: https://www.gratipay.com/Hunchmun/
