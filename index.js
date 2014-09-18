@@ -143,6 +143,9 @@ Logger.settings = {
 		for(var prop in options){
 			Logger.core.settings[prop] = options[prop];
 		}
+
+		catchUncaught()
+		catchExit()
 	},
 	addToWhiteList: function(parameter, arr) {
 
@@ -256,19 +259,21 @@ Logger.startFile = function(options) {
 	Logger("info", "Logger", "Starting File logging utility...");
 	Logger("warning", "Logger", "The File logging utility is not complete and as a result will not load!");
 };
-
-//For production certified code only!
-//For production certified code only!
-if (Logger.core.settings.catchUncaught === true) {
-	process.on('uncaughtException', function(e) {
-	    logger('error', 'Exception', 'Logger caught exception: '+e.stack);
-	})
+var catchUncaught = function() {
+	//For production certified code only!
+	if (Logger.core.settings.catchUncaught === true) {
+		process.on('uncaughtException', function(e) {
+		    logger('error', 'Exception', 'Logger caught exception: '+e.stack);
+		})
+	}
 }
 
-if (Logger.core.settings.catchExit === true) {
-	process.on('exit', function(e) {
-    	logger('error', 'Caught Exit', 'Logger caught exit with code: ' + e);
-	});
+var catchExit = function() {
+	if (Logger.core.settings.catchExit === true) {
+		process.on('exit', function(e) {
+	    	logger('error', 'Caught Exit', 'Logger caught exit with code: ' + e);
+		});
+	}
 }
 
 module.exports = Logger;
