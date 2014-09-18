@@ -105,6 +105,14 @@ logger.output({
 });
 ```
 Just remember, using this method ONLY outputs to console, and no other transport is used and no event is emitted. It's basically a fancy console log, useful for welcome messages etc.
+```
+//Alternatively
+
+var Return = true;
+
+console.log(logger.output(data, Return));
+```
+However, if a true value is passed as the second argument, then output() will return rather than doing a direct console log. This method was added to allow for quick and easy formatting of logs for writing to file or a custom transport method
 
 ## Event Emitter
 

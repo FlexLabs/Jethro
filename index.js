@@ -171,10 +171,10 @@ Logger.emitter = new EventEmitter({
 });
 
 Logger.emitter.on('logger', function(data) {
-	Logger.output(data);
+	console.log(Logger.output(data, true));
 });
 
-Logger.output = function(data) {
+Logger.output = function(data, Return) {
 	if (typeof data === "object") {
 
 		var a = "";
@@ -231,7 +231,12 @@ Logger.output = function(data) {
 		if (typeof data.message !== "undefined" && Logger.core.settings.output.displayOpts.message === true) {
 			e = "" + data.message + "";
 		}
-		console.log(a + b + c + d + "	" + e + "	");
+		var output = (a + b + c + d + "	" + e + "	")
+		if (Return === true) {
+			return output;
+		} else  {
+			console.log(output);
+		}
 	} else {
 		throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 	}
@@ -254,11 +259,6 @@ Logger.startDatabase = function(options) {
 	Logger("info", "Logger", "Starting Database utility...");
 	Logger("warning", "Logger", "The Database utility is not complete and as a result will not load!");
 };
-Logger.startFile = function(options) {
-	//Preparation for local file logging
-	Logger("info", "Logger", "Starting File logging utility...");
-	Logger("warning", "Logger", "The File logging utility is not complete and as a result will not load!");
-};
 var catchUncaught = function() {
 	//For production certified code only!
 	if (Logger.core.settings.catchUncaught === true) {
@@ -275,5 +275,13 @@ var catchExit = function() {
 		});
 	}
 }
+
+//------------------------------- File writer -----------------------------------
+Logger.startFile = function(options) {
+	//Preparation for local file logging
+	Logger("info", "Logger", "Starting File logging utility...");
+	Logger("warning", "Logger", "The File logging utility is not complete and as a result will not load!");
+};
+//Place holder for the write to file module!
 
 module.exports = Logger;

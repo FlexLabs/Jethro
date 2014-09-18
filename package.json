@@ -2,7 +2,7 @@
   "name": "jethro",
   "build": "Private",
   "state": "Early Alpha",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
