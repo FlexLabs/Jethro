@@ -90,6 +90,9 @@ Logger.core = {
 	},
 
 	init: function(options) {
+		if (typeof options === "undefined") {
+			options = {}
+		}	
 		if (options.quickStart !== true) {
 			Logger.output({timestamp:new Date(), message:"Logger is starting up...", source:"Logger", severity:"info"})
 		}
@@ -155,7 +158,7 @@ Logger.settings = {
 	}
 }
 
-Logger.init = function(options) {
+Logger.init = function(options) {	
 	Logger.core.init(options);
 };
 

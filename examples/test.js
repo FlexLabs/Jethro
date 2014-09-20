@@ -1,10 +1,6 @@
 logger = require('../')
 
-logger.init({
-	//quickStart: true
-	//database: {run: true}
-
-})
+logger.init()
 
 /*
 logger('info', "startup", "Test")
