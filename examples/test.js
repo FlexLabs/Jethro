@@ -1,6 +1,8 @@
 logger = require('../')
 
-logger.init()
+logger.init({
+	timeformat:"DD MMM HH:mm:ss"
+})
 
 /*
 logger('info', "startup", "Test")

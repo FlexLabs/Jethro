@@ -185,16 +185,13 @@ Logger.output = function(data, Return) {
 		var c = "";
 		var d = "";
 		var e = "";
-		var x = " ";
-		var y = " ";
-		var z = "	";
 
 		if (typeof data.timestamp !== "undefined" && Logger.core.settings.output.displayOpts.timestamp === true) {
 			if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
 				try {
-					a = "[" + moment().format(Logger.core.settings.timeformat) + "] ";
+					a = moment().format(Logger.core.settings.timeformat) + " ";
 				} catch (e) {
-					a = "[" + moment().format('DD MMM HH:mm:ss') + "] ";
+					a = moment().format('DD MMM HH:mm:ss') + " ";
 				}
 			} else {
 				a = "[" + Logger.util.formatTimestamp(data.timestamp) + "] ";
