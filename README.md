@@ -1,4 +1,4 @@
-# Jethro  [![Build Status][travis-image]][travis-url] [![npm version][version-image]][version-url] [![downloads][downloads-image]][downloads-url] [![Gratipay][gratipay-image]][gratipay-url]
+# Jethro  [![Build Status][travis-image]][travis-url] [![npm version][version-image]][version-url] [![npm downloads](http://img.shields.io/npm/dm/jethro.svg)](https://npmjs.org/package/jethro) [![Gratipay][gratipay-image]][gratipay-url]
 
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
@@ -177,9 +177,6 @@ You can find full license [here.](https://github.com/HenchSpace/Jethro/blob/mast
 
 [version-image]: http://img.shields.io/npm/v/jethro.svg
 [version-url]: https://npmjs.org/package/jethro
-
-[downloads-image]: http://img.shields.io/npm/dm/jethro.svg
-[doanloads-url]: https://npmjs.org/package/jethro
 
 [gratipay-image]: http://img.shields.io/gratipay/Hunchmun.svg
 [gratipay-url]: https://www.gratipay.com/Hunchmun/
