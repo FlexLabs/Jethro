@@ -82,6 +82,9 @@ Logger.core = {
 				whitlistOnly: false,
 				sourceWhiteList: [],
 				sourceBlackList: [],
+			},
+			timestampOpts: {
+				brackets: false
 			}
 		},
 
@@ -92,14 +95,7 @@ Logger.core = {
 	init: function(options) {
 		if (typeof options === "undefined") {
 			options = {}
-		}	
-		if (options.quickStart !== true) {
-			Logger.output({timestamp:new Date(), message:"Logger is starting up...", source:"Logger", severity:"info"})
 		}
-		if (typeof options === "undefined") {
-			options = {}
-		} 
-
 		if (Logger.core.initialised === false) {
 
 			//Makes sure init cannot be called again
@@ -179,25 +175,27 @@ Logger.emitter.on('logger', function(data) {
 
 Logger.output = function(data, Return) {
 	if (typeof data === "object") {
-
 		var a = "";
 		var b = "";
 		var c = "";
 		var d = "";
 		var e = "";
-
+		var f = "";
 		if (typeof data.timestamp !== "undefined" && Logger.core.settings.output.displayOpts.timestamp === true) {
 			if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
 				try {
-					a = moment().format(Logger.core.settings.timeformat) + " ";
+					f = moment().format(Logger.core.settings.timeformat);
 				} catch (e) {
-					a = moment().format('DD MMM HH:mm:ss') + " ";
+					f = moment().format('DD MMM HH:mm:ss');
 				}
 			} else {
-				a = "[" + Logger.util.formatTimestamp(data.timestamp) + "] ";
+				f = Logger.util.formatTimestamp(data.timestamp);
 			}
-		}
-		if (typeof data.severity !== "undefined" && Logger.core.settings.output.displayOpts.severity === true) {
+		} if (Logger.core.settings.output.timestampOpts.brackets === true) {
+			a = "["+f+"] ";
+		} else {
+			a = f+" ";
+		} if (typeof data.severity !== "undefined" && Logger.core.settings.output.displayOpts.severity === true) {
 			var h = Logger.util.capitiliseFirstLetter(data.severity);
 			switch (data.severity.toLowerCase()) {
 	            case 'success':
@@ -221,14 +219,11 @@ Logger.output = function(data, Return) {
 	            default:
 					b = "[" + h + "]     ";
 	        }
-		}
-		if (typeof data.location !== "undefined" && Logger.core.settings.output.displayOpts.location === true) {
+		} if (typeof data.location !== "undefined" && Logger.core.settings.output.displayOpts.location === true) {
 			c = "[" + data.location + "] ";
-		}	
-		if (typeof data.source !== "undefined" && Logger.core.settings.output.displayOpts.source === true) {
+		} if (typeof data.source !== "undefined" && Logger.core.settings.output.displayOpts.source === true) {
 			d = "[" + data.source + "] ";
-		}
-		if (typeof data.message !== "undefined" && Logger.core.settings.output.displayOpts.message === true) {
+		} if (typeof data.message !== "undefined" && Logger.core.settings.output.displayOpts.message === true) {
 			e = "" + data.message + "";
 		}
 		var output = (a + b + c + d + "	" + e + "	")

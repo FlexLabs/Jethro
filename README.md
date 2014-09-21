@@ -33,6 +33,9 @@ logger.init({
 				whitlistOnly: 		false,
 				sourceWhiteList: 	[],
 				sourceBlackList: 	[],
+			},
+			timestampOpts: {
+				brackets: false
 			}
 		},
 		quickStart: 				false,
@@ -40,8 +43,9 @@ logger.init({
 		catchExit: 					false
 })
 ```
-To initialise the logger with your own settings, you may do so with this snippet. You can include as many or as little of these settings as you wish, the ones that you do not include will be defaulted to.
-However, init is called upon sending the first message, init settings will be the default ones in this case. The first message tat is sent will be delayed and this is a bug that will be fixed shortly!
+To initialise the logger with your own settings, you may do so with this snippet. You can include as many or as little of these settings as you wish, the ones that you do not include will be defaulted to the ones that are displayed above.
+	If you decide to edit things inside a nested setting, such as the output object, then you should include all of the settings that are displayed inside of it. I will write a proper settings setter in the future to make this not be the case. If you do not do this, you risk overwriting the object/variables that you do not set, with undefined. This does not apply to root settings such as location or timeformat, they can be left not defined within the init and still will be defaulted.
+	However, init is called upon sending the first message, init settings will be the default ones in this case. The first message that is sent will be delayed and this is a bug that will be fixed shortly!
 
 ## Settings in detail
 
@@ -51,7 +55,7 @@ the location that is given as a parameter of the log. Defaults to os.hostname() 
 
 ##### timeformat 
 
-the formatting of the timestamp parameter. Defaults to:
+the formatting of the timestamp parameter. Defaults to something like: [16:31 48s 0076ms]
 
 An example of how it can be set is: 'DD MMM HH:mm:ss' or any other string that the 'moment' module supports
 
@@ -75,7 +79,7 @@ The API
 
 In order to account for all needs and desires I have tried to make any and all useful functions and variables exported and available in the public API. As time goes on I hope to fine tune this by removing things that aren't useful and are potentially annoying or dangerous as exported, but also offering a plethora of functions that can be used outside of the logger, although these might get moved to another module if they become too big in the future.
 
-If you have an recommendations, suggestions or ideas regarding the API, do not hesitate to let me know!  
+If you have any recommendations, suggestions or ideas regarding the API, do not hesitate to let me know!  
 
 ## Settings
 

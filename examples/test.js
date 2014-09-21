@@ -1,7 +1,24 @@
 logger = require('../')
 
 logger.init({
-	timeformat:"DD MMM HH:mm:ss"
+	timeformat:"DD MMM HH:mm:ss",
+	output: {
+		displayOpts: {
+			severity: true,
+			source: true,
+			message: true,
+			location: false,
+			timestamp: true
+		},
+		sourceOpts: {
+			whitlistOnly: false,
+			sourceWhiteList: [],
+			sourceBlackList: [],
+		},
+		timestampOpts: {
+			brackets: true
+		}
+	}
 })
 
 /*
