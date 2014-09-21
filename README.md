@@ -1,4 +1,4 @@
-# Jethro  [![Build Status][travis-image]][travis-url] [![npm version][version-image]][version-url] [![npm downloads][downloads-image]][downloads-url] [![Gratipay][gratipay-image]][gratipay-url]
+# Jethro  [![Build Status][travis-image]][travis-url] [![npm version][version-image]][version-url] [![downloads][downloads-image]][downloads-url] [![Gratipay][gratipay-image]][gratipay-url]
 
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
