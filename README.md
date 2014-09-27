@@ -22,29 +22,29 @@ logger = require('jethro')
 //Initialises the logger
 
 logger.init({
-		location: "undefined",
-		timeformat: "undefined",
-		output: {
-			console: true,
-			displayOpts: {
-				severity: true,
-				source: true,
-				message: true,
-				location: false,
-				timestamp: true
-			},
-			sourceOpts: {
-				whitlistOnly: false,
-				sourceWhiteList: [],
-				sourceBlackList: [],
-			},
-			timestampOpts: {
-				brackets: false
-			}
+	location: "undefined",
+	timeformat: "undefined",
+	output: {
+		console: true,
+		displayOpts: {
+			severity: true,
+			source: true,
+			message: true,
+			location: false,
+			timestamp: true
 		},
-		quickStart: false,
-		catchUncaught: false,
-		catchExit: false
+		sourceOpts: {
+			whitelistOnly: false,
+			sourceWhitelist: [],
+			sourceBlacklist: [],
+		},
+		timestampOpts: {
+			brackets: false
+		}
+	},
+	quickStart: false,
+	catchUncaught: false,
+	catchExit: false
 })
 ```
 To initialise the logger with your own settings, you may do so with this snippet. You can include as many or as little of these settings as you wish, the ones that you do not include will be defaulted to the ones that are displayed above.
