@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
@@ -24,6 +24,8 @@
   "bugs": {
     "url": "https://github.com/henchspace/jethro/issues"
   },
+  "readme": "Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.",
+  "readmeFilename": "README.md",
   "directories": {
     "example": "examples"
   },

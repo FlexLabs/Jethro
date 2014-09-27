@@ -65,12 +65,10 @@ Logger.core = {
 	initialised: false,
 
 	settings: {
-
 		location: "undefined",
-
 		timeformat: "undefined",
-
 		output: {
+			console: true,
 			displayOpts: {
 				severity: true,
 				source: true,
@@ -79,7 +77,7 @@ Logger.core = {
 				timestamp: true
 			},
 			sourceOpts: {
-				whitlistOnly: false,
+				whitelistOnly: false,
 				sourceWhiteList: [],
 				sourceBlackList: [],
 			},
@@ -87,12 +85,13 @@ Logger.core = {
 				brackets: false
 			}
 		},
-
+		quickStart: false,
 		catchUncaught: false,
 		catchExit: false
 	},
 
 	init: function(options) {
+
 		if (typeof options === "undefined") {
 			options = {}
 		}
@@ -118,6 +117,15 @@ Logger.core = {
 			if (typeof options.database !== "undefined") {
 				if (options.database.run === true) {
 					Logger.startDatabase(options.database)
+				}
+			}
+			if (process.argv.indexOf('-output')>-1){
+				var i = process.argv.indexOf('-output')
+				var j = i+1;
+				if (process.argv[j] === 'false') {
+					Logger.core.settings.output.console = false;
+				} else {
+					Logger.core.settings.output.console = true;
 				}
 			}
 			if (options.quickStart !== true) {
@@ -170,70 +178,74 @@ Logger.emitter = new EventEmitter({
 });
 
 Logger.emitter.on('logger', function(data) {
-	console.log(Logger.output(data, true));
+	if (Logger.core.settings.output.console === true) {
+		console.log(Logger.output(data, true));
+	}
 });
 
 Logger.output = function(data, Return) {
-	if (typeof data === "object") {
-		var a = "";
-		var b = "";
-		var c = "";
-		var d = "";
-		var e = "";
-		var f = "";
-		if (typeof data.timestamp !== "undefined" && Logger.core.settings.output.displayOpts.timestamp === true) {
-			if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
-				try {
-					f = moment().format(Logger.core.settings.timeformat);
-				} catch (e) {
-					f = moment().format('DD MMM HH:mm:ss');
+	if (Logger.core.settings.output.console === true) {
+		if (typeof data === "object") {
+			var a = "";
+			var b = "";
+			var c = "";
+			var d = "";
+			var e = "";
+			var f = "";
+			if (typeof data.timestamp !== "undefined" && Logger.core.settings.output.displayOpts.timestamp === true) {
+				if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
+					try {
+						f = moment().format(Logger.core.settings.timeformat);
+					} catch (e) {
+						f = moment().format('DD MMM HH:mm:ss');
+					}
+				} else {
+					f = Logger.util.formatTimestamp(data.timestamp);
 				}
+			} if (Logger.core.settings.output.timestampOpts.brackets === true) {
+				a = "["+f+"] ";
 			} else {
-				f = Logger.util.formatTimestamp(data.timestamp);
+				a = f+" ";
+			} if (typeof data.severity !== "undefined" && Logger.core.settings.output.displayOpts.severity === true) {
+				var h = Logger.util.capitiliseFirstLetter(data.severity);
+				switch (data.severity.toLowerCase()) {
+		            case 'success':
+		            	b = "[" + h.success + "]   ";
+		            break;
+		            case 'transport':
+		            	b = "[" + h.transport + "] ";
+		            break;
+		            case 'debug':
+		            	b = "[" + h.debug + "]     ";
+		            break;
+		            case 'info':
+		            	b = "[" + h.info + "]      ";
+		            break;
+		            case 'warning':
+		            	b = "[" + h.warning + "]   ";
+		            break;
+		            case 'error':
+		            	b = "[" + h.error + "]     ";
+		            break;
+		            default:
+						b = "[" + h + "]     ";
+		        }
+			} if (typeof data.location !== "undefined" && Logger.core.settings.output.displayOpts.location === true) {
+				c = "[" + data.location + "] ";
+			} if (typeof data.source !== "undefined" && Logger.core.settings.output.displayOpts.source === true) {
+				d = "[" + data.source + "] ";
+			} if (typeof data.message !== "undefined" && Logger.core.settings.output.displayOpts.message === true) {
+				e = "" + data.message + "";
 			}
-		} if (Logger.core.settings.output.timestampOpts.brackets === true) {
-			a = "["+f+"] ";
+			var output = (a + b + c + d + "	" + e + "	")
+			if (Return === true) {
+				return output;
+			} else  {
+				console.log(output);
+			}
 		} else {
-			a = f+" ";
-		} if (typeof data.severity !== "undefined" && Logger.core.settings.output.displayOpts.severity === true) {
-			var h = Logger.util.capitiliseFirstLetter(data.severity);
-			switch (data.severity.toLowerCase()) {
-	            case 'success':
-	            	b = "[" + h.success + "]   ";
-	            break;
-	            case 'transport':
-	            	b = "[" + h.transport + "] ";
-	            break;
-	            case 'debug':
-	            	b = "[" + h.debug + "]     ";
-	            break;
-	            case 'info':
-	            	b = "[" + h.info + "]      ";
-	            break;
-	            case 'warning':
-	            	b = "[" + h.warning + "]   ";
-	            break;
-	            case 'error':
-	            	b = "[" + h.error + "]     ";
-	            break;
-	            default:
-					b = "[" + h + "]     ";
-	        }
-		} if (typeof data.location !== "undefined" && Logger.core.settings.output.displayOpts.location === true) {
-			c = "[" + data.location + "] ";
-		} if (typeof data.source !== "undefined" && Logger.core.settings.output.displayOpts.source === true) {
-			d = "[" + data.source + "] ";
-		} if (typeof data.message !== "undefined" && Logger.core.settings.output.displayOpts.message === true) {
-			e = "" + data.message + "";
+			throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 		}
-		var output = (a + b + c + d + "	" + e + "	")
-		if (Return === true) {
-			return output;
-		} else  {
-			console.log(output);
-		}
-	} else {
-		throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 	}
 };
 

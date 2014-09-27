@@ -7,10 +7,14 @@ Installation
 ------------
 `npm install jethro`
 
-It works!
-
 ## Usage
 
+######Command line arguments:
+`node app.js -output false`
+
+-output true or false will allow or mute the console output, but will not effect the internal emitter
+
+######Alternatively, other settings can be used as follows:
 ```js
 
 logger = require('jethro')
@@ -18,28 +22,29 @@ logger = require('jethro')
 //Initialises the logger
 
 logger.init({
-		location: 					"undefined",
-		timeformat: 				"undefined",
+		location: "undefined",
+		timeformat: "undefined",
 		output: {
+			console: true,
 			displayOpts: {
-				severity: 			true,
-				source: 			true,
-				message: 			true,
-				location:	 		false,
-				timestamp: 			true
+				severity: true,
+				source: true,
+				message: true,
+				location: false,
+				timestamp: true
 			},
 			sourceOpts: {
-				whitlistOnly: 		false,
-				sourceWhiteList: 	[],
-				sourceBlackList: 	[],
+				whitlistOnly: false,
+				sourceWhiteList: [],
+				sourceBlackList: [],
 			},
 			timestampOpts: {
 				brackets: false
 			}
 		},
-		quickStart: 				false,
-		catchUncaught: 				false,
-		catchExit: 					false
+		quickStart: false,
+		catchUncaught: false,
+		catchExit: false
 })
 ```
 To initialise the logger with your own settings, you may do so with this snippet. You can include as many or as little of these settings as you wish, the ones that you do not include will be defaulted to the ones that are displayed above.
