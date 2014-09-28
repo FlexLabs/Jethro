@@ -8,9 +8,9 @@
   ],
   "main": "./index.js",
   "dependencies": {
-    "moment": "^2.8.3",
-    "colour": "^0.7.1",
-    "eventemitter2": "^0.4.14"
+    "moment": "2.8.3",
+    "colour": "0.7.1",
+    "eventemitter2": "0.4.14"
   },
   "optionalDependencies": {},
   "repository": {
