@@ -78,8 +78,8 @@ Logger.core = {
 			},
 			sourceOpts: {
 				whitelistOnly: false,
-				sourceWhiteList: [],
-				sourceBlackList: [],
+				sourceWhitelist: [],
+				sourceBlacklist: [],
 			},
 			timestampOpts: {
 				brackets: false
@@ -177,13 +177,11 @@ Logger.emitter = new EventEmitter({
 	maxListeners: 20
 });
 
-Logger.emitter.on('logger', function(data) {
-	if (Logger.core.settings.output.console === true) {
-		console.log(Logger.output(data, true));
-	}
+Logger.emitter.on('logger', function(data){
+	Logger.output(data)
 });
 
-Logger.output = function(data, Return) {
+Logger.output = function(data, callback) {
 	if (Logger.core.settings.output.console === true) {
 		if (typeof data === "object") {
 			var a = "";
