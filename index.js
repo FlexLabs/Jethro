@@ -127,6 +127,8 @@ Logger.core = {
 				} else {
 					Logger.core.settings.output.console = true;
 				}
+			} else {
+				Logger.core.settings.output.console = true;
 			}
 			if (options.quickStart !== true) {
 				Logger.output({timestamp:new Date(), message:"Logger "+pack.version+" succesfully initialised!", source:"Logger", severity:"success"})
@@ -236,11 +238,9 @@ Logger.output = function(data, callback) {
 				e = "" + data.message + "";
 			}
 			var output = (a + b + c + d + "	" + e + "	")
-			if (Return === true) {
-				return output;
-			} else  {
+
 				console.log(output);
-			}
+			
 		} else {
 			throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 		}
