@@ -22,6 +22,7 @@ logger = require('jethro')
 //Initialises the logger
 
 logger.init({
+	defaultLocation: "ip",
 	location: "undefined",
 	timeformat: "undefined",
 	output: {
@@ -55,11 +56,13 @@ To initialise the logger with your own settings, you may do so with this snippet
 
 ##### location
 
-the location that is given as a parameter of the log. Defaults to os.hostname() if undefined. 
+The location that is given as a parameter of the log. Defaults to ip address using the ipify module if undefined. 
+defaultLocation can be set to "ip" or "hostname". "hostname" utilises os.hostname().
+You can also just set location manually as logger.core.settings.location = "Somewhere";
 
 ##### timeformat 
 
-the formatting of the timestamp parameter. Defaults to something like: [16:31 48s 0076ms]
+The formatting of the timestamp parameter. Defaults to something like: [16:31 48s 0076ms]
 
 An example of how it can be set is: 'DD MMM HH:mm:ss' or any other string that the 'moment' module supports
 
