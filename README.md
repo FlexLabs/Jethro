@@ -43,6 +43,10 @@ logger.init({
 			brackets: false
 		}
 	},
+	modules: {
+		socket: false,
+		file: false
+	},
 	quickStart: false,
 	catchUncaught: false,
 	catchExit: false
