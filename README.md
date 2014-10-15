@@ -137,6 +137,10 @@ logger.emitter.emit('logger', data)
 ```
 This will emit straight into the matrix, make sure to be careful with emitted data, that it is correctly formatted and will not cause any of the other listeners and modules to error out
 
+```logger.emitter.emit('chat', {message:"hi", output:true, severity:"warning", source:"test", })```
+
+Used for emtting to a seperate logging file (jethro-file), the event name becomes the folder that logs are saved to.
+
 ###### The listener:
 ```
 logger.emitter.on('logger', function(data){
@@ -156,6 +160,22 @@ Will capitilise the first letter of the string and return it
 logger.util.formatTimestamp(timestamp) 
 ```
 Will format the timestamp in the default manner
+
+Transports
+----------
+
+##Jethro File
+
+Logger.core.settings.modules.file must be true
+
+Logger.init({
+	modules: {
+		file: true
+	}
+});
+
+To save to a different folder use an event: `logger.emitter.emit('chat', {message:"hi", output:true, severity:"warning", source:"test"})`
+
 
 More features Coming!
 ---------------------
