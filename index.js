@@ -120,21 +120,6 @@ Logger.core = {
 			Logger.settings.set(options);
 
 			//Startup the respective services...
-			if (typeof options.file !== "undefined") {
-				if (options.file.run === true) {
-					Logger.startFile(options.file);
-				}
-			} 
-			if (typeof options.socket !== "undefined") {
-				if (options.socket.run === true) {
-					Logger.startSocket(options.socket);
-				}
-			} 
-			if (typeof options.database !== "undefined") {
-				if (options.database.run === true) {
-					Logger.startDatabase(options.database);
-				}
-			}
 			if (process.argv.indexOf('-output')>-1){
 				var i = process.argv.indexOf('-output');
 				var j = i+1;
@@ -146,17 +131,18 @@ Logger.core = {
 			} else {
 				Logger.core.settings.output.console = true;
 			}
-			if (options.defaultLocation === "ip") {
-				Logger.core.settings.location = IP;
-			} else if (options.defaultLocation === "hostname") {
-				Logger.core.settings.location = os.hostname();
+			if (typeof options.defaultLocation !== "undefined"){
+				if (options.defaultLocation === "ip") {
+					Logger.core.settings.location = IP;
+				} else if (options.defaultLocation === "hostname") {
+					Logger.core.settings.location = os.hostname();
+				}
 			}
-			if (options.modules.file === true){
-				Logger.startFile()
-			}
-
-
-
+			if (typeof options.modules !== "undefined") {
+				if (options.modules.file === true){
+					Logger.startFile()
+				} 
+			} 
 			//When Finished!
 			if (options.quickStart !== true) {
 				Logger.output({timestamp:new Date(), message:"Logger "+pack.version+" succesfully initialised!", source:"Logger", severity:"success"});
