@@ -1,8 +1,11 @@
 logger = require('../')
 
 logger.init({
-	timeformat:"DD MMM HH:mm:ss",
+	defaultLocation: "ip",
+	location: "undefined",
+	timeformat: "undefined",
 	output: {
+		console: true,
 		displayOpts: {
 			severity: true,
 			source: true,
@@ -11,15 +14,24 @@ logger.init({
 			timestamp: true
 		},
 		sourceOpts: {
-			whitlistOnly: false,
-			sourceWhiteList: [],
-			sourceBlackList: [],
+			whitelistOnly: false,
+			sourceWhitelist: [],
+			sourceBlacklist: [],
 		},
 		timestampOpts: {
-			brackets: true
+			brackets: false
 		}
-	}
+	},
+	modules: {
+		socket: false,
+		file: true
+	},
+	quickStart: false,
+	catchUncaught: false,
+	catchExit: false
 })
+
+logger.emitter.emit('chat', {message:"hi"})
 
 /*
 logger('info', "startup", "Test")

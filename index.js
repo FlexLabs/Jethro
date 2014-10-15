@@ -97,6 +97,10 @@ Logger.core = {
 				brackets: false
 			}
 		},
+		modules: {
+			socket: false,
+			file: false
+		},
 		quickStart: false,
 		catchUncaught: false,
 		catchExit: false
@@ -147,6 +151,13 @@ Logger.core = {
 			} else if (options.defaultLocation === "hostname") {
 				Logger.core.settings.location = os.hostname();
 			}
+			if (options.modules.file === true){
+				Logger.startFile()
+			}
+
+
+
+			//When Finished!
 			if (options.quickStart !== true) {
 				Logger.output({timestamp:new Date(), message:"Logger "+pack.version+" succesfully initialised!", source:"Logger", severity:"success"});
 			}
@@ -163,6 +174,8 @@ Logger.core = {
 		}
 	}
 };
+
+Logger.file = require('jethro-file');
 
 Logger.settings = {
 	set: function(options) {
@@ -263,7 +276,12 @@ Logger.output = function(data, callback) {
 				}
 			} if (Logger.core.settings.output.displayOpts.location === true || typeof callback === "function") {
 				if (typeof data.location !== "undefined"){
-					c = "[" + data.location + "] 	";
+					if (data.location.length > 9) {
+						c = "[" + data.location + "] 	";
+					} else {
+						c = "[" + data.location + "]    	";
+					}
+
 				} else {
 					c = "[" + Logger.core.settings.location + "] 	";
 				}
@@ -331,7 +349,22 @@ var catchExit = function() {
 Logger.startFile = function(options) {
 	//Preparation for local file logging
 	Logger("info", "Logger", "Starting File logging utility...");
-	Logger("warning", "Logger", "The File logging utility is not complete and as a result will not load!");
+	Logger.emitter.onAny(function(data){
+		var event = this.event
+		Logger.output(data, function(log) {
+			Logger.file(log, __dirname+"/logs/"+event)
+			if (this.event !== "logger" && data.output === true) {
+				try {
+					var a = data.source;
+					var b = event;
+					data.source = a+":"+b
+					Logger.output(data)
+				} catch (e) {
+					Logger('error', 'Logger', 'Event: '+event+" has not been formatted properly and has created an error! "+e)
+				}
+			}
+		});
+	});
 };
 //Place holder for the write to file module!
 
