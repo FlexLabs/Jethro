@@ -365,7 +365,7 @@ Logger.startFile = function(options) {
 		var event = this.event
 		Logger.output(data, function(log) {
 			Logger.file(log, __dirname+"/logs/"+event)
-			if (this.event !== "logger" && data.output === true) {
+			if (event !== "logger" && data.output === true) {
 				try {
 					var a = data.source;
 					var b = event;

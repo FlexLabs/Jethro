@@ -31,7 +31,9 @@ logger.init({
 	catchExit: false
 })
 
-logger.emitter.emit('chat', {message:"hi"})
+setInterval(function(){
+	logger.emitter.emit('chat', {message:"hi", output:true, severity:"warning", source:"test"})
+}, 2000)
 
 /*
 logger('info', "startup", "Test")
