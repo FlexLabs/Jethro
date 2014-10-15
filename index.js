@@ -232,94 +232,94 @@ Logger.emitter.on('logger', function(data){
 });
 
 Logger.output = function(data, callback) {
-	if (Logger.core.settings.output.console === true) {
-		if (typeof data === "object") {
-			var a = "";
-			var b = "";
-			var c = "";
-			var d = "";
-			var e = "";
-			var f = "";
-			if (Logger.core.settings.output.displayOpts.timestamp === true || typeof callback === "function") {
-				if (typeof data.timestamp !== "undefined"){
-					if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
-						try {
-							f = moment().format(Logger.core.settings.timeformat);
-						} catch (e) {
-							f = moment().format('DD MMM HH:mm:ss');
-						}
-					} else {
-						f = Logger.util.formatTimestamp(data.timestamp);
+	if (typeof data === "object") {
+		var a = "";
+		var b = "";
+		var c = "";
+		var d = "";
+		var e = "";
+		var f = "";
+		if (Logger.core.settings.output.displayOpts.timestamp === true || typeof callback === "function") {
+			if (typeof data.timestamp !== "undefined"){
+				if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
+					try {
+						f = moment().format(Logger.core.settings.timeformat);
+					} catch (e) {
+						f = moment().format('DD MMM HH:mm:ss');
 					}
 				} else {
-					f = Logger.util.formatTimestamp(new Date());
+					f = Logger.util.formatTimestamp(data.timestamp);
 				}
-			} if (Logger.core.settings.output.timestampOpts.brackets === true) {
-				a = "["+f+"] ";
 			} else {
-				a = f+" ";
-			} if (Logger.core.settings.output.displayOpts.severity === true || typeof callback === "function") {
-				if (typeof data.severity !== "undefined"){
-					var h = Logger.util.capitiliseFirstLetter(data.severity);
-					switch (data.severity.toLowerCase()) {
-			            case 'success':
-			            	b = "[" + h.success + "]   ";
-			            break;
-			            case 'transport':
-			            	b = "[" + h.transport + "] ";
-			            break;
-			            case 'debug':
-			            	b = "[" + h.debug + "]     ";
-			            break;
-			            case 'info':
-			            	b = "[" + h.info + "]      ";
-			            break;
-			            case 'warning':
-			            	b = "[" + h.warning + "]   ";
-			            break;
-			            case 'error':
-			            	b = "[" + h.error + "]     ";
-			            break;
-			            default:
-							b = "[" + h + "]     ";
-			        }
-				} else {
-					b = "[" + "undefined".error + "]      ";
-				}
-			} if (Logger.core.settings.output.displayOpts.location === true || typeof callback === "function") {
-				if (typeof data.location !== "undefined"){
-					if (data.location.length > 9) {
-						c = "[" + data.location + "] 	";
-					} else {
-						c = "[" + data.location + "]    	";
-					}
-
-				} else {
-					c = "[" + Logger.core.settings.location + "] 	";
-				}
-			} if (Logger.core.settings.output.displayOpts.source === true || typeof callback === "function") {
-				if (typeof data.source !== "undefined"){
-					d = "[" + data.source + "] ";
-				} else {
-					d = "[" + "undefined" + "] ";
-				}
-			} if (Logger.core.settings.output.displayOpts.message === true || typeof callback === "function") {
-				if (typeof data.message !== "undefined"){
-					e = "" + data.message + "";
-				} else {
-					e = "" + "undefined".error + "";
-				}
+				f = Logger.util.formatTimestamp(new Date());
 			}
-			var output = (a + b + c + d + "	" + e + "	");
-
-			if (typeof callback !== "undefined") {
-				callback(output);
+		} if (Logger.core.settings.output.timestampOpts.brackets === true) {
+			a = "["+f+"] ";
+		} else {
+			a = f+" ";
+		} if (Logger.core.settings.output.displayOpts.severity === true || typeof callback === "function") {
+			if (typeof data.severity !== "undefined"){
+				var h = Logger.util.capitiliseFirstLetter(data.severity);
+				switch (data.severity.toLowerCase()) {
+		            case 'success':
+		            	b = "[" + h.success + "]   ";
+		            break;
+		            case 'transport':
+		            	b = "[" + h.transport + "] ";
+		            break;
+		            case 'debug':
+		            	b = "[" + h.debug + "]     ";
+		            break;
+		            case 'info':
+		            	b = "[" + h.info + "]      ";
+		            break;
+		            case 'warning':
+		            	b = "[" + h.warning + "]   ";
+		            break;
+		            case 'error':
+		            	b = "[" + h.error + "]     ";
+		            break;
+		            default:
+						b = "[" + h + "]     ";
+		        }
 			} else {
+				b = "[" + "undefined".error + "]      ";
+			}
+		} if (Logger.core.settings.output.displayOpts.location === true || typeof callback === "function") {
+			if (typeof data.location !== "undefined"){
+				if (data.location.length > 9) {
+					c = "[" + data.location + "] 	";
+				} else {
+					c = "[" + data.location + "]    	";
+				}
+
+			} else {
+				c = "[" + Logger.core.settings.location + "] 	";
+			}
+		} if (Logger.core.settings.output.displayOpts.source === true || typeof callback === "function") {
+			if (typeof data.source !== "undefined"){
+				d = "[" + data.source + "] ";
+			} else {
+				d = "[" + "undefined" + "] ";
+			}
+		} if (Logger.core.settings.output.displayOpts.message === true || typeof callback === "function") {
+			if (typeof data.message !== "undefined"){
+				e = "" + data.message + "";
+			} else {
+				e = "" + "undefined".error + "";
+			}
+		}
+		var output = (a + b + c + d + "	" + e + "	");
+
+		if (typeof callback !== "undefined") {
+			callback(output);
+		} else {
+			if (Logger.core.settings.output.console === true) {
 				console.log(output);
 			}
-		} else {
-			throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 		}
+	} else {
+		throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
 	}
 };
 
