@@ -131,6 +131,8 @@ Logger.core = {
 			} else {
 				Logger.core.settings.output.console = true;
 			}
+
+			//Sets the default Location
 			if (typeof options.defaultLocation !== "undefined"){
 				if (options.defaultLocation === "ip") {
 					Logger.core.settings.location = IP;
@@ -138,11 +140,35 @@ Logger.core = {
 					Logger.core.settings.location = os.hostname();
 				}
 			}
+
+			//Make sure you don't break the modules/transport settings.
 			if (typeof options.modules !== "undefined") {
 				if (options.modules.file === true){
 					Logger.startFile()
 				} 
 			} 
+
+			//Let's make sure you don't break the output settings. If you set one, SET THEM ALL!
+			if (typeof options.output === "undefined" && typeof Logger.core.settings.output === "undefined"){
+				Logger.core.settings.output = {
+					console: true,
+					displayOpts: {
+						severity: true,
+						source: true,
+						message: true,
+						location: false,
+						timestamp: true
+					},
+					sourceOpts: {
+						whitelistOnly: false,
+						sourceWhitelist: [],
+						sourceBlacklist: [],
+					},
+					timestampOpts: {
+						brackets: false
+					}
+				}
+			}
 			//When Finished!
 			if (options.quickStart !== true) {
 				Logger.output({timestamp:new Date(), message:"Logger "+pack.version+" succesfully initialised!", source:"Logger", severity:"success"});
