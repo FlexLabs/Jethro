@@ -2,6 +2,10 @@
 
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
+Feel free to visit the HenchSpace website [here.](https://henchspace.co/)
+
+You can find useful guides, tips and tricks, [here.](https://blog.henchspace.co/)
+
 
 Installation
 ------------
@@ -193,8 +197,9 @@ Projects using this logger
 
 Credits
 -------
-Based on work started by Marak (Marak Squires), cloudhead (Alexis Sellier), mmalecki (Maciej Małecki), nicoreed (Nico
-Reed), morganrallen (Morgan Allen), JustinCampbell (Justin Campbell) and ded (Dustin Diaz).
+Birthed by [Henchman](https://hench.in), with help from [Matthew](https://github.com/yemasthui).
+
+Help, suggestions and moral support from [xBytez](https://github.com/xBytez) and [Alex](http://thedark1337.com)!
 
 License
 -------
