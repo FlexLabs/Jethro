@@ -1,8 +1,6 @@
-//Core Modules
+//Modules
 var os = require('os');
 var util = require('util');
-
-//Node_Modules
 var moment = require('moment');
 
 //Colour
@@ -15,12 +13,6 @@ colour.setTheme({
 	warning:            'yellow bold',
 	debug: 				'blue bold'
 });
-
-//Settings
-var pack = require('./package.json');
-var ipify = require('ipify');
-var IP = "127.0.0.1";
-
 
 //Core logger function
 var Logger = function(severity, source, message, location, timestamp) {
@@ -78,312 +70,25 @@ var Logger = function(severity, source, message, location, timestamp) {
 };
 
 //Loggar innards, the core of the module
-Logger.core = {
-	initialised: false,
-
-	settings: {
-		defaultLocation: "ip",
-		location: "undefined",
-		timeformat: "undefined",
-		output: {
-			console: true,
-			displayOpts: {
-				severity: true,
-				source: true,
-				message: true,
-				location: false,
-				timestamp: true
-			},
-			sourceOpts: {
-				whitelistOnly: false,
-				sourceWhitelist: [],
-				sourceBlacklist: [],
-			},
-			timestampOpts: {
-				brackets: false
-			}
-		},
-		modules: {
-			socket: false,
-			file: false
-		},
-		quickStart: false,
-		catchUncaught: false,
-		catchExit: false
-	},
-
-	init: function(options) {
-
-		if (typeof options === "undefined") {
-			options = {};
-		}
-		if (Logger.core.initialised === false) {
-
-			//Makes sure init cannot be called again
-			Logger.core.initialised = true;
-
-			//Sets the loggers settings
-			Logger.settings.set(options);
-
-			//Startup the respective services...
-			if (process.argv.indexOf('-output')>-1){
-				var i = process.argv.indexOf('-output');
-				var j = i+1;
-				if (process.argv[j] === 'false') {
-					Logger.core.settings.output.console = false;
-				} else {
-					Logger.core.settings.output.console = true;
-				}
-			} else {
-				Logger.core.settings.output.console = true;
-			}
-
-			//Sets the default Location
-			if (typeof options.defaultLocation !== "undefined"){
-				if (options.defaultLocation === "ip") {
-					Logger.core.settings.location = IP;
-				} else if (options.defaultLocation === "hostname") {
-					Logger.core.settings.location = os.hostname();
-				}
-			}
-
-			//Make sure you don't break the modules/transport settings.
-			if (typeof options.modules !== "undefined") {
-				if (options.modules.file === true){
-					Logger.startFile()
-				} 
-			} 
-
-			//Let's make sure you don't break the output settings. If you set one, SET THEM ALL!
-			if (typeof options.output === "undefined" && typeof Logger.core.settings.output === "undefined"){
-				Logger.core.settings.output = {
-					console: true,
-					displayOpts: {
-						severity: true,
-						source: true,
-						message: true,
-						location: false,
-						timestamp: true
-					},
-					sourceOpts: {
-						whitelistOnly: false,
-						sourceWhitelist: [],
-						sourceBlacklist: [],
-					},
-					timestampOpts: {
-						brackets: false
-					}
-				}
-			}
-			//When Finished!
-			if (options.quickStart !== true) {
-				Logger.output({timestamp:new Date(), message:"Logger "+pack.version+" succesfully initialised!", source:"Logger", severity:"success"});
-			}
-		} else {
-			
-			//Example of direct-to-console logging
-			Logger.output({
-				severity:'warning', 
-				source:'Logger',
-				message:'Logger is already initialised!',
-				timestamp: new Date(),
-				location: os.hostname()
-			});
-		}
-	}
-};
-
-Logger.file = require('jethro-file');
-
-Logger.settings = {
-	set: function(options) {
-		for(var prop in options){
-			Logger.core.settings[prop] = options[prop];
-		}
-
-		catchUncaught();
-		catchExit();
-	},
-	addToWhiteList: function(parameter, arr) {
-
-	},
-	addToBlackList: function(parameter, arr) {
-
-	},
-	setLocation: function(loc) {
-		Logger.core.settings.location = loc;
-	}
-};
+Logger.core = 		require('jethro-core');
+Logger.core.pack = 	require('./package.json');
+Logger.emitter = 	require('jethro-events');
+Logger.file = 		require('jethro-file');
+Logger.output = 	require('jethro-output');
+Logger.util = 		require('jethro-utils');
 
 Logger.init = function(options) {	
 	Logger.core.init(options);
 };
 
-Logger.emitter = require('jethro-events')
-
 Logger.emitter.on('logger', function(data){
 	Logger.output(data);
-	/*Logger.output(data, function(log){
-		console.log(log);
-	});*/
 });
 
-Logger.output = function(data, callback) {
-	if (typeof data === "object") {
-		var a = "";
-		var b = "";
-		var c = "";
-		var d = "";
-		var e = "";
-		var f = "";
-		if (Logger.core.settings.output.displayOpts.timestamp === true || typeof callback === "function") {
-			if (typeof data.timestamp !== "undefined"){
-				if (Logger.core.settings.timeformat !== "undefined" && Logger.core.settings.timeformat !== "undefined") {
-					try {
-						f = moment().format(Logger.core.settings.timeformat);
-					} catch (e) {
-						f = moment().format('DD MMM HH:mm:ss');
-					}
-				} else {
-					f = Logger.util.formatTimestamp(data.timestamp);
-				}
-			} else {
-				f = Logger.util.formatTimestamp(new Date());
-			}
-		} if (Logger.core.settings.output.timestampOpts.brackets === true) {
-			a = "["+f+"] ";
-		} else {
-			a = f+" ";
-		} if (Logger.core.settings.output.displayOpts.severity === true || typeof callback === "function") {
-			if (typeof data.severity !== "undefined"){
-				var h = Logger.util.capitiliseFirstLetter(data.severity);
-				switch (data.severity.toLowerCase()) {
-		            case 'success':
-		            	b = "[" + h.success + "]   ";
-		            break;
-		            case 'transport':
-		            	b = "[" + h.transport + "] ";
-		            break;
-		            case 'debug':
-		            	b = "[" + h.debug + "]     ";
-		            break;
-		            case 'info':
-		            	b = "[" + h.info + "]      ";
-		            break;
-		            case 'warning':
-		            	b = "[" + h.warning + "]   ";
-		            break;
-		            case 'error':
-		            	b = "[" + h.error + "]     ";
-		            break;
-		            default:
-						b = "[" + h + "]     ";
-		        }
-			} else {
-				b = "[" + "undefined".error + "]      ";
-			}
-		} if (Logger.core.settings.output.displayOpts.location === true || typeof callback === "function") {
-			if (typeof data.location !== "undefined"){
-				if (data.location.length > 9) {
-					c = "[" + data.location + "] 	";
-				} else {
-					c = "[" + data.location + "]    	";
-				}
 
-			} else {
-				c = "[" + Logger.core.settings.location + "] 	";
-			}
-		} if (Logger.core.settings.output.displayOpts.source === true || typeof callback === "function") {
-			if (typeof data.source !== "undefined"){
-				d = "[" + data.source + "] ";
-			} else {
-				d = "[" + "undefined" + "] ";
-			}
-		} if (Logger.core.settings.output.displayOpts.message === true || typeof callback === "function") {
-			if (typeof data.message !== "undefined"){
-				e = "" + data.message + "";
-			} else {
-				e = "" + "undefined".error + "";
-			}
-		}
-		var output = (a + b + c + d + "	" + e + "	");
-
-		if (typeof callback !== "undefined") {
-			callback(output);
-		} else {
-			if (Logger.core.settings.output.console === true) {
-				console.log(output);
-			}
-		}
-	} else {
-		throw new Error("A non-object was sent to the Logger.output() function! See: "+util.inspect(data));
-	}
-};
-
-Logger.util = require('jethro-utils');
-
-Logger.startServer = function(options) {
-	//Preparation for logger socket server
-	Logger("info", "Logger", "Starting Socket server utility...");
-	Logger("warning", "Logger", "The Socket server utility is not complete and as a result will not load!");
-};
-Logger.startClient = function(options) {
-	//Preparation for logger socket client
-	Logger("info", "Logger", "Starting Socket client utility...");
-	Logger("warning", "Logger", "The Socket client utility is not complete and as a result will not load!");
-};
-Logger.startDatabase = function(options) {
-	//Preparation for sending to a database
-	Logger("info", "Logger", "Starting Database utility...");
-	Logger("warning", "Logger", "The Database utility is not complete and as a result will not load!");
-};
-var catchUncaught = function() {
-	//For production certified code only!
-	if (Logger.core.settings.catchUncaught === true) {
-		process.on('uncaughtException', function(e) {
-		    logger('error', 'Exception', 'Logger caught exception: '+e.stack);
-		});
-	}
-};
-
-var catchExit = function() {
-	if (Logger.core.settings.catchExit === true) {
-		process.on('exit', function(e) {
-	    	logger('error', 'Caught Exit', 'Logger caught exit with code: ' + e);
-		});
-	}
-};
 
 //------------------------------- File writer -----------------------------------
-Logger.startFile = function(options) {
-	//Preparation for local file logging
-	Logger("info", "Logger", "Starting File logging utility...");
-	Logger.emitter.onAny(function(data){
-		var event = this.event
-		Logger.output(data, function(log) {
-			Logger.file(log, __dirname+"/logs/"+event)
-			if (event !== "logger" && data.output === true) {
-				try {
-					var a = data.source;
-					var b = event;
-					data.source = a+":"+b
-					Logger.output(data)
-				} catch (e) {
-					Logger('error', 'Logger', 'Event: '+event+" has not been formatted properly and has created an error! "+e)
-				}
-			}
-		});
-	});
-};
-//Place holder for the write to file module!
 
-ipify(function (err, ip) {
-	IP = ip;
-	if (Logger.core.settings.defaultLocation === "ip") {
-		if (Logger.core.settings.location !== "127.0.0.1" || Logger.core.settings.location !== "undefined") {
-			Logger.core.settings.location = ip;
-		}
-	}
-});
+//Place holder for the write to file module!
 
 module.exports = Logger;
