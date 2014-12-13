@@ -10,10 +10,10 @@
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter2": "^0.4.14",
-    "ipify": "^1.0.1",
-    "jethro-file": "^0.0.1",
-    "jethro-utils": "0.0.1",
-    "moment": "^2.8.3"
+    "ipify": "^1.0.2",
+    "jethro-file": "^0.0.6",
+    "jethro-utils": "^0.0.3",
+    "moment": "^2.8.4"
   },
   "optionalDependencies": {},
   "repository": {

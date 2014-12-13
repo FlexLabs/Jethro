@@ -3,7 +3,6 @@ var os = require('os');
 var util = require('util');
 
 //Node_Modules
-var EventEmitter = require('eventemitter2').EventEmitter2;
 var moment = require('moment');
 
 //Colour
@@ -220,16 +219,7 @@ Logger.init = function(options) {
 	Logger.core.init(options);
 };
 
-Logger.emitter = new EventEmitter({
-	// use wildcards.
-	wildcard: true,
-	// the delimiter used to segment namespaces, defaults to `.`.
-	delimiter: '::', 
-	// if you want to emit the newListener event set to true.
-	newListener: false, 
-	// max listeners that can be assigned to an event, default 10.
-	maxListeners: 20
-});
+Logger.emitter = require('jethro-events')
 
 Logger.emitter.on('logger', function(data){
 	Logger.output(data);
