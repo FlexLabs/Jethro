@@ -443,4 +443,18 @@ ipify(function (err, ip) {
 	}
 });
 
+try {
+	var config = require(__dirname+"/jethro.json");
+	Logger.init(config);
+} catch (e) {
+	Logger.output({
+		severity:"warning",
+		source:"Logger",
+		message:"Local config not found, aborting initialisation",
+		location:null,
+		timestamp:new Date()
+	})
+}
+
+
 module.exports = Logger;
