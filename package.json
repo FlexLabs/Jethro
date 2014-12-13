@@ -33,7 +33,7 @@
     "example": "examples"
   },
   "scripts": {
-    "test": "nodemon examples/test.js"
+    "test": "node index.js"
   },
   "keywords": [
     "logger"
