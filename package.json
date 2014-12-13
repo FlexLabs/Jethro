@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
@@ -11,9 +11,9 @@
     "colour": "^0.7.1",
     "eventemitter2": "^0.4.14",
     "ipify": "^1.0.2",
-    "jethro-file": "^0.0.6",
-    "jethro-utils": "^0.0.3",
-    "moment": "^2.8.4"
+    "moment": "^2.8.4",
+    "stripcolorcodes": "^0.1.0",
+    "mkdirp": "^0.5.0"
   },
   "optionalDependencies": {},
   "repository": {
