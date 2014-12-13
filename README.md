@@ -4,8 +4,6 @@ Jethro Logger is an all-in-one logging utility designed to give developers the l
 
 Feel free to visit the HenchSpace website [here.](https://henchspace.co/)
 
-You can find useful guides, tips and tricks, [here.](https://blog.henchspace.co/)
-
 
 Installation
 ------------
