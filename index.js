@@ -8,7 +8,14 @@ var moment = require('moment');
 
 //Colour
 var colour = require('colour');
-var colourSettings = require('./lib/colour.js');
+colour.setTheme({
+	info: 				'magenta bold',
+	error: 				'red bold',
+	transport:	  		'cyan bold',
+	success:    		'green bold italic',
+	warning:            'yellow bold',
+	debug: 				'blue bold'
+});
 
 //Settings
 var pack = require('./package.json');
@@ -323,7 +330,7 @@ Logger.output = function(data, callback) {
 	}
 };
 
-Logger.util = require('./lib/util.js');
+Logger.util = require('jethro-utils');
 
 Logger.startServer = function(options) {
 	//Preparation for logger socket server
