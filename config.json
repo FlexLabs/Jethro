@@ -1,0 +1,30 @@
+{
+    "defaultLocation": "ip",
+    "location": "undefined",
+    "timeformat": "undefined",
+    "output": {
+        "console": true,
+        "displayOpts": {
+            "severity": true,
+            "source": true,
+            "message": true,
+            "location": false,
+            "timestamp": true
+        },
+        "sourceOpts": {
+            "whitelistOnly": false,
+            "sourceWhitelist": [],
+            "sourceBlacklist": []
+        },
+        "timestampOpts": {
+            "brackets": false
+        }
+    },
+    "modules": {
+        "socket": false,
+        "file": false
+    },
+    "quickStart": false,
+    "catchUncaught": false,
+    "catchExit": false
+}
