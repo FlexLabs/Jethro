@@ -72,7 +72,7 @@ var Logger = function(severity, source, message, location, timestamp) {
 //Loggar innards, the core of the module
 Logger.core = 		require('jethro-core');
 Logger.core.pack = 	require('./package.json');
-Logger.emitter = 	require('jethro-events');
+Logger.emitter = 	Logger.core.emitter;
 Logger.file = 		require('jethro-file');
 Logger.output = 	require('jethro-output');
 Logger.util = 		require('jethro-utils');
