@@ -329,7 +329,11 @@ Logger.startFile = function(options) {
 					try {
 						var a = data.source;
 						var b = event;
-						data.source = a+":"+b
+						if (a.indexOf(b) > -1){
+							data.source = a;
+						} else {
+							data.source = a+":"+b;
+						}
 						Logger.output(data)
 					} catch (e) {
 						Logger('error', 'Logger', 'Event: '+event+" has not been formatted properly and has created an error! "+e)
