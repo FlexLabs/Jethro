@@ -16,7 +16,7 @@ var colour = 		require('colour');
 colour.setTheme({
 	info: 				'magenta bold',
 	error: 				'red bold',
-	transport:	  		'cyan bold',
+	transport:  		'cyan bold',
 	success:    		'green bold italic',
 	warning:            'yellow bold',
 	debug: 				'blue bold'
@@ -373,10 +373,7 @@ var socketio = function(address, namespace, username, password) {
 	var io = require("socket.io-client");
 
 	//var address = "http://31.220.43.201:1337"
-
-	console.log(username);
-	console.log(password);
-
+	
 	Logger.socket = io(address+namespace, {query:{username:username, password:password}});
 
 	Logger('info', 'Socket', "Connecting to HenchSocket: "+address+namespace)
