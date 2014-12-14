@@ -320,7 +320,11 @@ Logger.startFile = function(options) {
 		if (Logger.core.settings.modules.file === true){
 			var event = this.event
 			Logger.output(data, function(log) {
-				Logger.file(log, __dirname+"/logs/"+event)
+				var dir = path.resolve(__dirname, "../../");
+				if (Logger.core.settings.server === true){
+					dir = dir+"/logs/"+data.location
+				}
+				Logger.file(log, dir+"/"+event)
 				if (event !== "logger" && data.output === true) {
 					try {
 						var a = data.source;

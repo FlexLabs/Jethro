@@ -1,4 +1,5 @@
 {
+    "server":false,
     "defaultLocation": "ip",
     "location": "undefined",
     "timeformat": "undefined",
