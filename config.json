@@ -1,6 +1,6 @@
 {
     "server":false,
-    "defaultLocation": "ip",
+    "defaultLocation": "hostname",
     "location": "undefined",
     "timeformat": "undefined",
     "output": {
