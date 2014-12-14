@@ -27,5 +27,11 @@
     },
     "quickStart": false,
     "catchUncaught": false,
-    "catchExit": false
+    "catchExit": false,
+    "socket": {
+        "address":"http://localhost:1337", 
+        "namespace":"/logger", 
+        "username":"logger",
+        "password":"dklo9"
+    }
 }

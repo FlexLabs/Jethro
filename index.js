@@ -126,7 +126,7 @@ Logger.core = {
 				if (options.modules.file === true){
 					Logger.startFile();
 				} if (options.modules.socket === true){
-					Logger.startSIO();
+					Logger.startSIO(Logger.core.settings.socket.address, Logger.core.settings.socket.namespace, Logger.core.settings.socket.username, Logger.core.settings.socket.password);
 				}
 			} 
 
@@ -368,19 +368,16 @@ Logger.file = function(data, location) {
 }
 
 //- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-var obi = {
-	address:"http://localhost:1337", 
-	namespace:"/logger", 
-	query:{username:"logger",password:"dklo9"}
-};
-
-var socketio = function(address, namespace, query, extension) {
+var socketio = function(address, namespace, username, password) {
 
 	var io = require("socket.io-client");
 
 	//var address = "http://31.220.43.201:1337"
 
-	Logger.socket = io(address+namespace, query);
+	console.log(username);
+	console.log(password);
+
+	Logger.socket = io(address+namespace, {query:{username:username, password:password}});
 
 	Logger('info', 'Socket', "Connecting to HenchSocket: "+address+namespace)
 
@@ -405,7 +402,7 @@ var socketio = function(address, namespace, query, extension) {
 }
 
 Logger.startSIO = function(){
-	socketio(obi.address, obi.namespace, {query:{username:obi.username, password:obi.password}});
+	socketio(Logger.core.settings.socket.address, Logger.core.settings.socket.namespace, Logger.core.settings.socket.username, Logger.core.settings.socket.password);
 
 	Logger.emitter.onAny(function(data){
 		if (Logger.core.settings.modules.socket === true && Logger.core.settings.server === false){
