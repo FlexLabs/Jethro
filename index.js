@@ -132,7 +132,7 @@ Logger.core = {
 			if (typeof options.modules !== "undefined") {
 				if (options.modules.file === true){
 					Logger.startFile();
-				} if (options.modules.file === true){
+				} if (options.modules.socket === true){
 					Logger.startSIO();
 				}
 			} 
@@ -407,7 +407,9 @@ Logger.startSIO = function(){
 	socketio(obi.address, obi.namespace, {query:{username:obi.username, password:obi.password}});
 
 	Logger.emitter.onAny(function(data){
-		Logger.socket.emit(this.event, data)
+		if (options.modules.socket === true){
+			Logger.socket.emit(this.event, data)
+		}
 	});
 };
 
