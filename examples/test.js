@@ -23,7 +23,7 @@ logger.init({
 		}
 	},
 	modules: {
-		socket: false,
+		socket: true,
 		file: true
 	},
 	quickStart: false,

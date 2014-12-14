@@ -1,16 +1,18 @@
 //Core Modules
-var os = 		require('os');
-var util = 		require('util');
-var fs = 		require('fs');
+var os = 			require('os');
+var util = 			require('util');
+var fs = 			require('fs');
+var path = 			require('path');
 
 //Node_Modules
-var EventEmitter = require('eventemitter2').EventEmitter2;
-var moment = 	require('moment');
-var strip =	 	require('stripcolorcodes');
-var mkdirp = 	require('mkdirp');
+var EventEmitter = 	require('eventemitter2').EventEmitter2;
+var moment = 		require('moment');
+var strip =	 		require('stripcolorcodes');
+var mkdirp = 		require('mkdirp');
+var io =			require('socket.io-client');
 
 //Colour
-var colour = 	require('colour');
+var colour = 		require('colour');
 colour.setTheme({
 	info: 				'magenta bold',
 	error: 				'red bold',
@@ -129,8 +131,10 @@ Logger.core = {
 			//Make sure you don't break the modules/transport settings.
 			if (typeof options.modules !== "undefined") {
 				if (options.modules.file === true){
-					Logger.startFile()
-				} 
+					Logger.startFile();
+				} if (options.modules.file === true){
+					Logger.startSIO();
+				}
 			} 
 
 			//Let's make sure you don't break the output settings. If you set one, SET THEM ALL!
@@ -362,6 +366,52 @@ Logger.file = function(data, location) {
 	}
 }
 
+//- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+var obi = {
+	address:"http://localhost:1337", 
+	namespace:"/logger", 
+	query:{username:"logger",password:"dklo9"}
+};
+
+var socketio = function(address, namespace, query, extension) {
+
+	var io = require("socket.io-client");
+
+	//var address = "http://31.220.43.201:1337"
+
+	Logger.socket = io(address+namespace, query);
+
+	Logger('info', 'Socket', "Connecting to HenchSocket: "+address+namespace)
+
+	//Generic Connection Events
+	Logger.socket.on("connect", function(){
+	    Logger('success', 'Socket', 'Connected!')
+	});
+
+	Logger.socket.on("disconnect", function(){
+	    Logger('warning', 'Socket', 'Disconnected!')
+	});
+
+	Logger.socket.on("error", function(e){
+	    Logger('warning', 'Socket', e)
+	});
+
+	Logger.socket.on("reconnecting", function(a){
+		if (a < 2) {
+	    	Logger('warning', 'Socket', 'Reconnecting... ')
+	    }
+	});
+}
+
+Logger.startSIO = function(){
+	socketio(obi.address, obi.namespace, {query:{username:obi.username, password:obi.password}});
+
+	Logger.emitter.onAny(function(data){
+		Logger.socket.emit(this.event, data)
+	});
+};
+
+
 Logger.startClient = function(options) {
 	//Preparation for logger socket client
 	Logger("info", "Logger", "Starting Socket client utility...");
@@ -443,9 +493,12 @@ ipify(function (err, ip) {
 	}
 });
 
+
 try {
-	var config = require(__dirname+"/jethro.json");
+	var dir = path.resolve(__dirname, "../../");
+	var config = require(dir+"/jethro.json");
 	Logger.init(config);
+	Logger('success', 'Logger', 'Found jethro.json, initialising...')
 } catch (e) {
 	Logger.output({
 		severity:"warning",
@@ -455,6 +508,5 @@ try {
 		timestamp:new Date()
 	})
 }
-
 
 module.exports = Logger;
