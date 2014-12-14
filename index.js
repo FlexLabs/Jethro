@@ -407,7 +407,7 @@ Logger.startSIO = function(){
 	socketio(obi.address, obi.namespace, {query:{username:obi.username, password:obi.password}});
 
 	Logger.emitter.onAny(function(data){
-		if (options.modules.socket === true){
+		if (Logger.core.settings.modules.socket === true){
 			Logger.socket.emit(this.event, data)
 		}
 	});
