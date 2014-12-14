@@ -10,7 +10,7 @@ logger.init({
 			severity: true,
 			source: true,
 			message: true,
-			location: false,
+			location: true,
 			timestamp: true
 		},
 		sourceOpts: {

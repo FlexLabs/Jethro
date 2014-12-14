@@ -33,36 +33,34 @@ var Logger = function(severity, source, message, location, timestamp) {
 	if (typeof severity !== "object") {
 		if (Logger.core.initialised === true) {
 			if (typeof severity !== "undefined" && typeof source !== "undefined" && typeof message !== "undefined") {
-				if (typeof location === "undefined") {
-					if (Logger.core.settings.location === "undefined"){
-						if (Logger.core.settings.defaultLocation === "ip") {
-							Logger.core.settings.location = IP;
-							location = IP;
-						} else if (Logger.core.settings.defaultLocation === "hostname") {
-							Logger.core.settings.location = os.hostname();
-							location = os.hostname();
-						} else {
-							Logger.core.settings.location = os.hostname();
-							location = os.hostname();
-						}
+				if (Logger.core.settings.location === "undefined" && typeof location === "undefined"){
+					if (Logger.core.settings.defaultLocation === "ip") {
+						Logger.core.settings.location = IP;
+						location = IP;
+					} else if (Logger.core.settings.defaultLocation === "hostname") {
+						Logger.core.settings.location = os.hostname();
+						location = os.hostname();
 					} else {
-						location = Logger.core.settings.location;
-					} if (typeof timestamp === "undefined") {
-						timestamp = new Date();
-					} 
+						Logger.core.settings.location = os.hostname();
+						location = os.hostname();
+					}
+				} else {
+					location = Logger.core.settings.location;
+				} if (typeof timestamp === "undefined") {
+					timestamp = new Date();
+				} 
 
-					//Process logger data
-					var data = {
-						severity:severity,
-						source:source,
-						message:message,
-						location:location,
-						timestamp:timestamp
-					};
+				//Process logger data
+				var data = {
+					severity:severity,
+					source:source,
+					message:message,
+					location:location,
+					timestamp:timestamp
+				};
 
-					Logger.emitter.emit('logger', data);
+				Logger.emitter.emit('logger', data);
 
-				}
 			} else {
 				Logger("warning", "Logger", "Check syntax, something was undefined - Severity: "+severity+" Source: "+source+" Message: "+message);
 			}
@@ -79,12 +77,7 @@ var Logger = function(severity, source, message, location, timestamp) {
 			}, 100);
 		}
 	} else {
-		var packet = severity;
-		try {
-			Logger.emitter.emit(packet);
-		} catch (e) {
-			Logger("warning", "Logger", "An object was passed to Jethro, support for this is currently unavailable!");
-		}
+		Logger("warning", "Logger", "An object was passed to Jethro, support for this is currently unavailable!");
 	}
 };
 
