@@ -420,8 +420,40 @@ Logger.startDatabase = function(options) {
 	Logger("warning", "Logger", "The Database utility is not complete and as a result will not load!");
 };
 
+// - - - - - - - - - - - - - - - - MySQL - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
-
+Logger.mysql = {
+	output: function(data, logger) {
+		try {
+			switch(this.event) {
+				case 'connecting':
+					if (data.connectionAttempts < 3) {
+						return Logger('info', 'MySQL', 'Connecting for the '+Logger.util.getWord(data.connectionAttempts+1)+' time to '+data.host);
+					}
+				break;
+				case 'connected':
+					return Logger('success', 'MySQL', 'Connected to '+data.database+"@"+data.host);
+				break;
+				case 'disconnected':
+					return Logger('warning', 'MySQL', 'Disconnected from '+data.host+" with code "+data.code);
+				break;
+				case 'error':
+					return Logger('warning', 'MySQL', 'Error - '+data.host+": "+data.err);
+				break;
+				case 'sending':
+					return Logger('transport', 'MySQL', 'Sending call: `'+data.call+'`');
+				break;
+				case 'start_complete':
+					return Logger('transport', data);
+				break;
+				case 'message':
+					return Logger(data);
+			}
+		} catch (e) {
+			return Logger('error', 'MySQL', 'Incorrect data went to logging util, '+e);
+		}
+	}
+}
 
 // - - - - - - - - - - - - - - - Utilities - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -460,6 +492,19 @@ Logger.util = {
 		str += milliseconds<10?'0':'';
 		str += milliseconds + 'ms';
 		return str;
+	},
+	getWord: function(number) {
+		switch(number) {
+			case 1: return 'first'
+			break;
+			case 2: return 'second'
+			break;
+			case 3: return 'third'
+			break;
+			case 4: return 'fourth'
+			break;
+			default: return number;
+		}
 	}
 }
 
@@ -468,7 +513,7 @@ var catchUncaught = function() {
 	//For production certified code only!
 	if (Logger.core.settings.catchUncaught === true) {
 		process.on('uncaughtException', function(e) {
-		    logger('error', 'Exception', 'Logger caught exception: '+e.stack);
+		    Logger('error', 'Exception', 'Logger caught exception: '+e.stack);
 		});
 	}
 };
@@ -476,7 +521,7 @@ var catchUncaught = function() {
 var catchExit = function() {
 	if (Logger.core.settings.catchExit === true) {
 		process.on('exit', function(e) {
-	    	logger('error', 'Caught Exit', 'Logger caught exit with code: ' + e);
+	    	Logger('error', 'Caught Exit', 'Logger caught exit with code: ' + e);
 		});
 	}
 };
