@@ -163,6 +163,20 @@ logger.util.formatTimestamp(timestamp)
 ```
 Will format the timestamp in the default manner
 
+
+Express Middleware
+------------------
+
+Simple placeholder logging utility!
+
+```
+var logger = require('jethro');
+app.use(logger.express); //That's it!
+```
+
+Note: The statuscode will always return 200 (I think), I need more time to sit and play with Express
+
+
 Transports
 ----------
 

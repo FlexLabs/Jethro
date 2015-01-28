@@ -408,16 +408,20 @@ Logger.startSIO = function(){
 	});
 };
 
+// - - - - - - - - - - - - - Express Middleware - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Logger.express = function(req, res, next){
+    var code = res.statusCode;
+    Logger('info', 'Express', code + ' ' + req.method.green.bold + ' ' + req.headers.host + ' --> ' + req.originalUrl);
+    next();
+}
+
+// - - - - - - - - - - - - - - Socket IO Client - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Logger.startClient = function(options) {
 	//Preparation for logger socket client
 	Logger("info", "Logger", "Starting Socket client utility...");
 	Logger("warning", "Logger", "The Socket client utility is not complete and as a result will not load!");
-};
-Logger.startDatabase = function(options) {
-	//Preparation for sending to a database
-	Logger("info", "Logger", "Starting Database utility...");
-	Logger("warning", "Logger", "The Database utility is not complete and as a result will not load!");
 };
 
 // - - - - - - - - - - - - - - - - MySQL - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
