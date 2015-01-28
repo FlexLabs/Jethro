@@ -491,7 +491,6 @@ Logger.util = {
 		str += minutes + ' ';
 		str += seconds<10?'0':'';
 		str += seconds + 's ';
-		str += milliseconds<1000?'0':'';
 		str += milliseconds<100?'0':'';
 		str += milliseconds<10?'0':'';
 		str += milliseconds + 'ms';
