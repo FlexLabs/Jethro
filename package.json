@@ -10,14 +10,13 @@
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter2": "^0.4.14",
-    "ipify": "^1.0.2",
-    "jethro-mysql": "0.0.10",
+    "ipify": "^1.0.3",
+    "jethro-mysql": "^0.0.11",
     "mkdirp": "^0.5.0",
-    "moment": "^2.8.4",
-    "socket.io-client": "^1.2.1",
+    "moment": "^2.9.0",
+    "socket.io-client": "^1.3.2",
     "stripcolorcodes": "^0.1.0"
   },
-  "optionalDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/henchspace/jethro"
@@ -29,9 +28,6 @@
   "bugs": {
     "url": "https://github.com/henchspace/jethro/issues"
   },
-  "directories": {
-    "example": "examples"
-  },
   "scripts": {
     "test": "node index.js"
   },
@@ -39,20 +35,7 @@
     "logger"
   ],
   "license": "LGPL 3.0",
-  "dist": {
-    "shasum": "c04f830a94b4238bfa5b4fb7d8f035e02f8393e1",
-    "tarball": "http://registry.npmjs.org/jethro/-/jethro-1.1.0.tgz"
-  },
-  "_from": "jethro@*",
-  "_npmVersion": "1.4.3",
-  "_npmUser": {
-    "name": "henchman",
-    "email": "therealhenchman@gmail.com"
-  },
   "maintainers": [
     "henchman <therealhenchman@gmail.com>"
-  ],
-  "_shasum": "c04f830a94b4238bfa5b4fb7d8f035e02f8393e1",
-  "_resolved": "https://registry.npmjs.org/jethro/-/jethro-1.1.0.tgz",
-  "devDependencies": {}
+  ]
 }
