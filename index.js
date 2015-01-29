@@ -133,6 +133,7 @@ Logger.core = {
 			//Let's make sure you don't break the output settings. If you set one, SET THEM ALL!
 			if (typeof options.output === "undefined" && typeof Logger.core.settings.output === "undefined"){
 				Logger.core.settings.output = {
+					quickStart: true,
 					console: true,
 					displayOpts: {
 						severity: true,
@@ -545,13 +546,7 @@ try {
 	Logger.init(config);
 	Logger('success', 'Logger', 'Found jethro.json, initialising...')
 } catch (e) {
-	Logger.output({
-		severity:"warning",
-		source:"Logger",
-		message:"Local config not found, aborting initialisation",
-		location:null,
-		timestamp:new Date()
-	})
+	//Config not found
 }
 
 module.exports = Logger;
