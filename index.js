@@ -417,7 +417,10 @@ Logger.express = function(req, res, next){
     next();
 }
 
-Logger.morgan = require('morgan');
+/*
+For Jethrolised-morgan output
+https://www.npmjs.com/package/morgan-jethro
+*/
 
 // - - - - - - - - - - - - - - Socket IO Client - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
