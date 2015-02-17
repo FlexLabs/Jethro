@@ -417,6 +417,8 @@ Logger.express = function(req, res, next){
     next();
 }
 
+Logger.morgan = require('morgan');
+
 // - - - - - - - - - - - - - - Socket IO Client - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Logger.startClient = function(options) {
