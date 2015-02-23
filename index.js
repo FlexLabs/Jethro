@@ -437,9 +437,11 @@ Logger.mysql = {
 		try {
 			switch(this.event) {
 				case 'connecting':
-					if (data.connectionAttempts < 3) {
-						return Logger('info', 'MySQL', 'Connecting for the '+Logger.util.getWord(data.connectionAttempts+1)+' time to '+data.host);
-					}
+					if (data.connectionAttempts < 5) {
+						return Logger('info', 'MySQL', 'Connecting for the '+Logger.util.getWord(data.connectionAttempts)+' time to '+data.host);
+					} else if (data.connectionAttempts === 5){
+                        return Logger('info', 'MySQL', 'Connecting for the '+Logger.util.getWord(data.connectionAttempts)+' time to '+data.host+". Continuing background connection loop.");
+                    }
 				break;
 				case 'connected':
 					return Logger('success', 'MySQL', 'Connected to '+data.database+"@"+data.host);
