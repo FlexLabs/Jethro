@@ -450,7 +450,7 @@ Logger.mysql = {
 					return Logger('warning', 'MySQL', 'Disconnected from '+data.host+" with code "+data.code);
 				break;
 				case 'error':
-					return Logger('warning', 'MySQL', 'Error - '+data.details.host+": "+data.details.err);
+					return Logger('warning', 'MySQL', 'Error - '+data.details.host+": "+data);
 				break;
 				case 'sending':
 					return Logger('transport', 'MySQL', 'Sending call: `'+data.call+'`');
