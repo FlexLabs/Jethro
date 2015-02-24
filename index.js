@@ -450,7 +450,7 @@ Logger.mysql = {
 					return Logger('warning', 'MySQL', 'Disconnected from '+data.host+" with code "+data.code);
 				break;
 				case 'error':
-					return Logger('warning', 'MySQL', 'Error - '+data.host+": "+data.err);
+					return Logger('warning', 'MySQL', 'Error - '+data.details.host+": "+data.details.err);
 				break;
 				case 'sending':
 					return Logger('transport', 'MySQL', 'Sending call: `'+data.call+'`');
@@ -507,13 +507,15 @@ Logger.util = {
 	getWord: function(number) {
 		switch(number) {
 			case 1: return 'first'
-			break;
+			    break;
 			case 2: return 'second'
-			break;
+			    break;
 			case 3: return 'third'
-			break;
+			    break;
 			case 4: return 'fourth'
-			break;
+			    break;
+            case 5: return 'fifth'
+                break;
 			default: return number;
 		}
 	}
