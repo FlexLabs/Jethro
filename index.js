@@ -147,7 +147,7 @@ Logger.core = {
 					sourceOpts: {
 						whitelistOnly: false,
 						sourceWhitelist: [],
-						sourceBlacklist: [],
+						sourceBlacklist: []
 					},
 					timestampOpts: {
 						brackets: false
@@ -382,11 +382,7 @@ Logger.file = function(data, location) {
 
 //- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 var socketio = function(address, namespace, username, password) {
-
 	var io = require("socket.io-client");
-
-	//var address = "http://31.220.43.201:1337"
-
 	Logger.socket = io(address + namespace, {
 		query: {
 			username: username,
@@ -418,7 +414,6 @@ var socketio = function(address, namespace, username, password) {
 
 Logger.startSIO = function() {
 	socketio(Logger.core.settings.socket.address, Logger.core.settings.socket.namespace, Logger.core.settings.socket.username, Logger.core.settings.socket.password);
-
 	Logger.emitter.onAny(function(data) {
 		if (Logger.core.settings.modules.socket === true && Logger.core.settings.server === false) {
 			Logger.socket.emit(this.event, data);
@@ -463,6 +458,7 @@ Logger.express = function(req, res, next) {
 /*
 For Jethrolised-morgan output
 https://www.npmjs.com/package/morgan-jethro
+// - Will be deprecated soon, adding stream support within jethro!
 */
 
 // - - - - - - - - - - - - - - Socket IO Client - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

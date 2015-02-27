@@ -1,2 +1,0 @@
-nodemon test.js
-pause
