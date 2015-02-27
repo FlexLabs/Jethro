@@ -459,15 +459,19 @@ Logger.express = function(req, res, next) {
 
         //Colour Method
         if (m === "POST" || m === "PUT"){
-            level = 'warning';
+            level = 'info';
             m = m.yellow.bold;
         } else if (m === "DELETE"){
-            level = 'info';
+            level = 'warning';
             m = m.red.bold;
+        } else if (m === "GET"){
+            level = 'info';
+            m = m.info;
         } else {
             level = 'info';
             m = m.green.bold;
         }
+
 
 
         Logger(level, 'Express', ip + ' ' + code + ' ' + m + ' ' + req.headers.host + ' --> ' + req.url + ' ' + res.responseTime + ' ms ');
