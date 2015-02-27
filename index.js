@@ -304,9 +304,9 @@ Logger.output = function(data, callback) {
 		}
 		if (Logger.core.settings.output.displayOpts.message === true || typeof callback === "function") {
 			if (typeof data.message !== "undefined") {
-				e = "" + data.message + "";
+				e = data.message;
 			} else {
-				e = "" + "undefined".error + "";
+				e = "undefined".error;
 			}
 		}
 		var output = (a + b + c + d + " " + e + "   ");
@@ -428,7 +428,9 @@ Logger.express = function(req, res, next) {
 
 	var end = res.end;
 	res.end = function(chunk, encoding) {
-		var code = res.statusCode.toString();
+        var m = req.method;
+        var n = res.statusCode;
+		var code = n.toString();
 		var level;
 		var ip = req.headers['X-Real-IP'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
@@ -436,20 +438,37 @@ Logger.express = function(req, res, next) {
 
 		res.end = end;
 		res.end(chunk, encoding);
-		if (code >= 100) {
+
+
+        //Colour StatusCode
+        if (n >= 500) {
+            level = 'error';
+            code = code.red.bold;
+        } else if (n >= 400) {
+            level = 'warning';
+            code = code.yellow.bold;
+        } else if (n >= 300){
+            level = 'info';
+            code = code.cyan.bold;
+        } else if (n >= 100) {
 			level = 'info';
 			code = code.green.bold;
 		}
-		if (code >= 400) {
-			level = 'warn';
-			code = code.yellow.bold;
-		}
-		if (code >= 500) {
-			level = 'error';
-			code = code.red.bold;
-		}
 
-		Logger(level, 'Express', ip + ' ' + code + ' ' + req.method.green.bold + ' ' + req.headers.host + ' --> ' + req.url + ' ' + res.responseTime + ' ms ');
+        //Colour Method
+        if (m === "POST" || m === "PUT"){
+            level = 'warning';
+            m = m.yellow.bold;
+        } else if (m === "DELETE"){
+            level = 'info';
+            m = m.red.bold;
+        } else {
+            level = 'info';
+            m = m.green.bold;
+        }
+
+
+		Logger(level, 'Express', ip + ' ' + code + ' ' + m + ' ' + req.headers.host + ' --> ' + req.url + ' ' + res.responseTime + ' ms ');
 
 	};
 	next();
