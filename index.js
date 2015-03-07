@@ -158,7 +158,7 @@ Logger.core = {
             if (options.quickStart !== true) {
                 Logger.output({
                     timestamp: new Date(),
-                    message: "Logger " + pack.version + " succesfully initialised!",
+                    message: "Logger " + pack.version + " successfully initialised!",
                     source: "Logger",
                     severity: "success"
                 });
@@ -373,9 +373,7 @@ Logger.file = function(data, location) {
         }
     } catch (e) {
         mkdirp(location, function(err) {
-            if (err) {
-
-            } else {
+            if (!err) {
                 Logger.file(data, location);
             }
         });
@@ -384,7 +382,6 @@ Logger.file = function(data, location) {
 
 //- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 var socketio = function(address, namespace, username, password) {
-    var io = require("socket.io-client");
     Logger.socket = io(address + namespace, {
         query: {
             username: username,
@@ -527,8 +524,8 @@ Logger.mysql = {
 // - - - - - - - - - - - - - - - Utilities - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Logger.util = {
-    getDateString: function(a) {
-        date = new Date();
+    getDateString: function() {
+        var date = new Date();
         var year = date.getFullYear();
         var month = date.getMonth() + 1;
         var day = date.getDate();
@@ -544,7 +541,7 @@ Logger.util = {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
     formatTimestamp: function(a) {
-        date = a;
+        var date = a;
         var milliseconds = date.getMilliseconds();
         var seconds = date.getSeconds();
         var minutes = date.getMinutes();
