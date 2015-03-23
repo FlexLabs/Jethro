@@ -493,6 +493,8 @@ Logger.startClient = function(options) {
 
 // - - - - - - - - - - - - - - - - MySQL - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
+//DEPRECATED  - Kept for backwards compatibility for people still using it after this point. 23/03/2015;
+
 Logger.mysql = {
     output: function(data, logger) {
         try {
