@@ -431,7 +431,7 @@ Logger.express = function(req, res, next) {
         var n = res.statusCode;
         var code = n.toString();
         var level;
-        var ip = req.headers['X-Real-IP'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        var ip = req.headers['x-forwarded-for'] || req.headers['X-Real-IP'] || req.connection.remoteAddress;
 
         res.responseTime = new Date() - req._startTime;
 
@@ -471,7 +471,7 @@ Logger.express = function(req, res, next) {
 
 
 
-        Logger(level, 'Express', ip + ' ' + code + ' ' + m + ' ' + req.headers.host + ' --> ' + req.url + ' ' + res.responseTime + ' ms ');
+        Logger(level, 'Express', ip + ' ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.url + ' ' + res.responseTime + ' ms ');
 
     };
     next();
