@@ -286,23 +286,23 @@ Logger.output = function(data, callback) {
     } if (Logger.core.settings.output.displayOpts.location === true || typeof callback === "function") {
         if (typeof data.location !== "undefined"){
             if (data.location.length > 9) {
-                c = "[" + data.location + "] 	";
+                c = "[" + data.location + "]    ";
             } else {
-                c = "[" + data.location + "]    	";
+                c = "[" + data.location + "]        ";
             }
 
         } else {
-            c = "[" + Logger.core.settings.location + "] 	";
+            c = "[" + Logger.core.settings.location + "]    ";
         }
     } if (Logger.core.settings.output.displayOpts.source === true || typeof callback === "function") {
         if (typeof data.source !== "undefined"){
             if (data.source.length > 9){
-            	d = "[" + data.source + "]    	";
+                d = "[" + data.source + "]      ";
             } else {
-            	d = "[" + data.source + "] 	";
+                d = "[" + data.source + "]  ";
             }
         } else {
-            d = "[" + "undefined" + "]	";
+            d = "[" + "undefined" + "]  ";
         }
         if (Logger.core.settings.output.displayOpts.message === true || typeof callback === "function") {
             if (typeof data.message !== "undefined") {
@@ -431,10 +431,9 @@ Logger.express = function(req, res, next) {
         var n = res.statusCode;
         var code = n.toString();
         var level;
-        var ip = req.headers['X-Real-IP'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        var ip = req.headers['x-forwarded-for'] || req.headers['X-Real-IP'] || req.connection.remoteAddress;
 
         res.responseTime = new Date() - req._startTime;
-
         res.end = end;
         res.end(chunk, encoding);
 
@@ -469,9 +468,7 @@ Logger.express = function(req, res, next) {
             m = m.green.bold;
         }
 
-
-
-        Logger(level, 'Express', ip + ' ' + code + ' ' + m + ' ' + req.headers.host + ' --> ' + req.url + ' ' + res.responseTime + ' ms ');
+        Logger(level, 'Express', ip + '     ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.url + '     ' + res.responseTime + ' ms ');
 
     };
     next();
