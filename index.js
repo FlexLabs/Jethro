@@ -82,7 +82,7 @@ var Logger = function(severity, source, message, location, timestamp) {
     }
 };
 
-// - - - - - - - - - Core Module - - - - - - - - - - - - - - - - - - - - - - - - 
+// - - - - - - - - - Core Module - - - - - - - - - - - - - - - - - - - - - - - -
 
 Logger.core = {
     initialised: false,
@@ -222,7 +222,7 @@ Logger.emitter.on('logger', function(data) {
 });
 
 
-//- - - - - - - - - - Outputs - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//- - - - - - - - - - Outputs - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 //Console output
@@ -380,7 +380,7 @@ Logger.file = function(data, location) {
     }
 };
 
-//- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//- - - - - - - - - - - - - - - - Socket Transport - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 var socketio = function(address, namespace, username, password) {
     Logger.socket = io(address + namespace, {
         query: {
@@ -471,7 +471,7 @@ Logger.express = function(req, res, next) {
 
 
 
-        Logger(level, 'Express', ip + '     ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.url + ' ' + res.responseTime + ' ms ');
+        Logger(level, 'Express', ip + '     ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.originalUrl + ' ' + res.responseTime + ' ms ');
 
     };
     next();
