@@ -471,56 +471,10 @@ Logger.express = function(req, res, next) {
 
 
 
-        Logger(level, 'Express', ip + ' ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.url + ' ' + res.responseTime + ' ms ');
+        Logger(level, 'Express', ip + '     ' + code + ' ' + m + '  ' + req.headers.host + '    --> ' + req.url + ' ' + res.responseTime + ' ms ');
 
     };
     next();
-};
-
-/*
- For Jethrolised-morgan output
- https://www.npmjs.com/package/morgan-jethro
- // - Will be deprecated soon, adding stream support within jethro!
- */
-
-// - - - - - - - - - - - - - - Socket IO Client - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-Logger.startClient = function(options) {
-    //Preparation for logger socket client
-    Logger("info", "Logger", "Starting Socket client utility...");
-    Logger("warning", "Logger", "The Socket client utility is not complete and as a result will not load!");
-};
-
-// - - - - - - - - - - - - - - - - MySQL - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-
-//DEPRECATED  - Kept for backwards compatibility for people still using it after this point. 23/03/2015;
-
-Logger.mysql = {
-    output: function(data, logger) {
-        try {
-            switch (this.event) {
-                case 'connecting':
-                    if (data.connectionAttempts < 3) {
-                        return Logger('info', 'MySQL', 'Connecting for the ' + Logger.util.getWord(data.connectionAttempts + 1) + ' time to ' + data.host);
-                    }
-                    break;
-                case 'connected':
-                    return Logger('success', 'MySQL', 'Connected to ' + data.database + "@" + data.host);
-                case 'disconnected':
-                    return Logger('warning', 'MySQL', 'Disconnected from ' + data.host + " with code " + data.code);
-                case 'error':
-                    return Logger('warning', 'MySQL', 'Error - ' + data.host + ": " + data.err);
-                case 'sending':
-                    return Logger('transport', 'MySQL', 'Sending call: `' + data.call + '`');
-                case 'start_complete':
-                    return Logger('transport', data);
-                case 'message':
-                    return Logger(data);
-            }
-        } catch (e) {
-            return Logger('error', 'MySQL', 'Incorrect data went to logging util, ' + e);
-        }
-    }
 };
 
 // - - - - - - - - - - - - - - - Utilities - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
