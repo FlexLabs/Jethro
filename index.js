@@ -31,51 +31,38 @@ var IP = "127.0.0.1";
 //Main Logger function
 var Logger = function(severity, source, message, location, timestamp) {
     if (typeof severity !== "object") {
-        if (Logger.core.initialised === true) {
-            if (typeof severity !== "undefined" && typeof source !== "undefined" && typeof message !== "undefined") {
-                if (Logger.core.settings.location === "undefined" && typeof location === "undefined") {
-                    if (Logger.core.settings.defaultLocation === "ip") {
-                        Logger.core.settings.location = IP;
-                        location = IP;
-                    } else if (Logger.core.settings.defaultLocation === "hostname") {
-                        Logger.core.settings.location = os.hostname();
-                        location = os.hostname();
-                    } else {
-                        Logger.core.settings.location = os.hostname();
-                        location = os.hostname();
-                    }
+        if (typeof severity !== "undefined" && typeof source !== "undefined" && typeof message !== "undefined") {
+            if (Logger.core.settings.location === "undefined" && typeof location === "undefined") {
+                if (Logger.core.settings.defaultLocation === "ip") {
+                    Logger.core.settings.location = IP;
+                    location = IP;
+                } else if (Logger.core.settings.defaultLocation === "hostname") {
+                    Logger.core.settings.location = os.hostname();
+                    location = os.hostname();
                 } else {
-                    location = Logger.core.settings.location;
+                    Logger.core.settings.location = os.hostname();
+                    location = os.hostname();
                 }
-                if (typeof timestamp === "undefined") {
-                    timestamp = new Date();
-                }
-
-                //Process logger data
-                var data = {
-                    severity: severity,
-                    source: source,
-                    message: message,
-                    location: location,
-                    timestamp: timestamp
-                };
-
-                Logger.emitter.emit('logger', data);
-
             } else {
-                Logger("warning", "Logger", "Check syntax, something was undefined - Severity: " + severity + " Source: " + source + " Message: " + message);
+                location = Logger.core.settings.location;
             }
-        } else {
-            Logger.core.init();
+            if (typeof timestamp === "undefined") {
+                timestamp = new Date();
+            }
 
-            Logger("info", "Logger", "Initialising Logger...");
-            setTimeout(function() {
-                if (severity === "info" && source === "Logger" && message === "Initialising Logger...") {
-                    Logger("info", "Logger", "Initialising Logger...");
-                } else {
-                    Logger(severity, source, message, location, timestamp);
-                }
-            }, 100);
+            //Process logger data
+            var data = {
+                severity: severity,
+                source: source,
+                message: message,
+                location: location,
+                timestamp: timestamp
+            };
+
+            Logger.emitter.emit('logger', data);
+
+        } else {
+            Logger("warning", "Logger", "Check syntax, something was undefined - Severity: " + severity + " Source: " + source + " Message: " + message);
         }
     } else {
         Logger("warning", "Logger", "An object was passed to Jethro, support for this is currently unavailable!");
@@ -85,95 +72,16 @@ var Logger = function(severity, source, message, location, timestamp) {
 // - - - - - - - - - Core Module - - - - - - - - - - - - - - - - - - - - - - - -
 
 Logger.core = {
-    initialised: false,
     settings: require('./config.json'),
-    init: function(options) {
-
-        if (typeof options === "undefined") {
-            options = {};
-        }
-        if (Logger.core.initialised === false) {
-
-            //Makes sure init cannot be called again
-            Logger.core.initialised = true;
-
-            //Sets the loggers settings
-            Logger.settings.set(options);
-
-            //Startup the respective services...
-            if (process.argv.indexOf('-output') > -1) {
-                var i = process.argv.indexOf('-output');
-                var j = i + 1;
-                if (process.argv[j] === 'false') {
-                    Logger.core.settings.output.console = false;
-                } else {
-                    Logger.core.settings.output.console = true;
-                }
-            } else {
-                Logger.core.settings.output.console = true;
-            }
-
-            //Sets the default Location
-            if (typeof options.defaultLocation !== "undefined") {
-                if (options.defaultLocation === "ip") {
-                    Logger.core.settings.location = IP;
-                } else if (options.defaultLocation === "hostname") {
-                    Logger.core.settings.location = os.hostname();
-                }
-            }
-
-            //Make sure you don't break the modules/transport settings.
-            if (typeof options.modules !== "undefined") {
-                if (options.modules.file === true) {
-                    Logger.startFile();
-                }
-                if (options.modules.socket === true) {
-                    Logger.startSIO(Logger.core.settings.socket.address, Logger.core.settings.socket.namespace, Logger.core.settings.socket.username, Logger.core.settings.socket.password);
-                }
-            }
-
-            //Let's make sure you don't break the output settings. If you set one, SET THEM ALL!
-            if (typeof options.output === "undefined" && typeof Logger.core.settings.output === "undefined") {
-                Logger.core.settings.output = {
-                    quickStart: true,
-                    console: true,
-                    displayOpts: {
-                        severity: true,
-                        source: true,
-                        message: true,
-                        location: false,
-                        timestamp: true
-                    },
-                    sourceOpts: {
-                        whitelistOnly: false,
-                        sourceWhitelist: [],
-                        sourceBlacklist: []
-                    },
-                    timestampOpts: {
-                        brackets: false
-                    }
-                };
-            }
-            //When Finished!
-            if (options.quickStart !== true) {
-                Logger.output({
-                    timestamp: new Date(),
-                    message: "Logger " + pack.version + " successfully initialised!",
-                    source: "Logger",
-                    severity: "success"
-                });
-            }
-        } else {
-
-            //Example of direct-to-console logging
-            Logger.output({
-                severity: 'warning',
-                source: 'Logger',
-                message: 'Logger is already initialised!',
-                timestamp: new Date(),
-                location: os.hostname()
-            });
-        }
+    init: function(){
+        Logger("warning", "Logger", "Logger.init() function now deprecated.");
+        Logger("warning", "Logger", "This is implemented in v2.0.0 onwards.");
+        Logger("warning", "Logger", "You have been warned with a MAJOR version bump!");
+        Logger("warning", "Logger", "If you wish to continue using the old API, downgrade to v1.2.11");
+        Logger("warning", "Logger", "Logger.settings.set() is the new alternative for the init method if you need to bulk change settings");
+        Logger("warning", "Logger", "Alternatively, you can access settings directly by Logger.core.settings");
+        Logger("info", "Logger", "");
+        Logger("info", "Logger", "If you have any questions, quarrels or queries, contact me at therealhenchman@gmail.com");
     }
 };
 
