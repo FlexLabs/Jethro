@@ -15,26 +15,31 @@ Usage
 
 ```js
 
-logger = require('jethro')
+logger = require('jethro');
 
 logger("info", "Testing", "This is a test message!");
-
-// AKA: logger(severity, source, message);
-
 ```
+
 It's as simple as that!
+
+The simple makeup of the logger input is explained within the sections below:
+
+logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message](/docs/v2/MESSAGE.md))
+
 
 The API
 -------
 
-###### API Docs
-This is now [version 2.0.0 documentation](/Jethro/tree/master/docs/v1/API.md), you can read v1 [here](/docs/v1/README.md).
+##### API Docs
+* [Version 2 Documentation](/docs/v2/API.md)
+* [Version 1 Documentation](/docs/v1/README.md)
 
-###### Settings
+##### Settings
 Customisations for the settings can be found [here] (/docs/v2/SETTINGS.md).
 
-##### Plugins
-There are many plugins, for express.js, restify, MySQL and more [here](/docs/v2/PLUGINS.md).
+##### [Plugins] (/docs/v2/PLUGINS.md)
+Current Internal plugins:
+* Express.js
 
 Transports
 ----------

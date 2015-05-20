@@ -3,9 +3,16 @@
 
 Express Middleware
 ------------------
+
 Nice and simple Express Log:
+
 ```js
 
 var logger = require('jethro');
 app.use(logger.express); //That's it!
 ```
+
+Restify Logger
+--------------
+
+Coming soon!

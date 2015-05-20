@@ -11,4 +11,5 @@ logger.output({
 	location: os.hostname()
 });
 ```
+
 Just remember, using this method ONLY outputs to console, and no other transport is used and no event is emitted. It's basically a fancy console log, useful for welcome messages etc.
