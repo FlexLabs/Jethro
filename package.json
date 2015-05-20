@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
@@ -11,7 +11,7 @@
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter3": "^1.1.0",
-    "moment": "^2.9.0",
+    "moment": "^2.9.0"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,6 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "homepage": "http://henchspace.co",
   "bugs": {
     "url": "https://github.com/henchspace/jethro/issues"
   },
@@ -29,10 +28,7 @@
     "start": "nodemon examples/test.js"
   },
   "keywords": [
-    "logger"
+    "logger", "jethro", "intelligent", "automatic", "socket", "logs", "logging", "file", "database"
   ],
-  "license": "LGPL 3.0",
-  "maintainers": [
-    "henchman <therealhenchman@gmail.com>"
-  ]
+  "license": "LGPL 3.0"
 }
