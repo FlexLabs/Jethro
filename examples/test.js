@@ -1,29 +1,30 @@
 var logger = require('../index.js');
-/*
+
 setInterval(function(){
-	logger.emitter.emit('chat', {message:"hi", output:true, severity:"warning", source:"test"})
+	logger.event.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"})
 }, 2000);
-*/
-/*
-logger('info', "startup", "Test")
-logger('error', "startup", "Test")
-logger('warning', "startup", "Test")
-logger('transport', "startup", "Test")
-logger('success', "startup", "Test")
-logger('debug', "startup", "Test")
-*/
-
-//logger.server()
-//logger.client()
-//logger.file()
-//logger.database()
 
 
+setInterval(function(){
+	logger.output({message:"hi", severity:"transport", source:"Output"});
+}, 5000);
 
-//logger('success', 'Core - ', 'Finished the testing procedure!')
+
+logger('info', "startup", "Test");
+logger('error', "startup", "Test");
+logger('warning', "startup", "Test");
+logger('transport', "startup", "Test");
+logger('success', "startup", "Test");
+logger('debug', "startup", "Test");
+
 
 logger('info', 'Core - ', 'Initating timer...');
 
 setInterval(function(){
 	logger('debug', 'Node.js', "Self.timer")
-}, 10000);
+}, 5000);
+
+setTimeout(function(){
+    logger('success', 'Core - ', 'Finished the testing procedure!');
+    process.exit(0);
+}, 8 * 1000);
