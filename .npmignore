@@ -5,3 +5,4 @@ logs
 .gitignore
 .DS_Store
 .travis.yml
+docs
