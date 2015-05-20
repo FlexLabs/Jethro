@@ -14,7 +14,14 @@
  */
 
 
+//Core
+module.exports =            require('./lib/index.js');
 
-module.exports =            require('./lib/core.js');
+//Modules
+module.exports.init =       require('./lib/init.js'); //Deprecated, contains a warning message
+module.exports.event =      require('./lib/events.js');
+module.exports.output =     require('./lib/output.js');
+
+//Plugins
 module.exports.express =    require('./lib/plugins/express.js');
 module.exports.restify =    require('./lib/plugins/restify.js');

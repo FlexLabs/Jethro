@@ -26,6 +26,10 @@ The simple makeup of the logger input is explained within the sections below:
 
 logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message](/docs/v2/MESSAGE.md))
 
+Here's a screen shot of a potential output:
+
+![Screenshot](/docs/v2/i.png "Screenshot")
+
 
 The API
 -------

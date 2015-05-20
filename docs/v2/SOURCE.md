@@ -2,4 +2,4 @@
 
 Source is the second argument in the logger function, it should define where with in the application the log originated (for example MySQL, Socket, PlugAPI...
 
-White listing and Blacklisting for sources is currently being worked on
+White listing and Blacklisting for sources is currently being worked on.
