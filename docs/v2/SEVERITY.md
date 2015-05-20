@@ -11,8 +11,8 @@ Here is the list of main outputs that are supported, and subsequently coloured
 
 * Info          - Magenta
 * Debug         - Blue
-* Warning       - Warning
-* Error         - Error
+* Warning       - Yellow
+* Error         - Red
 * Transport     - Cyan
 
 Please don't pass colour codes with a severity, as this will likely not work!
