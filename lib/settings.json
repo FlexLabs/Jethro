@@ -1,0 +1,17 @@
+{
+  "location": "undefined",
+  "timeformat": "undefined",
+  "output": {
+    "console": true,
+    "sourceOpts": {
+      "whitelistOnly": false,
+      "sourceWhitelist": [],
+      "sourceBlacklist": []
+    },
+    "timestampOpts": {
+      "brackets": false
+    }
+  },
+  "catchUncaught": false,
+  "catchExit": false
+}

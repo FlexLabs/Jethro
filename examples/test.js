@@ -1,40 +1,9 @@
-logger = require('../')
-
-logger.init({
-	defaultLocation: "ip",
-	location: "undefined",
-	timeformat: "undefined",
-	output: {
-		console: true,
-		displayOpts: {
-			severity: true,
-			source: true,
-			message: true,
-			location: true,
-			timestamp: true
-		},
-		sourceOpts: {
-			whitelistOnly: false,
-			sourceWhitelist: [],
-			sourceBlacklist: [],
-		},
-		timestampOpts: {
-			brackets: false
-		}
-	},
-	modules: {
-		socket: true,
-		file: true
-	},
-	quickStart: false,
-	catchUncaught: false,
-	catchExit: false
-})
-
+var logger = require('../index.js');
+/*
 setInterval(function(){
 	logger.emitter.emit('chat', {message:"hi", output:true, severity:"warning", source:"test"})
-}, 2000)
-
+}, 2000);
+*/
 /*
 logger('info', "startup", "Test")
 logger('error', "startup", "Test")
@@ -53,8 +22,8 @@ logger('debug', "startup", "Test")
 
 //logger('success', 'Core - ', 'Finished the testing procedure!')
 
-logger('info', 'Core - ', 'Initating timer...')
+logger('info', 'Core - ', 'Initating timer...');
 
 setInterval(function(){
 	logger('debug', 'Node.js', "Self.timer")
-}, 10000)
+}, 10000);
