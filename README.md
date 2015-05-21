@@ -28,6 +28,7 @@ logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message
 
 Here's a screen shot of a potential output:
 
+
 ![Screenshot](/docs/v2/i.png "Screenshot")
 
 
@@ -41,9 +42,10 @@ The API
 ##### Settings
 Customisations for the settings can be found [here] (/docs/v2/SETTINGS.md).
 
-##### [Plugins] (/docs/v2/PLUGINS.md)
+##### Plugins
 Current Internal plugins:
-* Express.js
+* [Express.js](/docs/v2/plugins/EXPRESS.md)
+* [Restify](/docs/v2/plugins/RESTIFY.md)
 
 Transports
 ----------
@@ -61,9 +63,9 @@ Projects using this logger
 
 Credits
 -------
-Birthed by [Henchman](https://hench.in), with help from [Matthew](https://github.com/yemasthui).
-
-Help, suggestions and moral support from [xBytez](https://github.com/xBytez) and [Alex](http://thedark1337.com)!
+Birthed by [Henchman](https://hench.in), with help from .
+Helped and maintained with [Alex](http://thedark1337.com)
+Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matthew](https://github.com/yemasthui)!
 
 License
 -------
