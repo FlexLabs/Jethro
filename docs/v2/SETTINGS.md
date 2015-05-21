@@ -44,6 +44,6 @@ Brackets can be added or removed by stating `output.timestampOpts.brackets` as t
 Output
 ------
 
-## Console
+#### Console
 
 output.console: disables the default event listener for emitting to the console.
