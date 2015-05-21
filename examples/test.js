@@ -16,8 +16,12 @@ logger('transport', "startup", "Test");
 logger('success', "startup", "Test");
 logger('debug', "startup", "Test");
 
+logger.setBrackets(true);
+
 
 logger('info', 'Core - ', 'Initating timer...');
+
+logger.setColour(false);
 
 setInterval(function(){
 	logger('debug', 'Node.js', "Self.timer")

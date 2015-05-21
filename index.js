@@ -21,6 +21,7 @@ module.exports =            require('./lib/index.js');
 module.exports.init =       require('./lib/init.js'); //Deprecated, contains a warning message
 module.exports.event =      require('./lib/events.js');
 module.exports.output =     require('./lib/output.js');
+module.exports.settings =   require('./lib/settings.js');
 
 //Plugins
 module.exports.express =    require('./lib/plugins/express.js');

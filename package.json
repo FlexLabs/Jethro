@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "2.4.4",
+  "version": "2.5.0",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
@@ -11,7 +11,8 @@
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter3": "^1.1.0",
-    "moment": "^2.9.0"
+    "moment": "^2.9.0",
+    "stripcolorcodes": "^0.1.0"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,15 @@
     "test": "node examples/test.js"
   },
   "keywords": [
-    "logger", "jethro", "intelligent", "automatic", "socket", "logs", "logging", "file", "database"
+    "logger",
+    "jethro",
+    "intelligent",
+    "automatic",
+    "socket",
+    "logs",
+    "logging",
+    "file",
+    "database"
   ],
   "license": "LGPL 3.0"
 }

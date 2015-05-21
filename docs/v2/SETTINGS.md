@@ -11,6 +11,12 @@ The Settings Object:
   "location": "undefined",
   "timeformat": "undefined",
   "output": {
+    "source":{
+      "whitelist": [],
+      "blacklist": []
+    },
+    "colour": true,
+    "timestamp": true,
     "console": true,
     "timestampOpts": {
       "brackets": false
@@ -19,27 +25,49 @@ The Settings Object:
 }
 ```
 
-This can be set by using the set method. A settings object must be passed replacing ALL setting objects stated above.
+This can be set by using the `logger.set(obj)` method. A settings object must be passed replacing ALL setting objects stated above.
 
 ```js
 
 var logger = require('jethro');
 
+logger.set(SettingsObject);
+
 ```
 
-Location
---------
+**__All of the below options are exposed via the logger.settings object__**
+
+For example: 
+
+```js
+
+logger.setBrackets(true);
+
+logger.setConsole(false);
+
+logger.setTimestamp(false);
+
+//A full list of these are below
+```
+
+Options
+-------
+
+#### Location
 
 Location is the how this logger instance will show up to a server that it communicates with, if applicable.
 
-Time Format 
------------
+Accessible via ```logger.setLocation(variable)``` or ```logger.settings.location = "127.0.0.1"```
 
-The formatting of the timestamp parameter. Defaults to something like: `[16:31 48s 0076ms]`
+#### Timeformat
+
+The formatting of the timestamp parameter. Defaults to something like: `16:31 48s 0076ms`
 
 An example of how it can be set is: 'DD MMM HH:mm:ss' or any other string that the 'moment' module supports
 
-Brackets can be added or removed by stating `output.timestampOpts.brackets` as true or false respectively.
+Accessible via ```logger.setTimeformat(variable)``` or ```logger.settings.timeformat = "DD MMM HH:mm:ss"```
+
+Brackets can be added or removed by stating `logger.settings.output.timestampOpts.brackets` as true or false respectively.
 
 Output
 ------
@@ -47,3 +75,30 @@ Output
 #### Console
 
 output.console: disables the default event listener for emitting to the console.
+
+Accessible via ```logger.setConsole(boolean)```
+
+#### Colour
+
+Boolean containing whether the output function strips colour codes from itself or not
+
+Accessible via ```logger.setColour(boolean)```
+
+#### Timestamp
+
+Boolean turning off the output of a timestamp, necessary if your hosting provider already uses this in their logs
+
+Accessible via ```logger.setTimestamp(boolean)```
+
+#### Brackets 
+
+Boolean disabling or enabling _timestamp_ brackets
+
+Accessible via ```logger.setBrackets(boolean)```
+
+Blacklisting and White listing
+------------------------------
+
+* Next Update!
+
+
