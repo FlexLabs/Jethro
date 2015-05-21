@@ -63,8 +63,10 @@ Projects using this logger
 
 Credits
 -------
-Birthed by [Henchman](https://hench.in), with help from .
-Helped and maintained with [Alex](http://thedark1337.com)
+Birthed by [Henchman](https://hench.in).
+
+Helped and maintained with [Alex](http://thedark1337.com).
+
 Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matthew](https://github.com/yemasthui)!
 
 License
