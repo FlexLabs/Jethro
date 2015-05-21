@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
@@ -15,17 +15,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/henchspace/jethro"
+    "url": "https://github.com/JethroLogger/Jethro"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
   "bugs": {
-    "url": "https://github.com/henchspace/jethro/issues"
+    "url": "https://github.com/JethroLogger/Jethro/issues"
   },
   "scripts": {
-    "test": "node index.js",
-    "start": "nodemon examples/test.js"
+    "test": "node examples/test.js"
   },
   "keywords": [
     "logger", "jethro", "intelligent", "automatic", "socket", "logs", "logging", "file", "database"

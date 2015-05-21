@@ -4,8 +4,6 @@ setInterval(function(){
 	logger.event.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"})
 }, 2000);
 
-logger.init();
-
 setInterval(function(){
 	logger.output({message:"hi", severity:"transport", source:"Output"});
 }, 5000);
