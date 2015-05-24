@@ -23,6 +23,14 @@ module.exports.event =      require('./lib/events.js');
 module.exports.output =     require('./lib/output.js');
 module.exports.settings =   require('./lib/settings.js');
 
+//utils
+module.exports.utils = {
+    capitalise: 		require('./lib/utils/capitalise.js'),
+    formatDate: 		require('./lib/utils/formatDate.js'),
+    formatTimestamp: 	require('./lib/utils/formatTimestamp.js'),
+    numberToWord: 		require('./lib/utils/numberToWord.js')
+};
+
 //Plugins
 module.exports.express =    require('./lib/plugins/express.js');
 module.exports.restify =    require('./lib/plugins/restify.js');
