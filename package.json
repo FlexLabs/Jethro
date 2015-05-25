@@ -1,6 +1,6 @@
 {
   "name": "jethro",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
