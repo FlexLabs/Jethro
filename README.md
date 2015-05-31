@@ -15,7 +15,7 @@ Usage
 
 ```js
 
-logger = require('jethro');
+var logger = require('jethro');
 
 logger("info", "Testing", "This is a test message!");
 ```
