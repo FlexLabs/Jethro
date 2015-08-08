@@ -73,6 +73,6 @@ License
 -------
 Licensed under the LGPL v3 License
 
-Copyright (C) 2014  Samuel Mills (known as Henchman, under the github team: HenchSpace)
+Copyright (C) 2015  Samuel Mills (known as Henchman, under the github teams: JethroLogger & HenchSpace)
 
 You can find full license [here.](/LICENSE.txt)
