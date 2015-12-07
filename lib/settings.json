@@ -2,7 +2,7 @@
   "location": "undefined",
   "timeformat": "undefined",
   "output": {
-    "source":{
+    "source": {
       "whitelist": [],
       "blacklist": []
     },
@@ -10,7 +10,8 @@
     "timestamp": true,
     "console": true,
     "timestampOpts": {
-      "brackets": false
+      "brackets": false,
+      "utc": false
     }
   }
 }
