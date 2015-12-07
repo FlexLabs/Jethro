@@ -19,7 +19,8 @@ The Settings Object:
     "timestamp": true,
     "console": true,
     "timestampOpts": {
-      "brackets": false
+      "brackets": false,
+	  "utc": false
     }
   }
 }
@@ -42,6 +43,8 @@ For example:
 ```js
 
 logger.setBrackets(true);
+
+logger.setUTC(true);
 
 logger.setConsole(false);
 
@@ -89,6 +92,12 @@ Accessible via ```logger.setColour(boolean)```
 Boolean turning off the output of a timestamp, necessary if your hosting provider already uses this in their logs
 
 Accessible via ```logger.setTimestamp(boolean)```
+
+#### UTC
+
+Boolean enabling or disabling UTC time format, necessary if you do not know the timezone of your hosting provider
+
+Accessible via ```logger.setUTC(boolean)```
 
 #### Brackets 
 
