@@ -1,11 +1,12 @@
 {
   "name": "jethro",
-  "version": "2.6.4",
+  "version": "2.6.6",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
   "description": "Modular logging utility",
   "contributors": [
     "Mathieu Samaey <yemasthui@gmail.com>",
-    "Alex Pham <thedark1337@thedark1337.com>"
+    "Alex Pham <thedark1337@thedark1337.com>",
+    "Nitro Ghost <wildeman.benjamin@gmail.com>"
   ],
   "main": "./index.js",
   "dependencies": {
