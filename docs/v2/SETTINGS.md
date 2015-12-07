@@ -19,7 +19,7 @@ The Settings Object:
     "timestamp": true,
     "console": true,
     "timestampOpts": {
-      "brackets": false
+      "brackets": false,
 	  "utc": false
     }
   }
