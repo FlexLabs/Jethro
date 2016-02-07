@@ -12,7 +12,7 @@
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter3": "^1.1.1",
-    "moment": "^2.10.6",
+    "moment": "^2.11.2",
     "stripcolorcodes": "^0.1.0"
   },
   "repository": {
