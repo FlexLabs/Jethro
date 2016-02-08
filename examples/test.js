@@ -15,6 +15,8 @@ logger.log('transport', "startup", "Test");
 logger.log('success', "startup", "Test");
 logger.log('debug', "startup", "Test");
 
+logger.log('debug', "Message", {yolo:true});
+
 //logger.setBrackets(true);
 
 logger.log('info', 'Core - ', 'Initating timer...');
