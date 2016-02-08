@@ -117,7 +117,7 @@ describe("Logger.set functions", function() {
     describe("Logger.setColour", function() {
         it("Should change colour boolean to false with false", function() {
             logger.setColour(false);
-            expect(logger.settings.output.colour, "to be", false)
+            expect(logger.settings.output.colour, "to be", false);
         });
 
         it("Should change colour boolean to true with true", function() {
@@ -187,7 +187,7 @@ describe("Logger.set functions", function() {
     describe("Logger.setUTC", function() {
         it("Should change UTC boolean to false with false", function() {
             logger.setUTC(false);
-            expect(logger.settings.output.timestampOpts.utc, "to be", false)
+            expect(logger.settings.output.timestampOpts.utc, "to be", false);
         });
 
         it("Should change UTC boolean to true with true", function() {
