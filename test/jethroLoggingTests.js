@@ -32,7 +32,6 @@ var defaultSet = function() {
             }
         }
     });
-    console.log(logger.settings);
 };
 
 describe("Logging Tests", function() {
@@ -45,9 +44,8 @@ describe("Logging Tests", function() {
         }), function(output) {
             expect(output, "to be", now + " [\x1b[1m\x1b[34mDebug\x1b[39m\x1b[22m]     [Tests]         Testing Output   ");
         });
-
-
     });
+
     it("Should Log to console with debug level", function() {
         var inspect = stdout.inspectSync(function() {
             output(assign(defaultInfo, {
@@ -111,6 +109,7 @@ describe("Logging Tests", function() {
 
         expect(inspect[0], "to be", now + " [\x1b[1m\x1b[36mTransport\x1b[39m\x1b[22m] [Tests]         Testing Output   \n");
     });
+
     it("Should Log to console with undefined level", function() {
         var inspect = stdout.inspectSync(function() {
             output(assign(defaultInfo, {
@@ -171,16 +170,15 @@ describe("Logging Tests", function() {
         logger.setColour(true);
     });
 
-    it.skip("should Log to console with undefined source", function() {
+    it("should Log to console with undefined source", function() {
         var inspect = stdout.inspectSync(function() {
-            var data = assign(defaultInfo, {
-                severity: "info"
-            });
-            data.source = undefined;
-            output(data);
+            output(assign(defaultInfo, {
+                severity: "info",
+                source: undefined
+            }));
         });
 
-        expect(inspect[0], "to equal", now + " [Info]      [Tests]         Testing Output   \n");
+        expect(inspect[0], "to equal", now + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [undefined]    Testing Output   \n");
     });
 });
 
@@ -189,7 +187,7 @@ describe("Deprecated functions", function() {
         var inspect = stdout.inspectSync(function() {
             logger.init();
         });
-        expect(inspect[0], "to contain", "function now deprecated.")
+        expect(inspect[0], "to contain", "function now deprecated.");
     });
 });
 
@@ -202,7 +200,8 @@ describe("Custom Log settings", function() {
             logger.setBrackets(true);
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
-                    severity: "info"
+                    severity: "info",
+                    source: "Tests"
                 }));
 
             });
@@ -215,26 +214,48 @@ describe("Custom Log settings", function() {
             logger.setTimeformat("DD:MM:YYYY");
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
-                    severity: "info"
+                    severity: "info",
+                    source: "Tests"
                 }));
 
             });
             expect(inspect[0], "to be", moment().format("DD:MM:YYYY") + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
-
         });
 
-        it("Should log with default format if an error happens", function() {
+        it("Should log with utc format", function() {
+            logger.setTimeformat("DD:MM:YYYY");
+            logger.setUTC(true);
+            var inspect = stdout.inspectSync(function() {
+                output(assign(defaultInfo, {
+                    severity: "info",
+                    source: "Tests"
+                }));
+
+            });
+            expect(inspect[0], "to be", moment.utc().format("DD:MM:YYYY") + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
+        });
+
+        it("Should log with default format if timeformat is not a string", function() {
             logger.setTimeformat(new Error());
 
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
                     severity: "info"
                 }));
-
             });
+            expect(inspect[0], "to be", now + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
+        });
 
-            expect(inspect[0], "to be", moment().format("DD MMM HH:mm:ss") + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
+        it("Should use new Date() if data.timestamp isn't defined", function() {
+            logger.setTimeformat(new Error());
 
+            var inspect = stdout.inspectSync(function() {
+                output(assign(defaultInfo, {
+                    severity: "info",
+                    timestamp: undefined
+                }));
+            });
+            expect(inspect[0], "to contain", " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
         });
     });
 });
