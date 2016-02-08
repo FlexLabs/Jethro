@@ -15,13 +15,13 @@
 
 
 //Core
-module.exports =            require('./lib/index.js');
+module.exports =            require('./old/index.js');
 
 //Modules
-module.exports.init =       require('./lib/init.js'); //Deprecated, contains a warning message
-module.exports.event =      require('./lib/events.js');
-module.exports.output =     require('./lib/output.js');
-module.exports.settings =   require('./lib/settings.js');
+module.exports.init =       require('./old/init.js'); //Deprecated, contains a warning message
+module.exports.event =      require('./old/events.js');
+module.exports.output =     require('./old/output.js');
+module.exports.settings =   require('./old/settings.js');
 
 //utils
 module.exports.utils = {
@@ -32,5 +32,5 @@ module.exports.utils = {
 };
 
 //Plugins
-module.exports.express =    require('./lib/plugins/express.js');
-module.exports.restify =    require('./lib/plugins/restify.js');
+module.exports.express =    require('./old/plugins/express.js');
+module.exports.restify =    require('./old/plugins/restify.js');

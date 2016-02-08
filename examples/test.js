@@ -1,31 +1,31 @@
-var logger = require('../index.js');
-
+var Jethro = require('../lib/index.js');
+var logger = new Jethro();
 setInterval(function(){
-    logger.event.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
+    logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
 }, 2000);
 
 setInterval(function(){
     logger.output({message:"hi", severity:"transport", source:"Output"});
 }, 5000);
 
-logger('info', "startup", "Test");
-logger('error', "startup", "Test");
-logger('warning', "startup", "Test");
-logger('transport', "startup", "Test");
-logger('success', "startup", "Test");
-logger('debug', "startup", "Test");
+logger.log('info', "startup", "Test");
+logger.log('error', "startup", "Test");
+logger.log('warning', "startup", "Test");
+logger.log('transport', "startup", "Test");
+logger.log('success', "startup", "Test");
+logger.log('debug', "startup", "Test");
 
-logger.setBrackets(true);
+//logger.setBrackets(true);
 
-logger('info', 'Core - ', 'Initating timer...');
+logger.log('info', 'Core - ', 'Initating timer...');
 
-logger.setColour(false);
+//logger.setColour(false);
 
 setInterval(function(){
-	logger('debug', 'Node.js', "Self.timer")
+	logger.log('debug', 'Node.js', "Self.timer")
 }, 5000);
 
 setTimeout(function(){
-    logger('success', 'Core - ', 'Finished the testing procedure!');
+    logger.log('success', 'Core - ', 'Finished the testing procedure!');
     process.exit(0);
 }, 8 * 1000);
