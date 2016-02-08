@@ -1,6 +1,6 @@
 "use strict";
 
-var lint = require("mocha-eslint")
+var lint = require("mocha-eslint");
 var paths = [
     "examples",
     "lib",
