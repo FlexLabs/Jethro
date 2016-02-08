@@ -1,4 +1,5 @@
 # Jethro [![Build Status](https://travis-ci.org/JethroLogger/Jethro.svg?branch=master)](https://travis-ci.org/JethroLogger/Jethro) [![npm version](http://img.shields.io/npm/v/jethro.svg)](https://npmjs.org/package/jethro) [![npm downloads](http://img.shields.io/npm/dm/jethro.svg)](https://npmjs.org/package/jethro) [![Gratipay](http://img.shields.io/gratipay/Hunchmun.svg)](https://www.gratipay.com/Hunchmun/)
+[![codecov.io](https://codecov.io/github/JethroLogger/Jethro/coverage.svg?branch=master)](https://codecov.io/github/JethroLogger/Jethro?branch=master)
 
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
@@ -65,7 +66,7 @@ Credits
 -------
 Birthed by [Henchman](https://hench.in).
 
-Helped and maintained with [Alex](http://thedark1337.com).
+Helped and maintained with [Thedark1337 (Alex Pham)](http://thedark1337.com).
 
 Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matthew](https://github.com/yemasthui)!
 
