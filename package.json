@@ -1,43 +1,55 @@
 {
   "name": "jethro",
+  "description": "Modular logging utility",
   "version": "2.6.6",
   "author": "Samuel Mills <spam.mills@hotmail.com>",
-  "description": "Modular logging utility",
+  "bugs": {
+    "url": "https://github.com/JethroLogger/Jethro/issues"
+  },
   "contributors": [
     "Mathieu Samaey <yemasthui@gmail.com>",
     "Alex Pham <thedark1337@thedark1337.com>",
     "Nitro Ghost <wildeman.benjamin@gmail.com>"
   ],
-  "main": "./index.js",
   "dependencies": {
     "colour": "^0.7.1",
     "eventemitter3": "^1.1.1",
     "moment": "^2.11.2",
     "stripcolorcodes": "^0.1.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JethroLogger/Jethro"
+  "devDependencies": {
+    "express": "^4.13.4",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "mocha-eslint": "^1.0.0",
+    "object-assign": "^4.0.1",
+    "restify": "^4.0.3",
+    "supertest": "^1.1.0",
+    "test-console": "^1.0.0",
+    "unexpected": "^10.8.1"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "bugs": {
-    "url": "https://github.com/JethroLogger/Jethro/issues"
+  "keywords": [
+    "automatic",
+    "database",
+    "file",
+    "intelligent",
+    "jethro",
+    "logger",
+    "logging",
+    "logs",
+    "socket"
+  ],
+  "license": "LGPL-3.0",
+  "main": "./index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JethroLogger/Jethro"
   },
   "scripts": {
-    "test": "node examples/test.js"
-  },
-  "keywords": [
-    "logger",
-    "jethro",
-    "intelligent",
-    "automatic",
-    "socket",
-    "logs",
-    "logging",
-    "file",
-    "database"
-  ],
-  "license": "LGPL-3.0"
+    "test": "mocha",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha"
+  }
 }
