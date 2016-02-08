@@ -4,7 +4,6 @@ var date = new Date();
 var expect = require("unexpected");
 var logger = require("../");
 var moment = require("moment");
-var now = logger.utils.formatTimestamp(date, false);
 var defaultSet = function() {
     logger.set({
         "location": "undefined",
@@ -35,16 +34,16 @@ describe("Util Functions", function() {
 
             expect(formatted, "to be", moment().format("YYYY-MM-DD"));
         });
-
     });
 
-    //TODO: Add testing for formatTimestamp
     describe("formatTimestamp", function() {
         var formatTimestamp = logger.utils.formatTimestamp;
-
+        it("Should format with UTC", function() {
+            expect(formatTimestamp(date, true), "to be", moment(date).utc().format("hh:mm:ss[s] SSS[ms]"));
+        });
         it("Should format without UTC", function() {
-            expect(formatTimestamp(date, false), "to be", now);
-        })
+            expect(formatTimestamp(date, false), "to be", moment(date).format("hh:mm:ss[s] SSS[ms]"));
+        });
     });
 
     describe("numberToWord", function() {
@@ -68,7 +67,5 @@ describe("Util Functions", function() {
         it("Should default to the number", function() {
             expect(numberToWord(5), "to be", 5);
         });
-
     });
-
 });
