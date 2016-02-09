@@ -71,8 +71,8 @@ Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matt
 
 License
 -------
-Licensed under the LGPL v3 License
+Licensed under the LGPL-v3 & MIT Licenses
 
 Copyright (C) 2015  Samuel Mills (known as Henchman, under the github teams: JethroLogger & HenchSpace)
 
-You can find full license [here.](/LICENSE.txt)
+Licenses: [LGPL-v3](/LGPLv3-license.txt) AND [MIT](/MIT-.txt)

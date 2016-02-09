@@ -1,11 +1,14 @@
 var Jethro = require('../lib/index.js');
+
 var logger = new Jethro();
+//logger.addTransport(new JethroConsole(), "console");
+
 setInterval(function(){
     logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
 }, 2000);
 
 setInterval(function(){
-    logger.output({message:"hi", severity:"transport", source:"Output"});
+    //logger.output({message:"hi", severity:"transport", source:"Output"});
 }, 5000);
 
 logger.log('info', "startup", "Test");

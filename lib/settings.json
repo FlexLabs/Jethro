@@ -1,17 +1,27 @@
 {
-  "location": "undefined",
-  "timeformat": "undefined",
+  "transports":{
+    "console":{
+      "timestampOpts": {
+        "brackets": false,
+        "utc": false
+      }
+    }
+  }, "plugins":{
+
+  }, "location":{
+    "value":"undefined"
+  }, "timestamp":{
+    "format":"undefined"
+  }, "source":{
+    "whitelist": [],
+    "blacklist": []
+  },
   "output": {
     "source": {
-      "whitelist": [],
-      "blacklist": []
+
     },
     "colour": true,
     "timestamp": true,
     "console": true,
-    "timestampOpts": {
-      "brackets": false,
-      "utc": false
-    }
   }
 }
