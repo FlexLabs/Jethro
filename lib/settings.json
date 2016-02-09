@@ -20,7 +20,10 @@
     "source": {
 
     },
-    "colour": true,
+    "colour": {
+        "enabled": true,
+        "force": false
+    },
     "timestamp": true,
     "console": true,
   }
