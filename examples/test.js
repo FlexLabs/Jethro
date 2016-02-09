@@ -1,14 +1,12 @@
 var Jethro = require('../lib/index.js');
-
 var logger = new Jethro();
-//logger.addTransport(new JethroConsole(), "console");
 
 setInterval(function(){
     logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
 }, 2000);
 
 setInterval(function(){
-    //logger.output({message:"hi", severity:"transport", source:"Output"});
+    logger.direct({message:"hi", severity:"transport", source:"Output"});
 }, 5000);
 
 logger.log('info', "startup", "Test");
@@ -34,3 +32,15 @@ setTimeout(function(){
     logger.log('success', 'Core - ', 'Finished the testing procedure!');
     process.exit(0);
 }, 8 * 1000);
+
+setTimeout(function() {
+    console.log("Custom methods test");
+    logger.info("startup", "Test");
+    logger.transport("startup", "Test");
+    logger.debug("startup", "Test");
+    logger.success("startup", "Test");
+    logger.warn("startup", "Test");
+    logger.warning("startup", "Test");
+    logger.error("startup", "Test");
+    logger.fatal("startup", "Test");
+}, 5000);
