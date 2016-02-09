@@ -1,3 +1,5 @@
+coverage/
+*.log
 node_modules/
 logs/
 .idea/
