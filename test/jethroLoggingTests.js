@@ -169,10 +169,30 @@ describe("Logging Tests", function() {
         expect(inspect[0], "to equal", now + " [Info]      [Tests]         Testing Output   \n");
         logger.setColour(true);
     });
+    it("should Log to console with no timestamp", function() {
+        logger.setTimestamp(false);
+        var inspect = stdout.inspectSync(function() {
+            output(assign(defaultInfo, {
+                severity: "info",
+            }));
+        });
 
+        expect(inspect[0], "to equal", "[\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         Testing Output   \n");
+    });
+    it("should Log to console with undefined message", function() {
+        var inspect = stdout.inspectSync(function() {
+            output(assign(defaultInfo, {
+                message: undefined,
+                severity: "info",
+            }));
+        });
+        expect(inspect[0], "to equal", now + " [\x1b[1m\x1b[35mInfo\x1b[39m\x1b[22m]      [Tests]         \x1b[1m\x1b[31mundefined\x1b[39m\x1b[22m   \n");
+
+    });
     it("should Log to console with undefined source", function() {
         var inspect = stdout.inspectSync(function() {
             output(assign(defaultInfo, {
+                message: "Testing Output",
                 severity: "info",
                 source: undefined
             }));
@@ -200,6 +220,7 @@ describe("Custom Log settings", function() {
             logger.setBrackets(true);
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
+                    message: "Testing Output",
                     severity: "info",
                     source: "Tests"
                 }));
@@ -214,6 +235,7 @@ describe("Custom Log settings", function() {
             logger.setTimeformat("DD:MM:YYYY");
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
+                    message: "Testing Output",
                     severity: "info",
                     source: "Tests"
                 }));
@@ -227,6 +249,7 @@ describe("Custom Log settings", function() {
             logger.setUTC(true);
             var inspect = stdout.inspectSync(function() {
                 output(assign(defaultInfo, {
+                    message: "Testing Output",
                     severity: "info",
                     source: "Tests"
                 }));
