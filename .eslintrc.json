@@ -22,7 +22,6 @@
             "uninitialized": "always",
             "initialized": "never"
         }],
-        "quotes": 2,
         "quote-props": [2, "consistent"],
         "semi": 2,
         "semi-spacing": 2,
