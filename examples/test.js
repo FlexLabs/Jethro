@@ -1,5 +1,4 @@
-var Jethro = require('../lib/index.js');
-var logger = new Jethro();
+var logger = require('../lib/index.js');
 
 setInterval(function(){
     logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});

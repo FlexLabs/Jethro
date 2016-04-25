@@ -69,6 +69,8 @@ Helped and maintained with [Alex](http://thedark1337.com).
 
 Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matthew](https://github.com/yemasthui)!
 
+Special thanks to [ReAnna](https://github.com/goto-bus-stop/) whom without which, version 3 would not be possible.
+
 License
 -------
 Licensed under the LGPL-v3 & MIT Licenses

@@ -1,7 +1,7 @@
 {
   "name": "jethro",
   "description": "Modular logging utility",
-  "version": "3.0.8",
+  "version": "3.1.0",
   "author": "Samuel Mills <sam.mills@hench.space>",
   "bugs": {
     "url": "https://github.com/JethroLogger/Jethro/issues"
@@ -14,7 +14,8 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "eventemitter3": "^1.1.1",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "uuid-v4": "^0.1.0"
   },
   "engines": {
     "node": ">= 0.12.0"
