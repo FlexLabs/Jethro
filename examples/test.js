@@ -8,6 +8,8 @@ setInterval(function(){
     logger.direct({message:"hi", severity:"transport", source:"Output"});
 }, 5000);
 
+logger("info", "constructor", "something");
+
 logger.log('info', "startup", "Test");
 logger.log('error', "startup", "Test");
 logger.log('warning', "startup", "Test");
