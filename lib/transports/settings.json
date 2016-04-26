@@ -1,0 +1,31 @@
+{
+  "enabled": true,
+  "colour": {
+    "bold": true,
+    "enabled": true,
+    "force": true
+  },
+  "events": [],
+  "severity": {
+    "debug": true,
+    "transport": true,
+    "info": true,
+    "success": true,
+    "warning": true,
+    "error": true
+  },
+  "source": {
+    "whitelist": [],
+    "blacklist": []
+  },
+  "timestamp": {
+    "enabled": true,
+    "format": "undefined",
+    "utc": false,
+    "brackets": false
+  },
+  "location": {
+    "enabled": false,
+    "value": null
+  }
+}

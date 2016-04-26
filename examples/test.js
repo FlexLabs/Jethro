@@ -1,23 +1,22 @@
 var logger = require('../lib/index.js');
+//var logger = new Jethro();
 
-setInterval(function(){
-    logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
-}, 2000);
+// We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
+// We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
+// Shouldn't be confused with this (soon to be documented) behaviour
+// logger("info", "this is", "Just a test");
 
-setInterval(function(){
-    logger.direct({message:"hi", severity:"transport", source:"Output"});
-}, 5000);
 
-logger("info", "constructor", "something");
-
-logger.log('info', "startup", "Test");
-logger.log('error', "startup", "Test");
-logger.log('warning', "startup", "Test");
-logger.log('transport', "startup", "Test");
-logger.log('success', "startup", "Test");
-logger.log('debug', "startup", "Test");
-
-logger.log('debug', "Message", {yolo:true});
+function test() {
+    logger("info", "constructor", "something");
+    logger.log('info', "startup", "Test");
+    logger.log('error', "startup", "Test");
+    logger.log('warning', "startup", "Test");
+    logger.log('transport', "startup", "Test");
+    logger.log('success', "startup", "Test");
+    logger.log('debug', "startup", "Test");
+    logger.log('debug', "Message", {yolo: true});
+}
 
 //logger.setBrackets(true);
 
@@ -29,19 +28,46 @@ setInterval(function(){
 	logger.log('debug', 'Node.js', "Self.timer")
 }, 5000);
 
-setTimeout(function(){
-    logger.log('success', 'Core - ', 'Finished the testing procedure!');
-    process.exit(0);
-}, 8 * 1000);
+logger.emit('logger', {message:"Event Emitter", severity:"transport", source:"Event"});
+logger.direct({message:"hi", severity:"transport", source:"Output"});
+console.log("Custom methods test");
+logger.info("startup", "Test");
+logger.transport("startup", "Test");
+logger.debug("startup", "Test");
+logger.success("startup", "Test");
+logger.warn("startup", "Test");
+logger.warning("startup", "Test");
+logger.error("startup", "Test");
+logger.fatal("startup", "Test");
+console.log("Starting test procedure");
 
-setTimeout(function() {
-    console.log("Custom methods test");
-    logger.info("startup", "Test");
-    logger.transport("startup", "Test");
-    logger.debug("startup", "Test");
-    logger.success("startup", "Test");
-    logger.warn("startup", "Test");
-    logger.warning("startup", "Test");
-    logger.error("startup", "Test");
-    logger.fatal("startup", "Test");
-}, 5000);
+testProcedure();
+
+function testProcedure(){
+    test();
+    console.log("Enabling brackets...");
+    logger.enableBrackets();
+    test();
+    console.log("Disabling colour...");
+    logger.disableBrackets().disableColour();
+    test();
+    console.log("Disable bold...");
+    logger.enableColour().disableBoldColour();
+    test();
+    console.log("Disable timestamp...");
+    logger.enableBoldColour().disableTimestamp();
+    test();
+    console.log("");
+    logger.enableTimestamp();
+    test();
+}
+
+/*
+ * Notes:
+ *
+ * Bold not implemented
+ *
+ * Enable/disable timestamp not implemented
+ *
+ *
+ */
