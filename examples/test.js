@@ -20,7 +20,7 @@ function test() {
 
 //logger.setBrackets(true);
 
-logger.log('info', 'Core - ', 'Initating timer...');
+logger.log('info', 'Core - ', 'Initating timer...', new Date("2016-05-19 10:41:36"));
 
 //logger.setColour(false);
 
@@ -57,8 +57,17 @@ function testProcedure(){
     console.log("Disable timestamp...");
     logger.enableBoldColour().disableTimestamp();
     test();
-    console.log("");
-    logger.enableTimestamp();
+    console.log("Enable UTC");
+    logger.enableTimestamp().enableUTC();
+    test();
+    console.log("Disable UTC");
+    logger.disableUTC();
+    test();
+    console.log("Set timestamp format");
+    logger.setTimestampFormat(null, "MMMM Do YYYY, h:mm:ss a");
+    test();
+    console.log("Reset timestamp");
+    logger.resetTimestampFormat();
     test();
 }
 

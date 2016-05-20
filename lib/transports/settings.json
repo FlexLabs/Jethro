@@ -20,7 +20,7 @@
   },
   "timestamp": {
     "enabled": true,
-    "format": "undefined",
+    "format": "HH:mm:ss[s] SSS[ms]",
     "utc": false,
     "brackets": false
   },
