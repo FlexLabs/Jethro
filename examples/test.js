@@ -24,7 +24,7 @@ logger.log('info', 'Core - ', 'Initating timer...', new Date("2016-05-19 10:41:3
 
 //logger.setColour(false);
 
-setInterval(function(){
+setInterval(function() {
 	logger.log('debug', 'Node.js', "Self.timer")
 }, 5000);
 
@@ -43,7 +43,7 @@ console.log("Starting test procedure");
 
 testProcedure();
 
-function testProcedure(){
+function testProcedure() {
     test();
     console.log("Enabling brackets...");
     logger.enableBrackets();
