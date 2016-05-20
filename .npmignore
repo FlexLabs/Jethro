@@ -6,3 +6,8 @@ logs
 .DS_Store
 .travis.yml
 docs
+.codeclimate.yml
+.eslintignore
+.eslintrc
+.idea
+tests
