@@ -1,0 +1,32 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc","closure"]
+  },
+  "source": {
+    "includePattern": ".+\\.js(doc)?$",
+    "excludePattern": "(^|\\/|\\\\)_",
+    "include": [
+      "lib/index.js",
+
+      "lib/transports/index.js",
+      "lib/transports/console.js",
+
+      "lib/transports/utils/capitalise.js",
+      "lib/transports/utils/formatDate.js",
+      "lib/transports/utils/formatString.js",
+      "lib/transports/utils/getMessage.js",
+      "lib/transports/utils/getSeverity.js",
+      "lib/transports/utils/getSeverityColour.js",
+      "lib/transports/utils/getSource.js",
+      "lib/transports/utils/getTimestamp.js",
+      "lib/transports/utils/spaceOut.js"
+    ],
+    "exclude": []
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
