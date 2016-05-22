@@ -1,14 +1,20 @@
-var logger = require('../lib/index.js');
-//var logger = new Jethro();
+var Jethro = require('../lib/index.js');
+var path = require("path");
+var logger = new Jethro();
 
 // We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
 // We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
 // Shouldn't be confused with this (soon to be documented) behaviour
 // logger("info", "this is", "Just a test");
 
+var jethroFile = new Jethro.JethroFile();
+jethroFile.setFilePath(path.join(__dirname, 'logs'));
+//jethroFile.setFilenameFormat("");
+logger.addTransport("file", jethroFile);
+
 
 function test() {
-    logger("info", "constructor", "something");
+    //logger("info", "constructor", "something");
     logger.log('info', "startup", "Test");
     logger.log('error', "startup", "Test");
     logger.log('warning', "startup", "Test");
@@ -44,40 +50,30 @@ console.log("Starting test procedure");
 testProcedure();
 
 function testProcedure() {
+    logger.enableForceColour("console");
     test();
-    console.log("Enabling brackets...");
-    logger.enableBrackets();
-    test();
-    console.log("Disabling colour...");
-    logger.disableBrackets().disableColour();
-    test();
-    console.log("Disable bold...");
-    logger.enableColour().disableBoldColour();
-    test();
-    console.log("Disable timestamp...");
-    logger.enableBoldColour().disableTimestamp();
-    test();
-    console.log("Enable UTC");
-    logger.enableTimestamp().enableUTC();
-    test();
-    console.log("Disable UTC");
-    logger.disableUTC();
-    test();
-    console.log("Set timestamp format");
-    logger.setTimestampFormat(null, "MMMM Do YYYY, h:mm:ss a");
-    test();
-    console.log("Reset timestamp");
-    logger.resetTimestampFormat();
-    test();
-    logger.fatal("Something", "Bad");
+    logger.log("info", "tester", "Enable colour...").enableColour();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Enable brackets...").enableBrackets();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Disable brackets...").disableBrackets();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Disable colour...").disableColour();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Enable colour...").enableColour();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Enable bold colour...").enableBoldColour();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Disable bold colour...").disableBoldColor();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Enable timestamp...").enableTimestamp();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Set timestamp format...").setTimestampFormat(null, "MMMM Do YYYY, h:mm:ss a");
+    logger.log("debug", "tester", "Test message.");
+    logger.log("info", "tester", "Reset timestamp format...").resetTimestampFormat();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("debug", "tester", "Enable location...").enableLocation();
+    logger.log("debug", "tester", "Test message.");
+    logger.log("debug", "tester", "Disable Location...").disableLocation();
+    logger.log("debug", "tester", "Test message.");
 }
-
-/*
- * Notes:
- *
- * Bold not implemented
- *
- * Enable/disable timestamp not implemented
- *
- *
- */

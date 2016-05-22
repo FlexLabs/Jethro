@@ -17,7 +17,7 @@ tests
 .gitignore
 
 # Legacy
-logs
+examples/logs
 
 # Environment
 .DS_Store
