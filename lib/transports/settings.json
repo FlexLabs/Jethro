@@ -5,7 +5,6 @@
     "enabled": true,
     "force": true
   },
-  "events": [],
   "severity": {
     "debug": true,
     "transport": true,
@@ -15,6 +14,7 @@
     "error": true
   },
   "source": {
+    "enabled": null,
     "whitelist": [],
     "blacklist": []
   },
@@ -25,7 +25,6 @@
     "brackets": false
   },
   "location": {
-    "enabled": false,
-    "value": null
+    "enabled": false
   }
 }

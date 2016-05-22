@@ -69,6 +69,7 @@ function testProcedure() {
     console.log("Reset timestamp");
     logger.resetTimestampFormat();
     test();
+    logger.fatal("Something", "Bad");
 }
 
 /*

@@ -1,13 +1,18 @@
-# Jethro [![Build Status](https://travis-ci.org/JethroLogger/Jethro.svg?branch=master)](https://travis-ci.org/JethroLogger/Jethro) [![npm version](http://img.shields.io/npm/v/jethro.svg)](https://npmjs.org/package/jethro) [![npm downloads](http://img.shields.io/npm/dm/jethro.svg)](https://npmjs.org/package/jethro) [![Code Climate](https://codeclimate.com/github/JethroLogger/Jethro/badges/gpa.svg)](https://codeclimate.com/github/JethroLogger/Jethro)
+# Jethro [![Build Status][travis-badge]][travis-link] [![npm version][npm-badge]][npm-link] [![npm downloads][npmd-badge]][npmd-link] [![Code Climate][cc-badge]][cc-link]
 
-Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need within one complete package. It is also designed to be used in cooperation with other tools and transport services.
+Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need
+within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
-Feel free to visit the HenchSpace website [here.](https://henchspace.co/)
+## Usage Notice
 
+This branch is unstable until this notice is removed.
+
+We will be following the node.js format of even major Semantic Versioning for stable, odd majors for
+unstable/development.
 
 Installation
 ------------
-`npm i jethro --save`
+```npm i jethro --save```
 
 
 Usage
@@ -29,31 +34,32 @@ logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message
 Here's a screen shot of a potential output:
 
 
-![Screenshot](/docs/v2/i.png "Screenshot")
+![Screenshot](/docs/v2/i.png "Screen shot")
 
+Examples
+--------
+* Coming [Soon.tm](http://soon.tm)
 
 The API
 -------
+* Coming [Soon.tm](http://soon.tm)
 
-##### API Docs
-* [Version 2 Documentation](/docs/v2/API.md)
-* [Version 1 Documentation](/docs/v1/README.md)
-
-##### Settings
-Customisations for the settings can be found [here] (/docs/v2/SETTINGS.md).
-
-##### Plugins
-Current Internal plugins:
-* [Express.js](/docs/v2/plugins/EXPRESS.md)
-* [Restify](/docs/v2/plugins/RESTIFY.md)
+Plugins
+-------
+* Coming [Soon.tm](http://soon.tm)
 
 Transports
 ----------
-* Undergoing Rewrite
+* Coming [Soon.tm](http://soon.tm)
 
-More features Coming!
+Settings & Customisations
+-------------------------
+* Coming [Soon.tm](http://soon.tm)
+
+Other Features
 ---------------------
-* Undergoing Rewrite
+* Namespaces
+* Error handling
 
 Projects using this logger
 --------------------------
@@ -61,15 +67,20 @@ Projects using this logger
 * HenchSpace backend infrastructure
 * TFL Bot (plug.dj)
 
+Deprecated Documentation
+------------------------
+* [Version 2 Documentation](/docs/v2/API.md)
+* [Version 1 Documentation](/docs/v1/README.md)
+
 Credits
 -------
-Birthed by [Henchman](https://hench.in).
+Created and maintained [Henchman](https://hench.space).
 
 Helped and maintained with [Alex](http://thedark1337.com).
 
 Suggestions and moral support from [xBytez](https://github.com/xBytez) and [Matthew](https://github.com/yemasthui)!
 
-Special thanks to [ReAnna](https://github.com/goto-bus-stop/) whom without which, version 3 would not be possible.
+Special thanks to [ReAnna](https://github.com/goto-bus-stop/) whom without which, version 3+ would not be possible.
 
 License
 -------
@@ -78,3 +89,14 @@ Licensed under the LGPL-v3 & MIT Licenses
 Copyright (C) 2015  Samuel Mills (known as Henchman, under the github teams: JethroLogger & HenchSpace)
 
 Licenses: [LGPL-v3](/LGPLv3-license.txt) AND [MIT](/MIT-.txt)
+
+[travis-badge]: https://travis-ci.org/JethroLogger/Jethro.svg?branch=master
+[travis-link]: https://travis-ci.org/JethroLogger/Jethro
+[npm-badge]: http://img.shields.io/npm/v/jethro.svg
+[npm-link]: https://npmjs.org/package/jethro
+[npmd-badge]: http://img.shields.io/npm/dm/jethro.svg
+[npmd-link]: https://npmjs.org/package/jethro
+[cc-badge]: https://codeclimate.com/github/JethroLogger/Jethro/badges/gpa.svg
+[cc-link]: https://codeclimate.com/github/JethroLogger/Jethro
+
+
