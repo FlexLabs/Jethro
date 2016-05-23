@@ -11,8 +11,7 @@
       "lib/index.js",
 
       "lib/transports/index.js",
-      "lib/transports/utils.js",
-      "lib/transports/formatString.js",
+      "lib/transports/settings.js",
 
       "lib/transports/native/console.js",
       "lib/transports/native/file.js"
