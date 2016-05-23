@@ -7,7 +7,7 @@ var logger = new Jethro();
 // Shouldn't be confused with this (soon to be documented) behaviour
 // logger("info", "this is", "Just a test");
 
-var jethroFile = new Jethro.JethroFile();
+var jethroFile = new Jethro.File();
 jethroFile.setFilePath(path.join(__dirname, 'logs'));
 //jethroFile.setFilenameFormat("");
 logger.addTransport("file", jethroFile);
