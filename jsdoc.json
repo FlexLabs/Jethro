@@ -12,7 +12,8 @@
       "lib/transports/index.js",
       "lib/transports/settings.js",
       "lib/transports/native/console.js",
-      "lib/transports/native/file.js"
+      "lib/transports/native/file.js",
+      "lib/plugins/index.js"
     ],
     "exclude": []
   },
