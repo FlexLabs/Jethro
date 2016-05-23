@@ -7,8 +7,8 @@
     "url": "https://github.com/JethroLogger/Jethro/issues"
   },
   "contributors": [
-    "Mathieu Samaey <yemasthui@gmail.com>",
     "Alex Pham <thedark1337@thedark1337.com>",
+    "Mathieu Samaey <yemasthui@gmail.com>",
     "Nitro Ghost <wildeman.benjamin@gmail.com>"
   ],
   "dependencies": {
@@ -16,6 +16,9 @@
     "eventemitter3": "^1.2.0",
     "moment": "^2.13.0",
     "uuid": "^2.0.2"
+  },
+  "devDependencies": {
+
   },
   "engines": {
     "node": ">= 0.12.0"
