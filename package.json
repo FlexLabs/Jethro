@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "mocha": "^2.5.1",
-    "mocha-eslint": "^2.0.2",
+    "mocha-eslint": "^1.0.0",
     "object-assign": "^4.1.0",
     "test-console": "^1.0.0",
     "unexpected": "^10.13.3"
