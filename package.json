@@ -1,7 +1,7 @@
 {
   "name": "jethro",
   "description": "Modular logging utility",
-  "version": "3.15.4",
+  "version": "3.15.5",
   "author": "Samuel Mills <sam.mills@hench.space>",
   "bugs": {
     "url": "https://github.com/JethroLogger/Jethro/issues"
