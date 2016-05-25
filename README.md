@@ -48,6 +48,24 @@ Plugins
 -------
 * Coming [Soon.tm](http://soon.tm)
 
+#### Express
+
+```js
+var Jethro = require('../Jethro/lib/index.js');
+var logger = new Jethro();
+var expressLog = new Jethro.Express();
+logger.addPlugin("express", expressLog);
+app.use(expressLog.input());
+```
+
+or
+
+```js
+var logger = require("jethro");
+logger.addPlugin("express", new Jethro.Express());
+app.use(logger.plugins.express.input());
+````
+
 Transports
 ----------
 * Coming [Soon.tm](http://soon.tm)
