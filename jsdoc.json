@@ -9,11 +9,13 @@
     "include": [
       "README.md",
       "lib/index.js",
+      "lib/utils.js",
+      "lib/plugins/index.js",
+      "lib/plugins/native/express.js",
       "lib/transports/index.js",
       "lib/transports/settings.js",
       "lib/transports/native/console.js",
-      "lib/transports/native/file.js",
-      "lib/plugins/index.js"
+      "lib/transports/native/file.js"
     ],
     "exclude": []
   },
