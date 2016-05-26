@@ -87,8 +87,8 @@ Projects using this logger
 
 Deprecated Documentation
 ------------------------
-* [Version 2 Documentation](/docs/v2/API.md)
-* [Version 1 Documentation](/docs/v1/README.md)
+* [Version 2 Documentation](https://github.com/JethroLogger/Jethro/tree/v2/docs/v2/API.md)
+* [Version 1 Documentation](https://github.com/JethroLogger/Jethro/tree//docs/v1/README.md)
 
 Credits
 -------
