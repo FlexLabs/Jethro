@@ -33,7 +33,6 @@ setInterval(function() {
 	logger.log('debug', 'Node.js', "Self.timer");
 }, 5000);
 
-logger.emit('logger', { message: "Event Emitter", severity: "transport", source:" Event" });
 logger.direct({ message: "hi", severity: "transport", source: "Output" });
 console.log("Custom methods test");
 logger.info("startup", "Test");
