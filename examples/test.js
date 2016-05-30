@@ -33,7 +33,6 @@ setInterval(function() {
 	logger.log('debug', 'Node.js', "Self.timer");
 }, 5000);
 
-logger.emit('logger', { message: "Event Emitter", severity: "transport", source:" Event" });
 logger.direct({ message: "hi", severity: "transport", source: "Output" });
 console.log("Custom methods test");
 logger.info("startup", "Test");
@@ -43,7 +42,7 @@ logger.success("startup", "Test");
 logger.warn("startup", "Test");
 logger.warning("startup", "Test");
 logger.error("startup", "Test");
-logger.fatal("startup", "Test");
+//logger.fatal("startup", "Test");
 console.log("Starting test procedure");
 
 testProcedure();
