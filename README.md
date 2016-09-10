@@ -34,48 +34,89 @@ The simple makeup of the logger input is explained within the sections below:
 
 logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message](/docs/v2/MESSAGE.md))
 
-Here's a screen shot of a potential output:
+Here's a screenshot of a potential output:
 
 
-![Screenshot](https://github.com/JethroLogger/Jethro/blob/v2/docs/v2/i.png "Screen shot")
+![Screenshot](https://raw.githubusercontent.com/JethroLogger/Jethro/v2/docs/v2/i.png "Screenshot")
 
 Examples
 --------
-* Coming [Soon.tm](http://soon.tm)
+
+#### Console
+
+```js
+var Jethro = require("jethro");
+var logger = new Jethro();
+logger("info", "Somewhere", "Something happened...");
+
+// OR
+
+var logger = require("jethro");
+logger.info("Somewhere", "Something happened");
+```
 
 The API
 -------
-* Coming [Soon.tm](http://soon.tm)
+```js
+var logger = new Jethro();
+logger.log(severity, source, message);
+logger.direct({
+    source,
+    severity,
+    message,
+    timestamp
+});
+logger.output({
+    source,
+    severity,
+    message,
+    timestamp
+});
+logger.info(source, message);
+logger.transport(source, message);
+logger.debug(source, message);
+logger.success(source, message);
+logger.warn(source, message);
+logger.warning(source, message);
+logger.error(source, message);
+logger.fatal(source, message);
+```
 
 Plugins
 -------
-* Coming [Soon.tm](http://soon.tm)
 
 #### Express
 
 ```js
-var Jethro = require('../Jethro/lib/index.js');
+var Jethro = require('jethro');
 var logger = new Jethro();
 var expressLog = new Jethro.Express();
 logger.addPlugin("express", expressLog);
 app.use(expressLog.input());
-```
 
-or
+// OR
 
-```js
 var logger = require("jethro");
 logger.addPlugin("express", new Jethro.Express());
 app.use(logger.plugins.express.input());
-````
+```
 
 Transports
 ----------
-* Coming [Soon.tm](http://soon.tm)
+
+#### File logging
+
+```js
+var Jethro = require('jethro');
+var path = require("path");
+var logger = new Jethro();
+var jethroFile = new Jethro.File();
+jethroFile.setFilePath(path.join(__dirname, 'logs'));
+logger.addTransport("file", jethroFile);
+```
 
 Settings & Customisations
 -------------------------
-* Coming [Soon.tm](http://soon.tm)
 
 Other Features
 ---------------------
@@ -107,7 +148,7 @@ License
 -------
 Licensed under the LGPL-v3 & MIT Licenses
 
-Copyright (C) 2015  Samuel Mills (known as Henchman, under the github teams: JethroLogger & HenchSpace)
+Copyright (C) 2016  Samuel Mills (known as Henchman, under the github teams: JethroLogger & HenchSpace)
 
 Licenses: [LGPL-v3](/LGPLv3-license.txt) AND [MIT](/MIT-.txt)
 
