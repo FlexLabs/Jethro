@@ -10,7 +10,7 @@ This branch is unstable until this notice is removed. This branch is version 3 o
 We will be following the node.js format of even major Semantic Versioning for stable, odd majors for
 unstable/development.
 
-Please refer to [v2.7.1](https://github.com/JethroLogger/Jethro/tree/v2/) as this is the current version on npm
+#### Please refer to documentation for [v2.7.1](https://github.com/JethroLogger/Jethro/tree/v2/) as this is the current version on npm
 
 
 Installation
@@ -37,7 +37,7 @@ logger( [severity](/docs/v2/SEVERITY.md), [source](/docs/v2/SOURCE.md), [message
 Here's a screen shot of a potential output:
 
 
-![Screenshot](/docs/v2/i.png "Screen shot")
+![Screenshot](https://github.com/JethroLogger/Jethro/blob/v2/docs/v2/i.png "Screen shot")
 
 Examples
 --------
