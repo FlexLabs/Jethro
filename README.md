@@ -3,19 +3,13 @@
 Jethro Logger is an all-in-one logging utility designed to give developers the logging tools and flexibility they need
 within one complete package. It is also designed to be used in cooperation with other tools and transport services.
 
-## Usage Notice
-
-This branch is unstable until this notice is removed. This branch is version 3 of Jethro.
-
-We will be following the node.js format of even major Semantic Versioning for stable, odd majors for
-unstable/development.
-
-#### Please refer to documentation for [v2.7.1](https://github.com/JethroLogger/Jethro/tree/v2/) as this is the current version on npm
-
-
 Installation
 ------------
 ```npm i jethro --save```
+
+Documentation
+-------------
+JSDoc documentation can be found [here](https://jethrologger.github.io/documentation/jethro-node)
 
 
 Usage

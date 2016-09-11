@@ -1,7 +1,7 @@
 {
   "name": "jethro",
   "description": "Modular logging utility",
-  "version": "3.21.0",
+  "version": "4.0.0",
   "author": "Samuel Mills <sam.mills@hench.space>",
   "bugs": {
     "url": "https://github.com/JethroLogger/Jethro/issues"
@@ -44,6 +44,7 @@
     "url": "https://github.com/JethroLogger/Jethro"
   },
   "scripts": {
-    "test": "node examples/test.js"
+    "test": "node examples/test.js",
+    "docs": "jsdoc ./lib --verbose --package ./package.json --readme ./README.md -c ./jsdoc.json -d ../jethrologger.github.io/documentation/jethro-node"
   }
 }
