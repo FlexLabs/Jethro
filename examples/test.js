@@ -12,6 +12,7 @@ jethroFile.setFilePath(path.join(__dirname, 'logs'));
 //jethroFile.setFilenameFormat("");
 logger.addTransport("file", jethroFile);
 
+
 function test() {
     //logger("info", "constructor", "something");
     logger.log('info', "startup", "Test");
