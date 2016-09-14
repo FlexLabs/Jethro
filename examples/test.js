@@ -13,6 +13,7 @@ jethroFile.setFilePath(path.join(__dirname, 'logs'));
 logger.addTransport("file", jethroFile);
 
 
+
 function test() {
     //logger("info", "constructor", "something");
     logger.log('info', "startup", "Test");
@@ -75,4 +76,5 @@ function testProcedure() {
     logger.log("debug", "tester", "Test message.");
     logger.log("debug", "tester", "Disable Location...").disableLocation();
     logger.log("debug", "tester", "Test message.");
+
 }
