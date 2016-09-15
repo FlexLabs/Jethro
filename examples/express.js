@@ -7,7 +7,7 @@ var expressLog = new Jethro.Express();
 logger.addPlugin("express", expressLog);
 app.use(expressLog.input());
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
     res.send('hello world');
 });
 
