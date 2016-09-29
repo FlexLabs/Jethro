@@ -18,7 +18,7 @@ Usage
 ```js
 var logger = require('jethro');
 
-logger("info", "Testing", "This is a test message!");
+logger('info', 'Testing', 'This is a test message!');
 ```
 
 It's as simple as that!
@@ -38,14 +38,14 @@ Examples
 #### Console
 
 ```js
-var Jethro = require("jethro");
+var Jethro = require('jethro');
 var logger = new Jethro();
-logger("info", "Somewhere", "Something happened...");
+logger('info', 'Somewhere', 'Something happened...');
 
 // OR
 
-var logger = require("jethro");
-logger.info("Somewhere", "Something happened");
+var logger = require('jethro');
+logger.info('Somewhere', 'Something happened');
 ```
 
 The API
@@ -84,13 +84,13 @@ Plugins
 var Jethro = require('jethro');
 var logger = new Jethro();
 var expressLog = new Jethro.Express();
-logger.addPlugin("express", expressLog);
+logger.addPlugin('express', expressLog);
 app.use(expressLog.input());
 
 // OR
 
-var logger = require("jethro");
-logger.addPlugin("express", new Jethro.Express());
+var logger = require('jethro');
+logger.addPlugin('express', new Jethro.Express());
 app.use(logger.plugins.express.input());
 ```
 
@@ -101,11 +101,11 @@ Transports
 
 ```js
 var Jethro = require('jethro');
-var path = require("path");
+var path = require('path');
 var logger = new Jethro();
 var jethroFile = new Jethro.File();
 jethroFile.setFilePath(path.join(__dirname, 'logs'));
-logger.addTransport("file", jethroFile);
+logger.addTransport('file', jethroFile);
 ```
 
 Settings & Customisations
