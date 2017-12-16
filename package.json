@@ -13,14 +13,17 @@
   ],
   "dependencies": {
     "chalk": "^2.3.0",
-    "moment": "^2.19.3",
+    "moment": "^2.19.4",
     "strip-ansi": "^4.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "express": "^4.16.2",
     "mocha": "^4.0.1",
     "mocha-eslint": "^4.1.0",
+    "nyc": "^11.3.0",
     "object-assign": "^4.1.1",
+    "supertest": "^3.0.0",
     "test-console": "^1.1.0",
     "unexpected": "^10.36.2"
   },
@@ -45,7 +48,7 @@
     "url": "https://github.com/JethroLogger/Jethro"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha --exit",
     "docs": "jsdoc ./lib --verbose --package ./package.json --readme ./README.md -c ./jsdoc.json -d ../jethrologger.github.io/documentation/jethro-node"
   }
 }
