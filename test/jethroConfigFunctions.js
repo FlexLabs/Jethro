@@ -4,7 +4,7 @@ var expect = require("unexpected");
 var Jethro = require("../");
 var logger = new Jethro();
 var defaultSet = function() {
-    logger.importSettings('console',{
+    logger.importSettings('console', {
         "location": "undefined",
         "timeformat": "undefined",
         "output": {
@@ -59,7 +59,7 @@ describe("Logger config functions", function() {
             });
             var options = Object.create(Jethro.Settings.prototype);
             Object.assign(options, {
-                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true },source: { enabled: null, whitelist: [], blacklist: [] }, timestamp: { enabled: true, format: 'HH:mm:ss[s] SSS[ms]', utc: false, brackets: false }, location: { enabled: false }});
+                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true }, source: { enabled: null, whitelist: [], blacklist: [] }, timestamp: { enabled: true, format: 'HH:mm:ss[s] SSS[ms]', utc: false, brackets: false }, location: { enabled: false }});
 
             expect(logger.transports.console.settings, "to equal", options);
         });
@@ -501,10 +501,10 @@ describe("Logger config functions", function() {
         });
     });
     describe("Logger getColorSettings", function() {
-        it("Should return color settings",function() {
+        it("Should return color settings", function() {
             expect(logger.getColorSettings().console, "to have keys", ["bold", "enabled", "force"]);
         });
-        it("Should return colour settings",function() {
+        it("Should return colour settings", function() {
             expect(logger.getColourSettings().console, "to have keys", ["bold", "enabled", "force"]);
         });
     });

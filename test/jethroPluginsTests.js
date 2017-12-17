@@ -6,7 +6,7 @@ var logger = new Jethro();
 var request = require("supertest");
 var stdout = require("test-console").stdout;
 var defaultSet = function() {
-    logger.importSettings('console',{
+    logger.importSettings('console', {
         "location": "undefined",
         "timeformat": "undefined",
         "output": {
@@ -117,7 +117,7 @@ describe("Express Plugin Test", function() {
             .post("/")
             .end(function() {
                 inspect.restore();
-                expect(inspect.output[0], "to contain","[\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Express]       127.0.0.1         \x1b[32m\x1b[1m200\x1b[22m\x1b[39m   \x1b[33m\x1b[1mPOST\x1b[22m\x1b[39m");
+                expect(inspect.output[0], "to contain", "[\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Express]       127.0.0.1         \x1b[32m\x1b[1m200\x1b[22m\x1b[39m   \x1b[33m\x1b[1mPOST\x1b[22m\x1b[39m");
                 return done();
             });
     });
