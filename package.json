@@ -24,6 +24,7 @@
     "nyc": "^11.3.0",
     "object-assign": "^4.1.1",
     "supertest": "^3.0.0",
+    "tempy": "^0.2.1",
     "test-console": "^1.1.0",
     "unexpected": "^10.36.2"
   },

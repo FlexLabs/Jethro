@@ -18,14 +18,197 @@ var defaultInfo = {
 };
 var defaultSet = function() {
     logger.clean();
+    logger.disableLocation();
     logger.disableBrackets();
     logger.disableUTC();
     logger.setTimestampFormat(undefined, 'H:mm');
 };
+var chalk = require("chalk");
+var forceChalk = new chalk.constructor({
+    enabled: true
+});
 
+describe("Jethro Transport Functionality", function() {
+    describe("Transport getLocation", function() {
+        it("Should return the location", function() {
+            expect(logger.transports.console.getLocation({location: "127.0.0.1"}), "to equal", "[127.0.0.1]");
+        });
+    });
+    describe("Transport getMessage", function() {
+        it("Should return the message", function() {
+            expect(logger.transports.console.getMessage({message: "test"}), "to equal", "test");
+        });
+        it("Should inspect on a non string", function() {
+            expect(logger.transports.console.getMessage({message: {foo: 'bar'}}), "to equal", require("util").inspect({foo: 'bar'}));
+        });
+    });
+    describe("Transport getSeverity", function() {
+        it("Should return [Info] with Magenta for info severity", function() {
+            expect(logger.transports.console.getSeverity({severity: "info"}), "to equal", "[" + chalk.magenta.bold("Info") + "]");
+        });
+        it("Should return undefined for invalid severity", function() {
+            expect(logger.transports.console.getSeverity(undefined), "to equal", "[undefined]");
+        });
+    });
+    describe("Transport getSeverityColor", function() {
+        describe("Force colors", function() {
+            beforeEach(function() {
+                logger.transports.console.settings.colour.force = true;
+            });
+            it("Should return yellow for warning", function() {
+                expect(logger.transports.console.getSeverityColour("warning"), "to equal", forceChalk.yellow.bold("warning"));
+            });
+            it("Should return blue for debug", function() {
+                expect(logger.transports.console.getSeverityColour("debug"), "to equal", forceChalk.blue.bold("debug"));
+            });
+            it("Should return red for error", function() {
+                expect(logger.transports.console.getSeverityColour("error"), "to equal", forceChalk.red.bold("error"));
+            });
+            it("Should return magenta for info", function() {
+                expect(logger.transports.console.getSeverityColour("info"), "to equal", forceChalk.magenta.bold("info"));
+            });
+            it("Should return magenta for success", function() {
+                expect(logger.transports.console.getSeverityColour("success"), "to equal", forceChalk.green.bold("success"));
+            });
+            it("Should return cyan for transport", function() {
+                expect(logger.transports.console.getSeverityColour("transport"), "to equal", forceChalk.cyan.bold("transport"));
+            });
+        });
+        describe("Normal colors", function() {
+            it("Should return yellow for warning", function() {
+                expect(logger.transports.console.getSeverityColour("warning"), "to equal", chalk.yellow.bold("warning"));
+            });
+            it("Should return blue for debug", function() {
+                expect(logger.transports.console.getSeverityColour("debug"), "to equal", chalk.blue.bold("debug"));
+            });
+            it("Should return red for error", function() {
+                expect(logger.transports.console.getSeverityColour("error"), "to equal", chalk.red.bold("error"));
+            });
+            it("Should return magenta for info", function() {
+                expect(logger.transports.console.getSeverityColour("info"), "to equal", chalk.magenta.bold("info"));
+            });
+            it("Should return green for success", function() {
+                expect(logger.transports.console.getSeverityColour("success"), "to equal", chalk.green.bold("success"));
+            });
+            it("Should return cyan for transport", function() {
+                expect(logger.transports.console.getSeverityColour("transport"), "to equal", chalk.cyan.bold("transport"));
+            });
+        });
+    });
+    describe("Transport getSource", function() {
+        it("Should return the source", function() {
+            expect(logger.transports.console.getSource({source: "source"}), "to equal", "[source]");
+        });
+        it("Should default to [undefined] on invalid source", function() {
+            expect(logger.transports.console.getSource(undefined), "to equal", "[undefined]");
+        });
+    });
+    describe("Transport getTimestamp", function() {
+        it("Should return the timestamp", function() {
+            var date = new Date();
+
+            expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", moment(date.toISOString()).format(logger.transports.console.settings.timestamp.format));
+        });
+        it("Should return the timestamp in utc", function() {
+            var date = new Date();
+
+            logger.transports.console.settings.timestamp.utc = true;
+
+            expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", moment(date.toISOString()).utc().format(logger.transports.console.settings.timestamp.format));
+        });
+        it("Should return the timestamp with brackets", function() {
+            var date = new Date();
+
+            logger.transports.console.settings.timestamp.utc = false;
+            logger.transports.console.settings.timestamp.brackets = true;
+
+            expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", "[" + moment(date.toISOString()).format(logger.transports.console.settings.timestamp.format) + "]");
+        });
+    });
+    describe("Transport output", function() {
+        it("Should throw if output function isn't overriden", function() {
+            expect(function() {
+                var transport = new Jethro.Transport();
+
+                transport.output();
+            }, "to throw", new Error("Output function not overwritten!"));
+        });
+    });
+});
+describe("logger.set (deprecated)", function() {
+    it("Should log its deprecated", function(done) {
+        logger.set("console", {});
+        process.on("warning", function(warning) {
+            expect(warning.message, "to be", "logger.set is deprecated, please use .importSettings instead!");
+
+            return done();
+        });
+    });
+});
 describe("Logging Tests", function() {
-    afterEach(defaultSet);
     beforeEach(defaultSet);
+
+    describe("Direct output", function() {
+        it("Should throw on invalid type for direct output", function() {
+            expect(function() {
+                output(undefined);
+            }, "to throw", new Error("Missing data parameter."));
+        });
+    });
+
+    describe("Legacy output", function() {
+        // TODO: Fix legacy output. Currently it does not auto capitalize the severity, nor the source. As well as settings are not working for it. Not sure why.
+        it("Should work with Legacy output", function() {
+            var inspect = stdout.inspectSync(function() {
+                Jethro("Info", "Tests", "Testing Output", date);
+            });
+
+            expect(inspect[0], "to contain", "[" + chalk.magenta.bold("Info") + "]      [Tests]         Testing Output\n");
+        });
+    });
+    describe("Logger addTransport", function() {
+        it("Should fail on non instance of Transport", function() {
+            expect(function() {
+                logger.addTransport("test", undefined);
+            }, "to throw", new TypeError("Provided Transport not an instance of Transport Class"));
+        });
+        it("Should fail on non string transport name", function() {
+            expect(function() {
+                logger.addTransport(undefined);
+            }, "to throw", new TypeError("Provided Transport Name is not a string."));
+        });
+    });
+    describe("Logger getId", function() {
+        it("Should have an ID", function() {
+            expect(logger.getId(), "to match", /[a-f0-9]{8}-?[a-f0-9]{4}-?4[a-f0-9]{3}-?[89ab][a-f0-9]{3}-?[a-f0-9]{12}/i);
+        });
+    });
+
+    describe("Logger resetTimestampFormat", function() {
+        it("Should reset the format", function() {
+            logger.resetTimestampFormat();
+
+            expect(logger.transports.console.settings.timestamp.format, "to equal", "HH:mm:ss[s] SSS[ms]");
+        });
+    });
+
+    describe("Logger _outputHandler", function() {
+        it("Should throw on invalid data", function() {
+            expect(function() {
+                logger._outputHandler(undefined);
+            }, "to throw", new Error("Missing parameters"));
+        });
+
+        // TODO: Fix when namespaces can be added.
+        it.skip("Should throw if not handled by a transport", function() {
+            expect(function() {
+                logger._outputHandler(assign({}, defaultInfo, {
+                    namespace: "testing",
+                    severity: "info"
+                }));
+            }, "to throw", new Error("Namespace: testing not handled"));
+        });
+    });
 
     describe("Logger Levels", function() {
         it("Should Log to console with debug level", function() {
@@ -130,6 +313,25 @@ describe("Logging Tests", function() {
             expect(inspect[0], "to be", now + " [" + chalk.green.bold("Success") + "]   [Tests]         Testing Output\n");
         });
 
+        describe("Logger Trace", function() {
+            it("Should Log to console with trace level for Logger.trace", function() {
+                var error = new TypeError("Test is undefined");
+                var inspect = stdout.inspectSync(function() {
+                    logger.trace("Tests", error);
+                });
+
+                expect(inspect[0], "to be", now + " [" + chalk.red.bold("Error") + "]     [Tests]         " + error.message + "\n");
+            });
+
+            it("Should throw if a non error is sent in", function() {
+                expect(function() {
+                    logger.trace("tests", undefined);
+                }, "to throw", new Error("Error not sent to Jethro.trace"));
+            });
+
+        });
+
+
         it("Should Log to console with transport level for Logger.transport", function() {
             var inspect = stdout.inspectSync(function() {
                 logger.transport("Tests", "Testing Output", date);
@@ -137,8 +339,16 @@ describe("Logging Tests", function() {
 
             expect(inspect[0], "to be", now + " [" + chalk.cyan.bold("Transport") + "] [Tests]         Testing Output\n");
         });
-    });
 
+        it("Should Log to console with warning level for Logger.warning", function() {
+            var inspect = stdout.inspectSync(function() {
+                logger.warning("Tests", "Testing Output", date);
+            });
+
+            expect(inspect[0], "to be", now + " [" + chalk.yellow.bold("Warning") + "]   [Tests]         Testing Output\n");
+        });
+
+    });
 
 
     describe("Logger Undefined / thrown errors", function() {
@@ -186,7 +396,6 @@ describe("Logging Tests", function() {
 
             expect(inspect[0], "to be", now + " [" + chalk.yellow.bold("Warning") + "]   [Logger]        Check syntax, something was undefined - Severity: info Source: undefined Message: Testing Output\n");
         });
-
 
 
         it("Should warn if object is passed to logger", function() {
@@ -259,6 +468,21 @@ describe("Custom Log settings", function() {
             });
 
             expect(inspect[0], "to be", "[" + now + "]" + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
+        });
+    });
+    describe("Location", function() {
+        it("Should log a location", function() {
+            logger.enableLocation("console");
+            var inspect = stdout.inspectSync(function() {
+                output(assign({}, defaultInfo, {
+                    message: "Testing Output",
+                    severity: "info",
+                    source: "Tests"
+                }));
+
+            });
+
+            expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     [" + require("os").hostname + "]    [Tests]         Testing Output\n");
         });
     });
     describe("Timeformats", function() {

@@ -27,41 +27,168 @@ describe("Logger config functions", function() {
     beforeEach(defaultSet);
 
     describe("logger.importSettings", function() {
+        it("Should throw if not an instance of Settings as well as undefined", function() {
+            expect(function() {
+                logger.importSettings(undefined);
+            }, "to throw");
+        });
+
+        it("Should throw Unexpected baggage on non undefined", function() {
+            expect(function() {
+                logger.importSettings(undefined, "test");
+            }, "to throw", new TypeError("Unexpected object in bagging area"));
+        });
+
+        it("Should use defaults with legacy object if opts are null", function() {
+            logger.importSettings("console", {
+                output: {
+                    colour: {
+                        enabled: null
+                    },
+                    source: {
+                        blacklist: null,
+                        whitelist: null
+                    },
+                    timestamp: null,
+                    timeformat: null,
+                    timestampOpts: {
+                        brackets: null,
+                        utc: null
+                    }
+                }
+            });
+            var options = Object.create(Jethro.Settings.prototype);
+            Object.assign(options, {
+                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true },source: { enabled: null, whitelist: [], blacklist: [] }, timestamp: { enabled: true, format: 'HH:mm:ss[s] SSS[ms]', utc: false, brackets: false }, location: { enabled: false }});
+
+            expect(logger.transports.console.settings, "to equal", options);
+        });
+
+        it("Should change settings with legacy object", function() {
+            logger.importSettings("console", {
+                output: {
+                    colour: {
+                        enabled: false
+                    },
+                    source: {
+                        blacklist: ["testing"],
+                        whitelist: ["testing"]
+                    },
+                    timestamp: true,
+                    timeformat: "HH:MM:SS[s] SSS[ms]",
+                    timestampOpts: {
+                        brackets: true,
+                        utc: true
+                    }
+                }
+            });
+            var options = Object.create(Jethro.Settings.prototype);
+            Object.assign(options, {
+                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true }, source: { enabled: null, whitelist: [ 'testing' ], blacklist: [ 'testing' ] }, timestamp: { enabled: true, format: 'HH:MM:SS[s] SSS[ms]', utc: true, brackets: true }, location: { enabled: false }
+            });
+
+            expect(logger.transports.console.settings, "to equal", options);
+        });
+
+        it("Should use defaults with invalid settings", function() {
+            logger.importSettings('console', {
+                "enabled": null,
+                "location": {
+                    "enabled": null
+                },
+                "severity": {
+                    "debug": null,
+                    "transport": null,
+                    "info": null,
+                    "success": null,
+                    "warning": null,
+                    "error": null
+                },
+                "timeformat": null,
+                "source": {
+                    "enabled": null,
+                    "whitelist": null,
+                    "blacklist": null
+                },
+                "colour": {
+                    "enabled": null,
+                    "bold": null,
+                    "force": null
+                },
+                "timestamp": {
+                    "enabled": null,
+                    "format": null,
+                    "brackets": null,
+                    "utc": null
+                }
+            });
+            var options = Object.create(Jethro.Settings.prototype);
+
+            Object.assign(options, {
+                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true }, source: { enabled: null, whitelist: [], blacklist: [] }, timestamp: { enabled: true, format: 'HH:mm:ss[s] SSS[ms]', utc: false, brackets: false }, location: { enabled: false }
+            });
+
+            expect(logger.transports.console.settings, "to equal", options);
+        });
+
         it("Should change the settings object", function() {
-            logger.importSettings('console',{
-                "location": "testing",
+            logger.importSettings('console', {
+                "enabled": false,
+                "location": {
+                    "enabled": true
+                },
+                "severity": {
+                    "debug": false,
+                    "transport": false,
+                    "info": false,
+                    "success": false,
+                    "warning": false,
+                    "error": false
+                },
                 "timeformat": "DD:MM:HH",
-                "output": {
-                    "source": {
-                        "whitelist": ["testing"],
-                        "blacklist": ["testing"]
-                    },
-                    "colour": false,
-                    "timestamp": false,
-                    "console": false,
-                    "timestampOpts": {
-                        "brackets": true,
-                        "utc": true
-                    }
+                "source": {
+                    "enabled": "blacklist",
+                    "whitelist": ["testing"],
+                    "blacklist": ["testing"]
+                },
+                "colour": {
+                    "enabled": false,
+                    "bold": true,
+                    "force": true
+                },
+                "timestamp": {
+                    "enabled": false,
+                    "format": "HH:MM:SS[s] SSS[ms]",
+                    "brackets": true,
+                    "utc": true
                 }
             });
-            expect(logger.settings, "not to equal", {
-                "location": "undefined",
-                "timeformat": "undefined",
-                "output": {
-                    "source": {
-                        "whitelist": [],
-                        "blacklist": []
-                    },
-                    "colour": true,
-                    "timestamp": true,
-                    "console": true,
-                    "timestampOpts": {
-                        "brackets": false,
-                        "utc": false
-                    }
-                }
+            var options = Object.create(Jethro.Settings.prototype);
+
+            Object.assign(options, {
+                _enabled: false, colour: { bold: true, enabled: false, force: true }, severity: { debug: false, transport: false, info: false, success: false, warning: false, error: false }, source: { enabled: "blacklist", whitelist: [ 'testing' ], blacklist: [ 'testing' ] }, timestamp: { enabled: false, format: 'HH:MM:SS[s] SSS[ms]', utc: true, brackets: true }, location: { enabled: true }
             });
+
+            expect(logger.transports.console.settings, "to equal", options);
+        });
+
+        it("Should throw if an invalid Settings instance is passed in", function() {
+            var options = Object.create(Jethro.Settings.prototype);
+
+            expect(function() {
+                logger.importSettings('console', options);
+            }, "to throw", new Error("Setting class failed validity check"));
+        });
+
+        it("Should work with an instance of Settings", function() {
+            var options = Object.create(Jethro.Settings.prototype);
+
+            Object.assign(options, {
+                _enabled: false, colour: { bold: true, enabled: false, force: true }, severity: { debug: false, transport: false, info: false, success: false, warning: false, error: false }, source: { enabled: "blacklist", whitelist: [ 'testing' ], blacklist: [ 'testing' ] }, timestamp: { enabled: false, format: 'HH:MM:SS[s] SSS[ms]', utc: true, brackets: true }, location: { enabled: true }
+            });
+
+            logger.importSettings('console', options);
+            expect(logger.transports.console.settings, "to equal", options);
         });
     });
     describe("Logger brackets", function() {
@@ -159,9 +286,9 @@ describe("Logger config functions", function() {
             expect(logger.transports.console.settings.timestamp.format, "to be", "testing");
         });
         it("Should throw on unknown timestamp format", function() {
-            try {
-                expect(logger.setTimestampFormat(undefined, undefined), "to throw");
-            } catch (e) {}
+            expect(function() {
+                logger.setTimestampFormat(undefined, undefined);
+            }, "to throw");
         });
     });
 
@@ -217,9 +344,9 @@ describe("Logger config functions", function() {
                 expect(logger.transports.console.settings.source.blacklist, "to contain", "testing");
             });
             it("Should throw on non string parameter", function() {
-                try {
-                    expect(logger.addToSourceBlacklist(undefined, undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.addToSourceBlacklist(undefined, undefined);
+                }, "to throw");
             });
         });
 
@@ -229,9 +356,9 @@ describe("Logger config functions", function() {
                 expect(logger.transports.console.settings.source.whitelist, "to contain", "testing");
             });
             it("Should throw on non string parameter", function() {
-                try {
-                    expect(logger.addToSourceWhitelist(undefined, undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.addToSourceWhitelist(undefined, undefined);
+                }, "to throw");
             });
         });
 
@@ -249,9 +376,9 @@ describe("Logger config functions", function() {
                 expect(logger.transports.console.settings.source.enabled, "to equal", null);
             });
             it("Should throw on unknown setting", function() {
-                try {
-                    expect(logger.setSourceControlSetting(undefined, undefined, undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.setSourceControlSetting(undefined, undefined, undefined);
+                }, "to throw");
             });
         });
         describe("Logger.disableSourceControlSetting", function() {
@@ -294,9 +421,9 @@ describe("Logger config functions", function() {
                 expect(logger.transports.console.settings.source.blacklist, "to be empty");
             });
             it("Should throw if a non string is a parameter", function() {
-                try {
-                    expect(logger.removeFromSourceBlacklist(undefined, undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.removeFromSourceBlacklist(undefined, undefined);
+                }, "to throw");
             });
         });
         describe("Logger.removeFromSourceWhitelist", function() {
@@ -308,44 +435,44 @@ describe("Logger config functions", function() {
                 expect(logger.transports.console.settings.source.whitelist, "to be empty");
             });
             it("Should throw if a non string is a parameter", function() {
-                try {
-                    expect(logger.removeFromSourceWhitelist(undefined, undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.removeFromSourceWhitelist(undefined, undefined);
+                }, "to throw");
             });
         });
     });
     describe("Logger setLogLevel", function() {
         it("Should throw an error if a non boolean is the third parameter", function() {
-            try {
-                expect(logger.setLogLevel(undefined, 'info', "hi"), 'to throw');
-            } catch (e) {}
+            expect(function() {
+                logger.setLogLevel(undefined, 'info', "hi");
+            }, 'to throw');
         });
         it("Should throw an error if the second parameter is an unknown severity", function() {
-            try {
-                expect(logger.setLogLevel(undefined, 'undefined', true), 'to throw');
-            } catch (e) {}
+            expect(function() {
+                logger.setLogLevel(undefined, 'undefined', true);
+            }, 'to throw');
         });
         it("Should set a level to false", function() {
             logger.setLogLevel(undefined, 'info', false);
             expect(logger.transports.console.settings.severity.info, 'to be', false);
         });
         it("Should throw if all parameters are incorrect", function() {
-            try {
-                expect(logger.setLogLevel(undefined, undefined, undefined), 'to throw');
-            } catch (e) {}
+            expect(function() {
+                logger.setLogLevel(undefined, undefined, undefined);
+            }, 'to throw');
         });
     });
     describe("Logger enable / disable", function() {
         describe("disableTransport /enableTransport", function() {
             it("Should throw on unknown transport for disableTransport", function() {
-                try {
-                    expect(logger.disableTransport(undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.disableTransport(undefined);
+                }, "to throw");
             });
             it("Should throw on unknown transport for enableTransport", function() {
-                try {
-                    expect(logger.enableTransport(undefined), "to throw");
-                } catch (e) {}
+                expect(function() {
+                    logger.enableTransport(undefined);
+                }, "to throw");
             });
             describe("Disabling console transport should work", function() {
                 beforeEach(function() {

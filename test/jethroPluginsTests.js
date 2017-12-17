@@ -51,7 +51,15 @@ app.get("/redirect", function(req, res) {
 });
 app.listen(3000);
 
+describe("Plugin instance Test", function() {
+    it("Should throw that input hasn't been overriden", function() {
+        expect(function() {
+            var plugin = new Jethro.Plugin();
 
+            plugin.input();
+        }, "to throw", new Error("Input function not overwritten!"));
+    });
+});
 describe("Express Plugin Test", function() {
     beforeEach(defaultSet);
     it("Should log 127.0.0.2 for x-real-ip", function(done) {
@@ -175,5 +183,27 @@ describe("Express Plugin Test", function() {
 
                 return done();
             });
+    });
+
+    it("Should throw if a non string is passed into setNamespace", function() {
+        expect(function() {
+            expressLog.setNamespace(null);
+        }, "to throw", new Error("Not a string"));
+    });
+
+    it("Should throw if _output has missing parameters", function() {
+        expect(function() {
+            expressLog._output(null);
+        }, "to throw", new Error("Missing parameters"));
+    });
+
+    it("Should set a namespace and get it correctly", function() {
+        expressLog.setNamespace("testing");
+
+        expect(expressLog.getNamespace(), "to equal", "testing");
+    });
+    it("Should delete the plugin", function() {
+        logger.removePlugin('express');
+        expect(logger.plugins, "to be empty");
     });
 });
