@@ -137,12 +137,21 @@ describe("Jethro Transport Functionality", function() {
 });
 describe("logger.set (deprecated)", function() {
     it("Should log its deprecated", function(done) {
-        logger.set("console", {});
-        process.on("warning", function(warning) {
-            expect(warning.message, "to be", "logger.set is deprecated, please use .importSettings instead!");
+        if (process.versions.node.split(".")[0] > 4) {
+            logger.set("console", {});
+            process.on("warning", function(warning) {
+                expect(warning.message, "to be", "logger.set is deprecated, please use .importSettings instead!");
 
+                return done();
+            });
+        } else {
+            var stderr = require('test-console').stderr;
+            var inspect = stderr.inspectSync((function() {
+                logger.set("console", {});
+            }));
+            expect(inspect[0], "to be", "logger.set is deprecated, please use .importSettings instead!\n");
             return done();
-        });
+        }
     });
 });
 describe("Logging Tests", function() {
