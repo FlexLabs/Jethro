@@ -17,11 +17,7 @@ var defaultInfo = {
     timestamp: date
 };
 var defaultSet = function() {
-    logger.clean();
-    logger.disableLocation();
-    logger.disableBrackets();
-    logger.disableUTC();
-    logger.setTimestampFormat(undefined, 'H:mm');
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().setTimestampFormat(undefined, 'H:mm');
 };
 var chalk = require("chalk");
 var forceChalk = new chalk.constructor({
@@ -29,6 +25,7 @@ var forceChalk = new chalk.constructor({
 });
 
 describe("Jethro Transport Functionality", function() {
+    beforeEach(defaultSet);
     describe("Transport getLocation", function() {
         it("Should return the location", function() {
             expect(logger.transports.console.getLocation({location: "127.0.0.1"}), "to equal", "[127.0.0.1]");
@@ -105,22 +102,15 @@ describe("Jethro Transport Functionality", function() {
     });
     describe("Transport getTimestamp", function() {
         it("Should return the timestamp", function() {
-            var date = new Date();
-
             expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", moment(date.toISOString()).format(logger.transports.console.settings.timestamp.format));
         });
         it("Should return the timestamp in utc", function() {
-            var date = new Date();
-
-            logger.transports.console.settings.timestamp.utc = true;
+            logger.enableUTC();
 
             expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", moment(date.toISOString()).utc().format(logger.transports.console.settings.timestamp.format));
         });
         it("Should return the timestamp with brackets", function() {
-            var date = new Date();
-
-            logger.transports.console.settings.timestamp.utc = false;
-            logger.transports.console.settings.timestamp.brackets = true;
+            logger.enableBrackets();
 
             expect(logger.transports.console.getTimestamp({timestamp: date}), "to equal", "[" + moment(date.toISOString()).format(logger.transports.console.settings.timestamp.format) + "]");
         });
@@ -288,8 +278,6 @@ describe("Logging Tests", function() {
     });
 
     describe("Logger.<level> Tests", function() {
-        beforeEach(defaultSet);
-
         it("Should Log to console with debug level for Logger.debug", function() {
             var inspect = stdout.inspectSync(function() {
                 logger.debug("Tests", "Testing Output", date);
@@ -442,7 +430,6 @@ describe("Logging Tests", function() {
                 severity: "info"
             }));
         });
-        logger.enableColour();
 
         expect(inspect[0], "to be", now + " [Info]      [Tests]         Testing Output\n");
     });
@@ -454,71 +441,67 @@ describe("Logging Tests", function() {
                 severity: "info",
             }));
         });
-        logger.enableTimestamp();
+
         expect(inspect[0], "to equal", " [" + chalk.magenta.bold("Info") + "]      [Tests]         Testing Output\n");
     });
+    describe("Custom Log settings", function() {
+        describe("Brackets", function() {
+            it("Should log timestamp with brackets", function() {
+                logger.enableBrackets();
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        message: "Testing Output",
+                        severity: "info",
+                        source: "Tests"
+                    }));
 
-});
+                });
 
-describe("Custom Log settings", function() {
-    afterEach(defaultSet);
-    beforeEach(defaultSet);
-
-    describe("brackets", function() {
-        it("Should log timestamp with brackets", function() {
-            logger.enableBrackets();
-            var inspect = stdout.inspectSync(function() {
-                output(assign({}, defaultInfo, {
-                    message: "Testing Output",
-                    severity: "info",
-                    source: "Tests"
-                }));
-
+                expect(inspect[0], "to be", "[" + now + "]" + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
             });
-
-            expect(inspect[0], "to be", "[" + now + "]" + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
         });
-    });
-    describe("Location", function() {
-        it("Should log a location", function() {
-            logger.enableLocation("console");
-            var inspect = stdout.inspectSync(function() {
-                output(assign({}, defaultInfo, {
-                    message: "Testing Output",
-                    severity: "info",
-                    source: "Tests"
-                }));
+        describe("Location", function() {
+            it("Should log a location", function() {
+                logger.enableLocation("console");
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        message: "Testing Output",
+                        severity: "info",
+                        source: "Tests"
+                    }));
 
+                });
+
+                expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     " + logger.spaceOut("[" + logger.getLocation() + "]", 20) + " [Tests]         Testing Output\n");
             });
-
-            expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     " + logger.spaceOut("[" + logger.getLocation() + "]", 20) + " [Tests]         Testing Output\n");
         });
-    });
-    describe("Timeformats", function() {
-        it("Should log with a custom format", function() {
-            logger.setTimestampFormat(undefined, "DD:MM:YYYY");
-            var inspect = stdout.inspectSync(function() {
-                output(assign({}, defaultInfo, {
-                    message: "Testing Output",
-                    severity: "info",
-                    source: "Tests"
-                }));
+        describe("Timeformats", function() {
+            it("Should log with a custom format", function() {
+                logger.setTimestampFormat(undefined, "DD:MM:YYYY");
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        message: "Testing Output",
+                        severity: "info",
+                        source: "Tests"
+                    }));
 
+                });
+                expect(inspect[0], "to be", moment().format("DD:MM:YYYY") + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
             });
-            expect(inspect[0], "to be", moment().format("DD:MM:YYYY") + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
-        });
 
-        it("Should log with utc format", function() {
-            logger.enableUTC();
-            var inspect = stdout.inspectSync(function() {
-                output(assign({}, defaultInfo, {
-                    message: "Testing Output",
-                    severity: "info",
-                    source: "Tests"
-                }));
+            it("Should log with utc format", function() {
+                logger.enableUTC();
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        message: "Testing Output",
+                        severity: "info",
+                        source: "Tests"
+                    }));
 
+                });
+                expect(inspect[0], "to be", nowUTC + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
             });
-            expect(inspect[0], "to be", nowUTC + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
         });
     });
 });
+
