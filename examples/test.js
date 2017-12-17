@@ -2,16 +2,17 @@ var Jethro = require('../lib/index.js');
 var path = require("path");
 var logger = new Jethro();
 
-// We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
-// We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
-// Shouldn't be confused with this (soon to be documented) behaviour
-// logger("info", "this is", "Just a test");
+/*
+ * We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
+ * We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
+ * Shouldn't be confused with this (soon to be documented) behaviour
+ * logger("info", "this is", "Just a test");
+ */
 
 var jethroFile = new Jethro.File();
 jethroFile.setFilePath(path.join(__dirname, 'logs'));
 //jethroFile.setFilenameFormat("");
 logger.addTransport("file", jethroFile);
-
 
 
 function test() {

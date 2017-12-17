@@ -2,10 +2,9 @@
 
 var lint = require("mocha-eslint");
 var paths = [
-    "examples",
-    "lib",
-    "test",
-    "index.js"
+    "examples/**/*.js",
+    "lib/**/*.js",
+    "test/**/*.js"
 ];
 
 lint(paths);

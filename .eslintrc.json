@@ -7,15 +7,23 @@
     "brace-style": [2, "1tbs", {
       "allowSingleLine": false
     }],
-
+    "comma-style": [2, "last"],
     "indent": [2, 4, {
       "SwitchCase": 1
     }],
     "key-spacing": 2,
+    "multiline-comment-style": 2,
     "no-dupe-args": 2,
     "no-dupe-keys": 2,
+    "no-else-return": 2,
     "no-extra-semi": 2,
+    "no-lonely-if": 2,
+    "no-mixed-operators": 2,
     "no-mixed-spaces-and-tabs": 2,
+    "no-multi-spaces": 2,
+    "no-multiple-empty-lines": 2,
+    "no-trailing-spaces": 2,
+    "no-unsafe-negation": 2,
     "no-unused-vars": 1,
     "no-warning-comments": 1,
     "one-var": [2, {
@@ -25,6 +33,7 @@
     "quote-props": [2, "consistent"],
     "semi": 2,
     "semi-spacing": 2,
+    "semi-style": 2,
     "keyword-spacing": 2,
     "space-before-blocks": 2,
     "space-before-function-paren": [2, "never"],
