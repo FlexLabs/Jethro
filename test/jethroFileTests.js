@@ -10,7 +10,6 @@ var moment = require('moment');
 var tempy = require('tempy');
 var folder = tempy.directory();
 var name = moment().format("YYYY-MM-DD") + '.txt';
-var eol = require('os').EOL;
 jethroFile.setFilePath(folder);
 logger.addTransport("file", jethroFile);
 
@@ -39,7 +38,7 @@ describe("Jethro File Transport Tests", function() {
                 if (err) {
                     return done(err);
                 }
-                expect(data, "to contain", "[Info]      [test]          test" + eol);
+                expect(data, "to contain", "[Info]      [test]          test");
                 return done();
             });
         });

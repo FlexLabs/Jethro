@@ -482,7 +482,7 @@ describe("Custom Log settings", function() {
 
             });
 
-            expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     [" + require("os").hostname + "]    [Tests]         Testing Output\n");
+            expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     " + logger.spaceOut("[" + logger.getLocation() + "]", 20) + " [Tests]         Testing Output\n");
         });
     });
     describe("Timeformats", function() {
