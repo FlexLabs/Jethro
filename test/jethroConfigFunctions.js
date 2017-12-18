@@ -4,23 +4,7 @@ var expect = require("unexpected");
 var Jethro = require("../");
 var logger = new Jethro();
 var defaultSet = function() {
-    logger.importSettings('console', {
-        "location": "undefined",
-        "timeformat": "undefined",
-        "output": {
-            "source": {
-                "whitelist": [],
-                "blacklist": []
-            },
-            "colour": true,
-            "timestamp": true,
-            "console": true,
-            "timestampOpts": {
-                "brackets": false,
-                "utc": false
-            }
-        }
-    });
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().resetSourceControl().setTimestampFormat(undefined, 'H:mm');
 };
 
 describe("Logger config functions", function() {
@@ -42,9 +26,7 @@ describe("Logger config functions", function() {
         it("Should use defaults with legacy object if opts are null", function() {
             logger.importSettings("console", {
                 output: {
-                    colour: {
-                        enabled: null
-                    },
+                    colour: null,
                     source: {
                         blacklist: null,
                         whitelist: null
@@ -67,9 +49,7 @@ describe("Logger config functions", function() {
         it("Should change settings with legacy object", function() {
             logger.importSettings("console", {
                 output: {
-                    colour: {
-                        enabled: false
-                    },
+                    colour: false,
                     source: {
                         blacklist: ["testing"],
                         whitelist: ["testing"]
@@ -84,7 +64,7 @@ describe("Logger config functions", function() {
             });
             var options = Object.create(Jethro.Settings.prototype);
             Object.assign(options, {
-                _enabled: true, colour: { bold: true, enabled: true, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true }, source: { enabled: null, whitelist: [ 'testing' ], blacklist: [ 'testing' ] }, timestamp: { enabled: true, format: 'HH:MM:SS[s] SSS[ms]', utc: true, brackets: true }, location: { enabled: false }
+                _enabled: true, colour: { bold: true, enabled: false, force: false }, severity: { debug: true, transport: true, info: true, success: true, warning: true, error: true }, source: { enabled: null, whitelist: [ 'testing' ], blacklist: [ 'testing' ] }, timestamp: { enabled: true, format: 'HH:MM:SS[s] SSS[ms]', utc: true, brackets: true }, location: { enabled: false }
             });
 
             expect(logger.transports.console.settings, "to equal", options);
@@ -331,17 +311,26 @@ describe("Logger config functions", function() {
             });
         });
         describe("Logger.getSourceBlacklist", function() {
-            logger.addToSourceBlacklist(undefined, "testing");
-            expect(logger.getSourceBlacklist().console, "to contain", "testing");
+            it("Should get the blacklist", function() {
+                logger.addToSourceBlacklist(undefined, "testing");
+                expect(logger.getSourceBlacklist().console, "to contain", "testing");
+            });
         });
-        describe("Logger.getSourceWhiteklist", function() {
-            logger.addToSourceWhitelist(undefined, "testing");
-            expect(logger.getSourceWhitelist().console, "to contain", "testing");
+        describe("Logger.getSourceWhitelist", function() {
+            it("Should get the whitelist", function() {
+                logger.addToSourceWhitelist(undefined, "testing");
+                expect(logger.getSourceWhitelist().console, "to contain", "testing");
+            });
         });
         describe("Logger.addToSourceBlacklist", function() {
             it("Should change blacklist to testing", function() {
                 logger.addToSourceBlacklist(undefined, "testing");
-                expect(logger.transports.console.settings.source.blacklist, "to contain", "testing");
+                expect(logger.transports.console.settings.source.blacklist, "to equal", ["testing"]);
+            });
+            it("Should only add once on duplicate items", function() {
+                logger.addToSourceBlacklist(undefined, "testing");
+                logger.addToSourceBlacklist(undefined, "testing");
+                expect(logger.transports.console.settings.source.blacklist, "to equal", ["testing"]);
             });
             it("Should throw on non string parameter", function() {
                 expect(function() {
@@ -353,7 +342,12 @@ describe("Logger config functions", function() {
         describe("Logger.addToSourceWhitelist", function() {
             it("Should change whitelist to testing", function() {
                 logger.addToSourceWhitelist(undefined, "testing");
-                expect(logger.transports.console.settings.source.whitelist, "to contain", "testing");
+                expect(logger.transports.console.settings.source.whitelist, "to equal", ["testing"]);
+            });
+            it("Should only add once on duplicate items", function() {
+                logger.addToSourceWhitelist(undefined, "testing");
+                logger.addToSourceWhitelist(undefined, "testing");
+                expect(logger.transports.console.settings.source.whitelist, "to equal", ["testing"]);
             });
             it("Should throw on non string parameter", function() {
                 expect(function() {

@@ -6,7 +6,7 @@ var logger = new Jethro();
 var request = require("supertest");
 var stdout = require("test-console").stdout;
 var defaultSet = function() {
-    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().setTimestampFormat(undefined, 'H:mm').enableForceColor();
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().resetSourceControl().setTimestampFormat(undefined, 'H:mm').enableForceColor();
 };
 var expressLog = new Jethro.Express();
 logger.addPlugin('express', expressLog);

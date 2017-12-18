@@ -17,7 +17,7 @@ var defaultInfo = {
     timestamp: date
 };
 var defaultSet = function() {
-    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().setTimestampFormat(undefined, 'H:mm').enableForceColor();
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().resetSourceControl().setTimestampFormat(undefined, 'H:mm').enableForceColor();
 };
 var chalk = require("chalk");
 var forceChalk = new chalk.constructor({
@@ -26,6 +26,20 @@ var forceChalk = new chalk.constructor({
 
 describe("Jethro Transport Functionality", function() {
     beforeEach(defaultSet);
+    describe("Transport formatString", function() {
+        it("Should throw on non object", function() {
+            expect(function() {
+                logger.transports.console.formatString(undefined);
+            }, "to throw", new Error("A non-object was sent to the Logger.output() function! See: undefined"));
+        });
+    });
+    describe("Transport _input", function() {
+        it("Should throw missing parameters if parameters are missing", function() {
+            expect(function() {
+                logger.transports.console._input(undefined);
+            }, "to throw", new Error("Missing parameters!"));
+        });
+    });
     describe("Transport getLocation", function() {
         it("Should return the location", function() {
             expect(logger.transports.console.getLocation({location: "127.0.0.1"}), "to equal", "[127.0.0.1]");
@@ -49,9 +63,6 @@ describe("Jethro Transport Functionality", function() {
     });
     describe("Transport getSeverityColor", function() {
         describe("Force colors", function() {
-            beforeEach(function() {
-                logger.transports.console.settings.colour.force = true;
-            });
             it("Should return yellow for warning", function() {
                 expect(logger.transports.console.getSeverityColour("warning"), "to equal", forceChalk.yellow.bold("warning"));
             });
@@ -72,6 +83,9 @@ describe("Jethro Transport Functionality", function() {
             });
         });
         describe("Normal colors", function() {
+            beforeEach(function() {
+                logger.disableForceColour();
+            });
             it("Should return yellow for warning", function() {
                 expect(logger.transports.console.getSeverityColour("warning"), "to equal", chalk.yellow.bold("warning"));
             });
