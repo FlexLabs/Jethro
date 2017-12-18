@@ -234,7 +234,6 @@ describe("Logging Tests", function() {
             expect(inspect[0], "to be", now + " [" + chalk.blue.bold("Debug") + "]     [Tests]         Testing Output\n");
         });
 
-
         it("Should Log to console with error level", function() {
             var inspect = stdout.inspectSync(function() {
                 output(assign({}, defaultInfo, {
@@ -342,7 +341,6 @@ describe("Logging Tests", function() {
 
         });
 
-
         it("Should Log to console with transport level for Logger.transport", function() {
             var inspect = stdout.inspectSync(function() {
                 logger.transport("Tests", "Testing Output", date);
@@ -360,7 +358,6 @@ describe("Logging Tests", function() {
         });
 
     });
-
 
     describe("Logger Undefined / thrown errors", function() {
         it("should Log to console with undefined message", function() {
@@ -408,7 +405,6 @@ describe("Logging Tests", function() {
             expect(inspect[0], "to be", now + " [" + chalk.yellow.bold("Warning") + "]   [Logger]        Check syntax, something was undefined - Severity: info Source: undefined Message: Testing Output\n");
         });
 
-
         it("Should warn if object is passed to logger", function() {
             var inspect = stdout.inspectSync(function() {
                 logger.log({
@@ -437,27 +433,6 @@ describe("Logging Tests", function() {
         });
     });
 
-    it("should Log to console with no colour", function() {
-        logger.disableColour();
-        var inspect = stdout.inspectSync(function() {
-            output(assign({}, defaultInfo, {
-                severity: "info"
-            }));
-        });
-
-        expect(inspect[0], "to be", now + " [Info]      [Tests]         Testing Output\n");
-    });
-
-    it("should Log to console with no timestamp", function() {
-        logger.disableTimestamp();
-        var inspect = stdout.inspectSync(function() {
-            output(assign({}, defaultInfo, {
-                severity: "info",
-            }));
-        });
-
-        expect(inspect[0], "to equal", " [" + chalk.magenta.bold("Info") + "]      [Tests]         Testing Output\n");
-    });
     describe("Custom Log settings", function() {
         describe("Brackets", function() {
             it("Should log timestamp with brackets", function() {
@@ -489,6 +464,71 @@ describe("Logging Tests", function() {
                 expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]     " + logger.spaceOut("[" + logger.getLocation() + "]", 20) + " [Tests]         Testing Output\n");
             });
         });
+        describe("Whitelist / Blacklist", function() {
+            describe("Blacklist", function() {
+                var inspect;
+                beforeEach(function() {
+                    logger.addToSourceBlacklist(undefined, "Tests").setSourceControlSetting(undefined, "blacklist");
+                    inspect = stdout.inspectSync(function() {
+                        output(assign({}, defaultInfo, {
+                            message: "Testing Output",
+                            severity: "info",
+                            source: "Tests"
+                        }));
+                        output(assign({}, defaultInfo, {
+                            message: "Testing Output",
+                            severity: "info",
+                            source: "Not Tests"
+                        }));
+                    });
+                });
+
+                it("Should only have one output", function() {
+                    expect(inspect.length, "to be", 1);
+                });
+                it("Should only log from Tests source", function() {
+                    expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Not Tests]     Testing Output\n");
+                });
+
+            });
+            describe("Whitelist", function() {
+                var inspect;
+                beforeEach(function() {
+                    logger.addToSourceWhitelist(undefined, "Tests").setSourceControlSetting(undefined, "whitelist");
+                    inspect = stdout.inspectSync(function() {
+                        output(assign({}, defaultInfo, {
+                            message: "Testing Output",
+                            severity: "info",
+                            source: "Tests"
+                        }));
+                        output(assign({}, defaultInfo, {
+                            message: "Testing Output",
+                            severity: "info",
+                            source: "Not Tests"
+                        }));
+                    });
+                });
+                it("Should only have one output", function() {
+                    expect(inspect.length, "to be", 1);
+                });
+                it("Should only log from Tests source", function() {
+                    expect(inspect[0], "to be", now + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
+                });
+
+            });
+        });
+        describe("Colors", function() {
+            it("should Log to console with no colour", function() {
+                logger.disableColour();
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        severity: "info"
+                    }));
+                });
+
+                expect(inspect[0], "to be", now + " [Info]      [Tests]         Testing Output\n");
+            });
+        });
         describe("Timeformats", function() {
             it("Should log with a custom format", function() {
                 logger.setTimestampFormat(undefined, "DD:MM:YYYY");
@@ -514,6 +554,16 @@ describe("Logging Tests", function() {
 
                 });
                 expect(inspect[0], "to be", nowUTC + " [\x1b[35m\x1b[1mInfo\x1b[22m\x1b[39m]      [Tests]         Testing Output\n");
+            });
+            it("should Log to console with no timestamp", function() {
+                logger.disableTimestamp();
+                var inspect = stdout.inspectSync(function() {
+                    output(assign({}, defaultInfo, {
+                        severity: "info",
+                    }));
+                });
+
+                expect(inspect[0], "to equal", " [" + chalk.magenta.bold("Info") + "]      [Tests]         Testing Output\n");
             });
         });
     });

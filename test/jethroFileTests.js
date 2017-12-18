@@ -11,6 +11,7 @@ var tempy = require('tempy');
 var folder = tempy.directory();
 var name = moment().format("YYYY-MM-DD") + '.txt';
 jethroFile.setFilePath(folder);
+logger.removeTransport("console");
 logger.addTransport("file", jethroFile);
 
 describe("Jethro File Transport Tests", function() {
@@ -29,7 +30,9 @@ describe("Jethro File Transport Tests", function() {
     });
 
     describe("Logging to file", function() {
-        logger.info("test", "test");
+        beforeEach(function() {
+            logger.info("test", "test");
+        });
         it("Should have a file with the correct formatted date", function() {
             expect(fs.existsSync(path.join(folder, name)), 'to be true');
         });

@@ -194,6 +194,16 @@ describe("Logger config functions", function() {
             expect(logger.transports.console.settings.colour.enabled, "to be", true);
         });
 
+        it("Should change colour boolean to false with disableColor", function() {
+            logger.disableColor('console');
+            expect(logger.transports.console.settings.colour.enabled, "to be", false);
+        });
+
+        it("Should change colour boolean to true with enableColor", function() {
+            logger.enableColor();
+            expect(logger.transports.console.settings.colour.enabled, "to be", true);
+        });
+
         it('Should change bold boolean to false with disableBoldColour', function() {
             logger.disableBoldColour();
             expect(logger.transports.console.settings.colour.bold, "to be", false);
@@ -231,15 +241,6 @@ describe("Logger config functions", function() {
         it('Should change force boolean to true with enableForceColor', function() {
             logger.enableForceColor();
             expect(logger.transports.console.settings.colour.force, "to be", true);
-        });
-        it("Should change colour boolean to false with disableColor", function() {
-            logger.disableColor('console');
-            expect(logger.transports.console.settings.colour.enabled, "to be", false);
-        });
-
-        it("Should change colour boolean to true with enableColor", function() {
-            logger.enableColor();
-            expect(logger.transports.console.settings.colour.enabled, "to be", true);
         });
     });
 
@@ -414,6 +415,10 @@ describe("Logger config functions", function() {
                 logger.removeFromSourceBlacklist(undefined, "testing");
                 expect(logger.transports.console.settings.source.blacklist, "to be empty");
             });
+            it("Should not remove from blacklist if it isn't in the blacklist", function() {
+                logger.removeFromSourceBlacklist(undefined, "testing2");
+                expect(logger.transports.console.settings.source.blacklist, "to equal", ["testing"]);
+            });
             it("Should throw if a non string is a parameter", function() {
                 expect(function() {
                     logger.removeFromSourceBlacklist(undefined, undefined);
@@ -427,6 +432,10 @@ describe("Logger config functions", function() {
             it("Should remove from Whitelist", function() {
                 logger.removeFromSourceWhitelist(undefined, "testing");
                 expect(logger.transports.console.settings.source.whitelist, "to be empty");
+            });
+            it("Should not remove from blacklist if it isn't in the blacklist", function() {
+                logger.removeFromSourceWhitelist(undefined, "testing2");
+                expect(logger.transports.console.settings.source.whitelist, "to equal", ["testing"]);
             });
             it("Should throw if a non string is a parameter", function() {
                 expect(function() {
