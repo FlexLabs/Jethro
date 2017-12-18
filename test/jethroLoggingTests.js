@@ -17,7 +17,7 @@ var defaultInfo = {
     timestamp: date
 };
 var defaultSet = function() {
-    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().setTimestampFormat(undefined, 'H:mm');
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().setTimestampFormat(undefined, 'H:mm').enableForceColor();
 };
 var chalk = require("chalk");
 var forceChalk = new chalk.constructor({
