@@ -21,7 +21,8 @@ var defaultSet = function() {
 };
 var chalk = require("chalk");
 var forceChalk = new chalk.constructor({
-    enabled: true
+    enabled: true,
+    level: chalk.supportsColor && chalk.supportsColor.level > 0 ? chalk.supportsColor.level : 1
 });
 
 describe("Jethro Transport Functionality", function() {
@@ -104,6 +105,23 @@ describe("Jethro Transport Functionality", function() {
             it("Should return cyan for transport", function() {
                 expect(logger.transports.console.getSeverityColour("transport"), "to equal", chalk.cyan.bold("transport"));
             });
+        });
+        describe("Transport Trace", function() {
+            it("Should Log to console with trace level for Logger.transports.console.trace", function() {
+                var error = new TypeError("Test is undefined");
+                var inspect = stdout.inspectSync(function() {
+                    logger.transports.console.trace("Tests", error);
+                });
+
+                expect(inspect[0], "to be", now + " [" + chalk.red.bold("Error") + "]     [Tests]         " + error.message + "\n");
+            });
+
+            it("Should throw if a non error is sent in", function() {
+                expect(function() {
+                    logger.transports.console.trace("tests", undefined);
+                }, "to throw", new Error("Error not sent to Jethro.trace"));
+            });
+
         });
     });
     describe("Transport getSource", function() {
@@ -189,6 +207,23 @@ describe("Logging Tests", function() {
             expect(function() {
                 logger.addTransport(undefined);
             }, "to throw", new TypeError("Provided Transport Name is not a string."));
+        });
+    });
+    describe("Logger getTransport", function() {
+        it("Should get the console transport", function() {
+            expect(logger.getTransport("console") instanceof Jethro.Transport, "to be", true);
+        });
+        it("Should throw if it can't find the transport", function() {
+            expect(function() {
+                logger.getTransport("undefined");
+            }, "to throw", new Error("Transport not found by name"));
+        });
+    });
+    describe("Logger removeTransport", function() {
+        it("Should throw if a non string is sent in", function() {
+            expect(function() {
+                logger.removeTransport(undefined);
+            }, "to throw", new TypeError("Invalid Transport specified"));
         });
     });
     describe("Logger getId", function() {
@@ -321,6 +356,22 @@ describe("Logging Tests", function() {
             });
 
             expect(inspect[0], "to be", now + " [" + chalk.green.bold("Success") + "]   [Tests]         Testing Output\n");
+        });
+
+        describe("Logger Fatal", function() {
+            it("Should throw an error if no errorhandlers for Logger.fatal", function() {
+                var error = new TypeError("Test is undefined");
+                expect(function() {
+                    logger.fatal(error);
+                }, "to throw", error);
+            });
+
+            it("Should throw if a non error is sent in", function() {
+                expect(function() {
+                    logger.fatal("tests");
+                }, "to throw", new Error("Error not sent to Jethro.fatal"));
+            });
+
         });
 
         describe("Logger Trace", function() {
