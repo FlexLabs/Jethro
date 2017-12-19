@@ -24,6 +24,16 @@ app.post("/", response);
 app.get("/info", function(req, res) {
     return res.status(101).send("Testing");
 });
+app.get("/lowdelay", function(req, res) {
+    setTimeout(function() {
+        return res.status(200).send("Testing");
+    }, 200);
+});
+app.get("/highdelay", function(req, res) {
+    setTimeout(function() {
+        return res.status(200).send("Testing");
+    }, 250);
+});
 app.get("/nope", function(req, res) {
     return res.status(404).send("Testing");
 });
@@ -165,6 +175,32 @@ describe("Express Plugin Test", function() {
                 inspect.restore();
                 expect(inspect.output[0], "to contain", "[\x1b[31m\x1b[1mError\x1b[22m\x1b[39m]     [Express]       127.0.0.1         \x1b[31m\x1b[1m500\x1b[22m\x1b[39m   \x1b[32m\x1b[1mGET\x1b[22m\x1b[39m");
 
+                return done();
+            });
+    });
+
+    it("Should log time in yellow for < 250ms", function(done) {
+        var inspect = stdout.inspect();
+
+        request(app)
+            .get("/lowdelay")
+            .end(function() {
+                inspect.restore();
+
+                expect(inspect.output[0], "to match", /\[33m\[1m\d\d\d ms\[22m\[39m/);
+                return done();
+            });
+    });
+
+    it("Should log time in red for > 250ms", function(done) {
+        var inspect = stdout.inspect();
+
+        request(app)
+            .get("/highdelay")
+            .end(function() {
+                inspect.restore();
+
+                expect(inspect.output[0], "to match", /\[31m\[1m\d\d\d ms\[22m\[39m/);
                 return done();
             });
     });
