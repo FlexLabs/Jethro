@@ -1,43 +1,43 @@
 "use strict";
 
-var expect = require("unexpected");
-var fs = require("fs");
-var Jethro = require('../');
-var path = require("path");
-var logger = new Jethro();
-var jethroFile = new Jethro.File();
-var moment = require('moment');
-var tempy = require('tempy');
-var folder = tempy.directory();
-var name = moment().format("YYYY-MM-DD") + '.txt';
+const expect = require("unexpected");
+const fs = require("fs");
+const Jethro = require('../');
+const path = require("path");
+const logger = new Jethro();
+const jethroFile = new Jethro.File();
+const moment = require('moment');
+const tempy = require('tempy');
+const folder = tempy.directory();
+const name = `${moment().format("YYYY-MM-DD")}.txt`;
 jethroFile.setFilePath(folder);
 logger.removeTransport("console");
 logger.addTransport("file", jethroFile);
 
-describe("Jethro File Transport Tests", function() {
-    it("Should be an instance of File", function() {
+describe("Jethro File Transport Tests", () => {
+    it("Should be an instance of File", () => {
         expect(jethroFile instanceof Jethro.File, "to be true");
     });
 
-    it("Should throw on a non string for setFilePath", function() {
+    it("Should throw on a non string for setFilePath", () => {
         try {
             expect(jethroFile.setFilePath(null), "to throw");
         } catch (ex) {}
     });
 
-    it("Should set the correct path", function() {
+    it("Should set the correct path", () => {
         expect(jethroFile.getFilePath(), "to equal", folder);
     });
 
-    describe("Logging to file", function() {
-        beforeEach(function() {
+    describe("Logging to file", () => {
+        beforeEach(() => {
             logger.info("test", "test");
         });
-        it("Should have a file with the correct formatted date", function() {
+        it("Should have a file with the correct formatted date", () => {
             expect(fs.existsSync(path.join(folder, name)), 'to be true');
         });
-        it("Should have logged something", function(done) {
-            fs.readFile(path.join(folder, name), 'utf8', function(err, data) {
+        it("Should have logged something", (done) => {
+            fs.readFile(path.join(folder, name), 'utf8', (err, data) => {
                 if (err) {
                     return done(err);
                 }
