@@ -18,6 +18,7 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "codecov": "^3.0.0",
     "express": "^4.16.2",
     "mocha": "^4.0.1",
     "mocha-eslint": "^4.1.0",
@@ -50,6 +51,7 @@
   },
   "scripts": {
     "test": "nyc mocha --exit",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "docs": "jsdoc ./lib --verbose --package ./package.json --readme ./README.md -c ./jsdoc.json -d ../jethrologger.github.io/documentation/jethro-node"
   }
 }
