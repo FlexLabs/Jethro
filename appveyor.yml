@@ -6,6 +6,7 @@ environment:
 install:
   - ps: Install-Product node $env:nodejs_version
   - set CI=true
+  - set FORCE_COLOR='1'
   - npm install --global npm@latest
   - set PATH=%APPDATA%\npm;%PATH%
   - npm install
@@ -16,6 +17,6 @@ shallow_clone: true
 test_script:
   - node --version
   - npm --version
-  - ps: npm test
+  - npm test
 cache:
   - '%APPDATA%\npm-cache'
