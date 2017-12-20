@@ -17,7 +17,7 @@ const defaultInfo = {
     timestamp: date
 };
 const defaultSet = function() {
-    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().resetSourceControl().setTimestampFormat(undefined, 'H:mm').enableForceColor();
+    logger.clean().disableLocation().disableBrackets().disableUTC().enableColour().enableTimestamp().resetSourceControl().setTimestampFormat(undefined, 'H:mm').enableForceColor().enableTransport("console");
 };
 const forceChalk = new chalk.constructor({
     enabled: true,
@@ -38,6 +38,40 @@ describe("Jethro Transport Functionality", () => {
             expect(() => {
                 logger.transports.console._input(undefined);
             }, "to throw", new Error("Missing parameters!"));
+        });
+    });
+    describe("Transport _throwError", () => {
+        it("Should throw on no error handler", () => {
+            const error = new TypeError("Test is undefined");
+            expect(() => {
+                const transport = new Jethro.Transport();
+
+                transport._throwError(error);
+            }, "to throw", error);
+        });
+        it("Should not log an error if error handler isn't a function", () => {
+            const error = new TypeError("Test is undefined");
+            const inspect = stdout.inspectSync(() => {
+                const transport = new Jethro.Transport();
+                transport._onError(undefined);
+
+                transport._throwError(error);
+            });
+
+            expect(inspect, "to be empty");
+        });
+        it("Should log an error", () => {
+            const error = new TypeError("Test is undefined");
+            const inspect = stdout.inspectSync(() => {
+                const transport = new Jethro.Transport();
+                transport._onError((data) => {
+                    console.log(data);
+                });
+
+                transport._throwError(error);
+            });
+
+            expect(inspect[0], "to equal", `${error.stack}\n`);
         });
     });
     describe("Transport getLocation", () => {
@@ -177,6 +211,19 @@ describe("logger.set (deprecated)", () => {
 });
 describe("Logging Tests", () => {
     beforeEach(defaultSet);
+
+    describe("Output disabled", () => {
+        it("Shouldn't log if console transport is disabled", () => {
+            logger.disableTransport("console");
+            const inspect = stdout.inspectSync(() => {
+                output(assign({}, defaultInfo, {
+                    severity: "error"
+                }));
+            });
+
+            expect(inspect, "to be empty");
+        });
+    });
 
     describe("Direct output", () => {
         it("Should throw on invalid type for direct output", () => {
@@ -363,6 +410,17 @@ describe("Logging Tests", () => {
                 expect(() => {
                     logger.fatal(error);
                 }, "to throw", error);
+            });
+            it("Should work with an added errorHandler", () => {
+                const error = new TypeError("Test is undefined");
+                const inspect = stdout.inspectSync(() => {
+                    logger.onError((data) => {
+                        console.log(data);
+                    });
+                    logger.fatal(error);
+                });
+
+                expect(inspect[0], "to equal", `${error.stack}\n`);
             });
 
             it("Should throw if a non error is sent in", () => {

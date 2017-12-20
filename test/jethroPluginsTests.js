@@ -15,6 +15,9 @@ const response = function(req, res) {
     return res.send("Testing");
 };
 const app = express();
+const date = new Date();
+const moment = require("moment");
+const now = moment(date.toISOString()).format('H:mm');
 
 app.use(expressLog.input());
 app.delete("/", response);
@@ -34,12 +37,67 @@ app.get("/redirect", (req, res) => res.status(302).send("Testing"));
 app.listen(3000);
 
 describe("Plugin instance Test", () => {
+    beforeEach(defaultSet);
     it("Should throw that input hasn't been overriden", () => {
         expect(() => {
             const plugin = new Jethro.Plugin();
 
             plugin.input();
         }, "to throw", new Error("Input function not overwritten!"));
+    });
+    it("Should not output with a non function output handler", () => {
+        const inspect = stdout.inspectSync(() => {
+            const plugin = new Jethro.Plugin();
+
+            plugin._onOutput(undefined);
+
+            plugin.log("info", "Plugin Tests", "Plugin Testing", date);
+        });
+        expect(inspect, "to be empty");
+    });
+    it("Should output with a null error and a null namespace", () => {
+        const inspect = stdout.inspectSync(() => {
+            const plugin = new Jethro.Plugin();
+
+            plugin._onOutput((data) => {
+                console.log(`${moment(data.timestamp.toISOString()).format("H:mm")} [${data.severity}] [${data.source}] ${data.message}`);
+            });
+
+            plugin.log("info", "Plugin Tests", "Plugin Testing", date);
+        });
+        expect(inspect[0], "to be", `${now} [info] [Plugin Tests] Plugin Testing\n`);
+    });
+    it("Should throw on no error handler", () => {
+        const error = new TypeError("Test is undefined");
+        expect(() => {
+            const plugin = new Jethro.Plugin();
+
+            plugin._throwError(error);
+        }, "to throw", error);
+    });
+    it("Should not log an error if error handler isn't a function", () => {
+        const error = new TypeError("Test is undefined");
+        const inspect = stdout.inspectSync(() => {
+            const plugin = new Jethro.Plugin();
+            plugin._onError(undefined);
+
+            plugin._throwError(error);
+        });
+
+        expect(inspect, "to be empty");
+    });
+    it("Should log an error", () => {
+        const error = new TypeError("Test is undefined");
+        const inspect = stdout.inspectSync(() => {
+            const plugin = new Jethro.Plugin();
+            plugin._onError((data) => {
+                console.log(data);
+            });
+
+            plugin._throwError(error);
+        });
+
+        expect(inspect[0], "to equal", `${error.stack}\n`);
     });
 });
 describe("Express Plugin Test", () => {
@@ -191,6 +249,27 @@ describe("Express Plugin Test", () => {
                 expect(inspect.output[0], "to match", /\[31m\[1m\d\d\d ms\[22m\[39m/);
                 return done();
             });
+    });
+
+    it("Should log 0.0.0.0 if an ip can't be found", () => {
+        const inspect = stdout.inspectSync(() => {
+            const req = {
+                headers: {
+                    host: "127.0.0.1"
+                },
+                method: "GET",
+                originalUrl: "/"
+            };
+            const next = () => {};
+            const res = {
+                end: () => {},
+                statusCode: 200
+            };
+            expressLog.input()(req, res, next);
+            res.end();
+        });
+
+        expect(inspect[0], "to contain", "[\u001b[35m\u001b[1mInfo\u001b[22m\u001b[39m]      [Express]       0.0.0.0           \u001b[32m\u001b[1m200\u001b[22m\u001b[39m   \u001b[32m\u001b[1mGET\u001b[22m\u001b[39m");
     });
 
     it("Should throw if a non string is passed into setNamespace", () => {
