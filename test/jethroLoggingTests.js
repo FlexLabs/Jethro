@@ -65,7 +65,7 @@ describe("Jethro Transport Functionality", () => {
             const inspect = stdout.inspectSync(() => {
                 const transport = new Jethro.Transport();
                 transport._onError((data) => {
-                    console.log(data);
+                    console.log(data.stack);
                 });
 
                 transport._throwError(error);
@@ -192,7 +192,7 @@ describe("Jethro Transport Functionality", () => {
 });
 describe("logger.set (deprecated)", () => {
     it("Should log its deprecated", (done) => {
-        if (process.versions.node.split(".")[0] > 4) {
+        if (process.versions.node.split(".")[0] > 5) {
             logger.set("console", {});
             process.on("warning", (warning) => {
                 expect(warning.message, "to be", "logger.set is deprecated, please use .importSettings instead!");
@@ -415,7 +415,7 @@ describe("Logging Tests", () => {
                 const error = new TypeError("Test is undefined");
                 const inspect = stdout.inspectSync(() => {
                     logger.onError((data) => {
-                        console.log(data);
+                        console.log(data.stack);
                     });
                     logger.fatal(error);
                 });
@@ -432,7 +432,7 @@ describe("Logging Tests", () => {
         });
 
         describe("Logger Trace", () => {
-            it("Should Log to console with trace level for Logger.trace", () => {
+            it("Should Log to console with error level for Logger.trace", () => {
                 const error = new TypeError("Test is undefined");
                 const inspect = stdout.inspectSync(() => {
                     logger.trace("Tests", error);

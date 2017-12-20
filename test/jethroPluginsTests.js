@@ -91,7 +91,7 @@ describe("Plugin instance Test", () => {
         const inspect = stdout.inspectSync(() => {
             const plugin = new Jethro.Plugin();
             plugin._onError((data) => {
-                console.log(data);
+                console.log(data.stack);
             });
 
             plugin._throwError(error);
