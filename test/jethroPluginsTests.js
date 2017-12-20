@@ -34,7 +34,7 @@ app.get("/highdelay", (req, res) => {
 app.get("/nope", (req, res) => res.status(404).send("Testing"));
 app.get("/error", (req, res) => res.status(500).send("Testing"));
 app.get("/redirect", (req, res) => res.status(302).send("Testing"));
-app.listen(3000);
+const server = app.listen(3000);
 
 describe("Plugin instance Test", () => {
     beforeEach(defaultSet);
@@ -102,6 +102,7 @@ describe("Plugin instance Test", () => {
 });
 describe("Express Plugin Test", () => {
     beforeEach(defaultSet);
+    after(() => server.close());
     it("Should log 127.0.0.2 for x-real-ip", (done) => {
         const inspect = stdout.inspect();
         request(app)

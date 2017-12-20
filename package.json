@@ -50,7 +50,7 @@
     "url": "https://github.com/JethroLogger/Jethro"
   },
   "scripts": {
-    "test": "nyc mocha --exit",
+    "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "docs": "jsdoc ./lib --verbose --package ./package.json --readme ./README.md -c ./jsdoc.json -d ../jethrologger.github.io/documentation/jethro-node"
   }
