@@ -20,6 +20,7 @@
   "devDependencies": {
     "codecov": "^3.0.0",
     "express": "^4.16.2",
+    "jsdoc": "^3.5.5",
     "mocha": "^4.0.1",
     "mocha-eslint": "^4.1.0",
     "nyc": "^11.3.0",
@@ -52,6 +53,6 @@
   "scripts": {
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "docs": "jsdoc ./lib --verbose --package ./package.json --readme ./README.md -c ./jsdoc.json -d ../jethrologger.github.io/documentation/jethro-node"
+    "docs": "jsdoc -c ./jsdoc.json"
   }
 }
