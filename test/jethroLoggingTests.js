@@ -3,6 +3,10 @@
 const assign = require("object-assign");
 const chalk = require("chalk");
 const date = new Date();
+const lolex = require('lolex');
+const clock = lolex.install({
+    now: date
+});
 const expect = require("unexpected");
 const Jethro = require("../");
 const logger = new Jethro();
@@ -211,6 +215,7 @@ describe("logger.set (deprecated)", () => {
 });
 describe("Logging Tests", () => {
     beforeEach(defaultSet);
+    after(() => clock.uninstall());
 
     describe("Output disabled", () => {
         it("Shouldn't log if console transport is disabled", () => {
