@@ -1,0 +1,24 @@
+# Documentation and dev folders
+docs
+examples
+node_modules
+out
+
+# CI & Tests
+.travis.yml
+.codeclimate.yml
+.eslintignore
+.eslintrc.json
+appveyor.yml
+tests
+
+# Git files/folders
+.git
+.gitignore
+
+# Legacy
+examples/logs
+
+# Environment
+.DS_Store
+.idea

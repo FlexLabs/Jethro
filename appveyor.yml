@@ -1,22 +1,18 @@
 environment:
   matrix:
-    - nodejs_version: '8'
-    - nodejs_version: '6'
-    - nodejs_version: '4'
+  - nodejs_version: "0.12"
+  - nodejs_version: "4.0"
+  - nodejs_version: "5.0"
+
+platform:
+  - x86
+  - x64
+
 install:
-  - ps: Install-Product node $env:nodejs_version
-  - set CI=true
-  - set FORCE_COLOR='1'
-  - npm install --global npm@latest
-  - set PATH=%APPDATA%\npm;%PATH%
+  - ps: Install-Product node $env:nodejs_version $env:platform
   - npm install
-matrix:
-  fast_finish: true
+
 build: off
-shallow_clone: true
+
 test_script:
-  - node --version
-  - npm --version
   - npm test
-cache:
-  - '%APPDATA%\npm-cache'

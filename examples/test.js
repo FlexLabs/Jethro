@@ -1,17 +1,13 @@
-'use strict';
+var Jethro = require('../lib/index.js');
+var path = require("path");
+var logger = new Jethro();
 
-const Jethro = require('../lib/index.js');
-const path = require("path");
-const logger = new Jethro();
+// We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
+// We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
+// Shouldn't be confused with this (soon to be documented) behaviour
+// logger("info", "this is", "Just a test");
 
-/*
- * We'll just accept that this will probably never work again - but that's ok, it's after a constructed element
- * We'll assume if anyone has actually already constructed a new Jethro instance, they know what they are doing and
- * Shouldn't be confused with this (soon to be documented) behaviour
- * logger("info", "this is", "Just a test");
- */
-
-const jethroFile = new Jethro.File();
+var jethroFile = new Jethro.File();
 jethroFile.setFilePath(path.join(__dirname, 'logs'));
 //jethroFile.setFilenameFormat("");
 logger.addTransport("file", jethroFile);
@@ -33,8 +29,8 @@ logger.log('info', 'Core - ', 'Initating timer...', new Date("2016-05-19 10:41:3
 
 //logger.setColour(false);
 
-setInterval(() => {
-    logger.log('debug', 'Node.js', "Self.timer");
+setInterval(function() {
+	logger.log('debug', 'Node.js', "Self.timer");
 }, 5000);
 
 logger.direct({ message: "hi", severity: "transport", source: "Output" });
@@ -78,5 +74,4 @@ function testProcedure() {
     logger.log("debug", "tester", "Test message.");
     logger.log("debug", "tester", "Disable Location...").disableLocation();
     logger.log("debug", "tester", "Test message.");
-
 }
