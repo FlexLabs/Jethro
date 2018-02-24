@@ -51,9 +51,12 @@
     }],
     "object-shorthand": 2,
     "prefer-arrow-callback": 2,
-    "prefer-const": 2,
     "prefer-template": 2,
     "quote-props": [2, "as-needed"],
+    "quotes": [
+      "error",
+      "single"
+  ],
     "semi": 2,
     "semi-spacing": 2,
     "semi-style": 2,
