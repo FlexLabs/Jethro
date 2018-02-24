@@ -4,19 +4,21 @@
     "dictionaries": ["jsdoc","closure"]
   },
   "source": {
-    "includePattern": ".+\\.js$",
+    "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_",
     "include": [
-      "lib/"
+      "README.md",
+      "lib/index.js",
+      "lib/utils.js",
+      "lib/plugins/index.js",
+      "lib/plugins/native/express.js",
+      "lib/transports/index.js",
+      "lib/transports/settings.js",
+      "lib/transports/native/console.js",
+      "lib/transports/native/file.js"
     ],
     "exclude": []
   },
-  "opts": {
-    "destination": "../jethrologger.github.io/documentation/jethro-node",
-    "readme": "./README.md",
-    "recurse": true,
-    "verbose": true
-    },
   "plugins": [],
   "templates": {
     "cleverLinks": false,
